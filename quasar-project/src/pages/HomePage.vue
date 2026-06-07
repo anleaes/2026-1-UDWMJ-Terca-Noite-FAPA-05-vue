@@ -57,7 +57,7 @@ const sections = [
   {
     title: 'Gêneros',
     icon: 'movie_filter',
-    to: '/',
+    to: '/generos',
   },
   {
     title: 'Cadastros',
