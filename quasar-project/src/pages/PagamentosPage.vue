@@ -58,7 +58,7 @@
       <div class="col-12 col-md-7 col-lg-8">
         <h2 class="text-h6 q-mb-md">Cadastrados</h2>
         <q-table
-          :rows="payments"
+          :rows="pagamentos"
           :columns="columns"
           row-key="id"
           :loading="loading"
@@ -99,9 +99,9 @@
 
 <script>
 import {
-  getAllPaymentsFromRest,
-  updatePayment,
-  deletePayment,
+  getAllPagamentosFromRest,
+  updatePagamento,
+  deletePagamento,
 } from 'src/services/pagamentoService'
 
 export default {
@@ -111,7 +111,7 @@ export default {
     return {
       loading: false,
       editingId: null,
-      payments: [],
+      pagamentos: [],
       paymentMethodOptions: [
         { label: 'PIX', value: 'pix' },
         { label: 'Cartão de crédito', value: 'credit_card' },
@@ -148,9 +148,9 @@ export default {
     carregar() {
       this.loading = true
 
-      getAllPaymentsFromRest(true)
+      getAllPagamentosFromRest(true)
         .then((data) => {
-          this.payments = [...data]
+          this.pagamentos = [...data]
         })
         .catch((err) => {
           console.error(err)
@@ -174,18 +174,18 @@ export default {
         charged_amount: this.form.charged_amount,
       }
 
-      updatePayment(this.editingId, payload)
+      updatePagamento(this.editingId, payload)
         .then(() => {
           this.$q.notify({
             type: 'positive',
             message: 'Pagamento atualizado!',
           })
           this.limparForm()
-          return getAllPaymentsFromRest(true)
+          return getAllPagamentosFromRest(true)
         })
         .then((data) => {
           if (data) {
-            this.payments = [...data]
+            this.pagamentos = [...data]
           }
         })
         .catch((err) => {
@@ -200,39 +200,39 @@ export default {
         })
     },
 
-    editar(payment) {
-      this.editingId = payment.id
+    editar(pagamento) {
+      this.editingId = pagamento.id
       this.form = {
-        order: payment.order,
-        payment_method: payment.payment_method,
-        transaction_status: payment.transaction_status,
-        charged_amount: Number(payment.charged_amount),
+        order: pagamento.order,
+        payment_method: pagamento.payment_method,
+        transaction_status: pagamento.transaction_status,
+        charged_amount: Number(pagamento.charged_amount),
       }
     },
 
-    excluir(payment) {
+    excluir(pagamento) {
       this.$q.dialog({
         title: 'Excluir pagamento',
-        message: `Deseja excluir o pagamento #${payment.id} do pedido #${payment.order}?`,
+        message: `Deseja excluir o pagamento #${pagamento.id} do pedido #${pagamento.order}?`,
         cancel: true,
         persistent: true,
       }).onOk(() => {
         this.loading = true
 
-        deletePayment(payment.id)
+        deletePagamento(pagamento.id)
           .then(() => {
             this.$q.notify({
               type: 'positive',
               message: 'Pagamento excluído!',
             })
-            if (this.editingId === payment.id) {
+            if (this.editingId === pagamento.id) {
               this.limparForm()
             }
-            return getAllPaymentsFromRest(true)
+            return getAllPagamentosFromRest(true)
           })
           .then((data) => {
             if (data) {
-              this.payments = [...data]
+              this.pagamentos = [...data]
             }
           })
           .catch((err) => {

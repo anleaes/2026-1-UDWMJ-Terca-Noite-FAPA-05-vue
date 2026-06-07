@@ -73,7 +73,7 @@
       <div class="col-12 col-md-7 col-lg-8">
         <h2 class="text-h6 q-mb-md">Cadastrados</h2>
         <q-table
-          :rows="movies"
+          :rows="filmes"
           :columns="columns"
           row-key="id"
           :loading="loading"
@@ -110,13 +110,13 @@
 
 <script>
 import {
-  getAllMoviesFromRest,
-  createMovie,
-  updateMovie,
-  deleteMovie,
-  getAllGenresFromRest,
+  getAllFilmesFromRest,
+  createFilme,
+  updateFilme,
+  deleteFilme,
   getPosterUrl,
 } from 'src/services/filmeService'
+import { getAllGenresFromRest } from 'src/services/generoService'
 
 export default {
   name: 'FilmesPage',
@@ -125,7 +125,7 @@ export default {
     return {
       loading: false,
       editingId: null,
-      movies: [],
+      filmes: [],
       genreOptions: [],
       genreMap: {},
       posterFile: null,
@@ -179,9 +179,9 @@ export default {
     carregar() {
       this.loading = true
 
-      getAllMoviesFromRest(true)
+      getAllFilmesFromRest(true)
         .then((data) => {
-          this.movies = [...data]
+          this.filmes = [...data]
         })
         .catch((err) => {
           console.error(err)
@@ -211,8 +211,8 @@ export default {
       }
 
       const request = this.editingId
-        ? updateMovie(this.editingId, payload)
-        : createMovie(payload)
+        ? updateFilme(this.editingId, payload)
+        : createFilme(payload)
 
       request
         .then(() => {
@@ -221,11 +221,11 @@ export default {
             message: this.editingId ? 'Filme atualizado!' : 'Filme cadastrado!',
           })
           this.limparForm()
-          return getAllMoviesFromRest(true)
+          return getAllFilmesFromRest(true)
         })
         .then((data) => {
           if (data) {
-            this.movies = [...data]
+            this.filmes = [...data]
           }
         })
         .catch((err) => {
@@ -240,16 +240,16 @@ export default {
         })
     },
 
-    editar(movie) {
-      this.editingId = movie.id
+    editar(filme) {
+      this.editingId = filme.id
       this.posterFile = null
-      this.posterPreview = getPosterUrl(movie.poster)
+      this.posterPreview = getPosterUrl(filme.poster)
       this.form = {
-        title: movie.title,
-        synopsis: movie.synopsis,
-        duration_minutes: movie.duration_minutes,
-        age_rating: movie.age_rating,
-        genres: Array.isArray(movie.genres) ? [...movie.genres] : [],
+        title: filme.title,
+        synopsis: filme.synopsis,
+        duration_minutes: filme.duration_minutes,
+        age_rating: filme.age_rating,
+        genres: Array.isArray(filme.genres) ? [...filme.genres] : [],
       }
     },
 
@@ -260,7 +260,7 @@ export default {
 
       if (!file) {
         this.posterPreview = this.editingId
-          ? getPosterUrl(this.movies.find((item) => item.id === this.editingId)?.poster)
+          ? getPosterUrl(this.filmes.find((item) => item.id === this.editingId)?.poster)
           : null
         return
       }
@@ -268,29 +268,29 @@ export default {
       this.posterPreview = URL.createObjectURL(file)
     },
 
-    excluir(movie) {
+    excluir(filme) {
       this.$q.dialog({
         title: 'Excluir filme',
-        message: `Deseja excluir "${movie.title}"?`,
+        message: `Deseja excluir "${filme.title}"?`,
         cancel: true,
         persistent: true,
       }).onOk(() => {
         this.loading = true
 
-        deleteMovie(movie.id)
+        deleteFilme(filme.id)
           .then(() => {
             this.$q.notify({
               type: 'positive',
               message: 'Filme excluído!',
             })
-            if (this.editingId === movie.id) {
+            if (this.editingId === filme.id) {
               this.limparForm()
             }
-            return getAllMoviesFromRest(true)
+            return getAllFilmesFromRest(true)
           })
           .then((data) => {
             if (data) {
-              this.movies = [...data]
+              this.filmes = [...data]
             }
           })
           .catch((err) => {

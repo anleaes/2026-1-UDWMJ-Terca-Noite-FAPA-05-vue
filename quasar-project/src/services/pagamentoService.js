@@ -3,10 +3,10 @@ import { pagamentoStore } from 'src/stores/pagamento-store.js'
 
 const BASE = `${API_URL}/payment/api/`
 
-function getAllPaymentsFromRest(forceReload = false) {
+function getAllPagamentosFromRest(forceReload = false) {
   return new Promise((resolve, reject) => {
-    if (!forceReload && pagamentoStore.payments.length > 0) {
-      resolve(pagamentoStore.payments)
+    if (!forceReload && pagamentoStore.pagamentos.length > 0) {
+      resolve(pagamentoStore.pagamentos)
       return
     }
 
@@ -20,23 +20,27 @@ function getAllPaymentsFromRest(forceReload = false) {
         response
           .json()
           .then((data) => {
-            const payments = Array.isArray(data) ? data : (data.results || [])
-            pagamentoStore.payments = payments
-            resolve(payments)
+            const pagamentos = Array.isArray(data) ? data : (data.results || [])
+            pagamentoStore.pagamentos = pagamentos
+            resolve(pagamentos)
           })
           .catch((error) => {
-            console.error('Error fetching payments:', error)
+            console.error('Error fetching pagamentos:', error)
             reject(error)
           })
       })
       .catch((error) => {
-        console.error('Error fetching payments:', error)
+        console.error('Error fetching pagamentos:', error)
         reject(error)
       })
   })
 }
 
-function updatePayment(id, data) {
+function getPagamentoById(id) {
+  return pagamentoStore.pagamentos.find((item) => item.id == id)
+}
+
+function updatePagamento(id, data) {
   return new Promise((resolve, reject) => {
     fetch(`${BASE}${id}/`, {
       method: 'PUT',
@@ -52,22 +56,22 @@ function updatePayment(id, data) {
         response
           .json()
           .then((updated) => {
-            pagamentoStore.payments = []
+            pagamentoStore.pagamentos = []
             resolve(updated)
           })
           .catch((error) => {
-            console.error('Error updating payment:', error)
+            console.error('Error updating pagamento:', error)
             reject(error)
           })
       })
       .catch((error) => {
-        console.error('Error updating payment:', error)
+        console.error('Error updating pagamento:', error)
         reject(error)
       })
   })
 }
 
-function deletePayment(id) {
+function deletePagamento(id) {
   return new Promise((resolve, reject) => {
     fetch(`${BASE}${id}/`, { method: 'DELETE' })
       .then((response) => {
@@ -76,18 +80,19 @@ function deletePayment(id) {
           return
         }
 
-        pagamentoStore.payments = []
+        pagamentoStore.pagamentos = []
         resolve()
       })
       .catch((error) => {
-        console.error('Error deleting payment:', error)
+        console.error('Error deleting pagamento:', error)
         reject(error)
       })
   })
 }
 
 export {
-  getAllPaymentsFromRest,
-  updatePayment,
-  deletePayment,
+  getAllPagamentosFromRest,
+  getPagamentoById,
+  updatePagamento,
+  deletePagamento,
 }
