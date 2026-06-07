@@ -62,7 +62,7 @@ const sections = [
   {
     title: 'Cadastros',
     icon: 'person_add',
-    to: '/',
+    to: '/cadastros',
   },
   {
     title: 'Pagamentos',
