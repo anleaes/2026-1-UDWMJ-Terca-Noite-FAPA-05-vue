@@ -4,8 +4,10 @@ const routes = [
     component: () => import('layouts/MainLayout.vue'),
     children: [
       { path: '', component: () => import('pages/HomePage.vue') },
-      { path: 'cinemas', component: () => import('pages/CinemaPage.vue')},
-      { path: 'movies', component: () => import('pages/FilmesPage.vue') },
+
+      { path: 'cinemas', component: () => import('pages/CinemaPage.vue') },
+      { path: 'filmes', component: () => import('pages/FilmePage.vue') },
+      { path: 'sessoes', component: () => import('pages/SessaoPage.vue') },
       { path: 'ingressos', component: () => import('pages/IngressoPage.vue') },
       { path: 'pagamentos', component: () => import('pages/PagamentosPage.vue') },
       { path: 'generos', component: () => import('pages/GeneroPage.vue') },

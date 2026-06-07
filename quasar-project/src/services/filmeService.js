@@ -52,35 +52,32 @@ function getAllMoviesFromRest(forceReload = false) {
         response
           .json()
           .then((data) => {
-            const movies = Array.isArray(data) ? data : (data.results || [])
-            filmeStore.movies = movies
-            resolve(movies)
+            const filmes = Array.isArray(data) ? data : (data.results || [])
+            filmeStore.filmes = filmes
+            resolve(filmes)
           })
           .catch((error) => {
-            console.error('Error fetching movies:', error)
+            console.error('Error fetching filmes:', error)
             reject(error)
           })
       })
       .catch((error) => {
-        console.error('Error fetching movies:', error)
+        console.error('Error fetching filmes:', error)
         reject(error)
       })
   })
 }
 
-function getMovieById(id) {
-  const movie = filmeStore.movies.find((item) => item.id == id)
-  return movie
+function getFilmeById(id) {
+  return filmeStore.filmes.find((item) => item.id == id)
 }
 
-function createMovie(data) {
-  const hasPoster = data.poster instanceof File
-
+function createFilme(data) {
   return new Promise((resolve, reject) => {
     fetch(BASE, {
       method: 'POST',
-      headers: hasPoster ? undefined : { 'Content-Type': 'application/json' },
-      body: hasPoster ? buildMovieFormData(data) : JSON.stringify(data),
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data),
     })
       .then((response) => {
         if (!response.ok) {
@@ -91,31 +88,27 @@ function createMovie(data) {
         response
           .json()
           .then((created) => {
-            filmeStore.movies = []
+            filmeStore.filmes = []
             resolve(created)
           })
           .catch((error) => {
-            console.error('Error creating movie:', error)
+            console.error('Error creating filme:', error)
             reject(error)
           })
       })
       .catch((error) => {
-        console.error('Error creating movie:', error)
+        console.error('Error creating filme:', error)
         reject(error)
       })
   })
 }
 
-function updateMovie(id, data) {
-  const hasPoster = data.poster instanceof File
-  const jsonData = { ...data }
-  delete jsonData.poster
-
+function updateFilme(id, data) {
   return new Promise((resolve, reject) => {
     fetch(`${BASE}${id}/`, {
-      method: hasPoster ? 'PATCH' : 'PUT',
-      headers: hasPoster ? undefined : { 'Content-Type': 'application/json' },
-      body: hasPoster ? buildMovieFormData(data) : JSON.stringify(jsonData),
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data),
     })
       .then((response) => {
         if (!response.ok) {
@@ -126,22 +119,22 @@ function updateMovie(id, data) {
         response
           .json()
           .then((updated) => {
-            filmeStore.movies = []
+            filmeStore.filmes = []
             resolve(updated)
           })
           .catch((error) => {
-            console.error('Error updating movie:', error)
+            console.error('Error updating filme:', error)
             reject(error)
           })
       })
       .catch((error) => {
-        console.error('Error updating movie:', error)
+        console.error('Error updating filme:', error)
         reject(error)
       })
   })
 }
 
-function deleteMovie(id) {
+function deleteFilme(id) {
   return new Promise((resolve, reject) => {
     fetch(`${BASE}${id}/`, { method: 'DELETE' })
       .then((response) => {
@@ -150,33 +143,20 @@ function deleteMovie(id) {
           return
         }
 
-        filmeStore.movies = []
+        filmeStore.filmes = []
         resolve()
       })
       .catch((error) => {
-        console.error('Error deleting movie:', error)
+        console.error('Error deleting filme:', error)
         reject(error)
       })
   })
 }
 
-function getAllGenresFromRest() {
-  return fetch(`${API_URL}/genre/api/`)
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error('Erro ao buscar gêneros')
-      }
-      return response.json()
-    })
-    .then((data) => (Array.isArray(data) ? data : (data.results || [])))
-}
-
 export {
-  getAllMoviesFromRest,
-  getMovieById,
-  createMovie,
-  updateMovie,
-  deleteMovie,
-  getAllGenresFromRest,
-  getPosterUrl,
+  getAllFilmesFromRest,
+  getFilmeById,
+  createFilme,
+  updateFilme,
+  deleteFilme,
 }

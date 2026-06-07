@@ -115,7 +115,7 @@
             Nenhuma sala cadastrada para este cinema
           </q-card-section>
 
-          <RoomForm
+          <SalaForm
             v-if="salaSelecionada"
             :key="salaSelecionada.id ?? 'nova-sala'"
             :sala="salaSelecionada"
@@ -132,9 +132,19 @@
 <script>
 import { useQuasar } from 'quasar'
 import CinemaForm from 'components/CinemaForm.vue'
-import RoomForm from 'components/RoomForm.vue'
-import { cinemaService } from 'src/services/cinemaService'
-import { roomService } from 'src/services/roomService'
+import SalaForm from 'components/SalaForm.vue'
+import {
+  getAllCinemasFromRest,
+  createCinema,
+  updateCinema,
+  deleteCinema,
+} from 'src/services/cinemaService'
+import {
+  getSalasByCinemaFromRest,
+  createSala,
+  updateSala,
+  deleteSala,
+} from 'src/services/salaService'
 
 const cinemaVazio = () => ({
   id: null,
@@ -154,7 +164,7 @@ const salaVazia = () => ({
 
 export default {
   name: 'CinemaPage',
-  components: { CinemaForm, RoomForm },
+  components: { CinemaForm, SalaForm },
   setup() {
     const $q = useQuasar()
     return { $q }
@@ -189,36 +199,46 @@ export default {
     this.carregarCinemas()
   },
   methods: {
-    async carregarCinemas() {
+    carregarCinemas() {
       this.carregando = true
-      try {
-        this.cinemas = await cinemaService.list()
-      } catch (error) {
-        this.$q.notify({
-          type: 'negative',
-          message: error.message || 'Erro ao carregar cinemas',
+
+      getAllCinemasFromRest(true)
+        .then((data) => {
+          this.cinemas = [...data]
         })
-      } finally {
-        this.carregando = false
-      }
+        .catch((error) => {
+          console.error(error)
+          this.$q.notify({
+            type: 'negative',
+            message: error.message || 'Erro ao carregar cinemas',
+          })
+        })
+        .finally(() => {
+          this.carregando = false
+        })
     },
-    async carregarSalas() {
+    carregarSalas() {
       if (!this.cinemaSelecionado.id) {
         this.salas = []
         return
       }
 
       this.carregandoSalas = true
-      try {
-        this.salas = await roomService.listByCinema(this.cinemaSelecionado.id)
-      } catch (error) {
-        this.$q.notify({
-          type: 'negative',
-          message: error.message || 'Erro ao carregar salas',
+
+      getSalasByCinemaFromRest(this.cinemaSelecionado.id, true)
+        .then((data) => {
+          this.salas = [...data]
         })
-      } finally {
-        this.carregandoSalas = false
-      }
+        .catch((error) => {
+          console.error(error)
+          this.$q.notify({
+            type: 'negative',
+            message: error.message || 'Erro ao carregar salas',
+          })
+        })
+        .finally(() => {
+          this.carregandoSalas = false
+        })
     },
     novoCinema() {
       this.cinemaSelecionado = cinemaVazio()
@@ -240,7 +260,7 @@ export default {
       this.salas = []
       this.salaSelecionada = null
     },
-    async salvar(cinema) {
+    salvar(cinema) {
       const payload = {
         name: cinema.name,
         address: cinema.address,
@@ -248,26 +268,36 @@ export default {
         cnpj: cinema.cnpj,
       }
 
-      try {
-        if (this.modoEdicao) {
-          const atualizado = await cinemaService.update(cinema.id, payload)
-          this.cinemaSelecionado = { ...atualizado }
-          this.$q.notify({ type: 'positive', message: 'Cinema atualizado com sucesso' })
-        } else {
-          const criado = await cinemaService.create(payload)
-          this.cinemaSelecionado = { ...criado }
-          this.modoEdicao = true
-          this.$q.notify({ type: 'positive', message: 'Cinema cadastrado com sucesso' })
-        }
+      const eraEdicao = this.modoEdicao
+      const request = eraEdicao
+        ? updateCinema(cinema.id, payload)
+        : createCinema(payload)
 
-        await this.carregarCinemas()
-        await this.carregarSalas()
-      } catch (error) {
-        this.$q.notify({
-          type: 'negative',
-          message: error.message || 'Erro ao salvar cinema',
+      request
+        .then((salvo) => {
+          this.cinemaSelecionado = { ...salvo }
+          if (!eraEdicao) {
+            this.modoEdicao = true
+          }
+          this.$q.notify({
+            type: 'positive',
+            message: eraEdicao ? 'Cinema atualizado com sucesso' : 'Cinema cadastrado com sucesso',
+          })
+          return getAllCinemasFromRest(true)
         })
-      }
+        .then((data) => {
+          if (data) {
+            this.cinemas = [...data]
+          }
+          this.carregarSalas()
+        })
+        .catch((error) => {
+          console.error(error)
+          this.$q.notify({
+            type: 'negative',
+            message: error.message || 'Erro ao salvar cinema',
+          })
+        })
     },
     excluirCinema(id) {
       this.$q.dialog({
@@ -275,21 +305,29 @@ export default {
         message: 'Deseja realmente excluir este cinema?',
         cancel: true,
         persistent: true,
-      }).onOk(async () => {
-        try {
-          await cinemaService.remove(id)
-          this.$q.notify({ type: 'positive', message: 'Cinema excluído com sucesso' })
-          await this.carregarCinemas()
+      }).onOk(() => {
+        deleteCinema(id)
+          .then(() => {
+            this.$q.notify({ type: 'positive', message: 'Cinema excluído com sucesso' })
 
-          if (this.cinemaSelecionado.id === id) {
-            this.cancelar()
-          }
-        } catch (error) {
-          this.$q.notify({
-            type: 'negative',
-            message: error.message || 'Erro ao excluir cinema',
+            if (this.cinemaSelecionado.id === id) {
+              this.cancelar()
+            }
+
+            return getAllCinemasFromRest(true)
           })
-        }
+          .then((data) => {
+            if (data) {
+              this.cinemas = [...data]
+            }
+          })
+          .catch((error) => {
+            console.error(error)
+            this.$q.notify({
+              type: 'negative',
+              message: error.message || 'Erro ao excluir cinema',
+            })
+          })
       })
     },
     novaSala() {
@@ -301,7 +339,7 @@ export default {
     cancelarSala() {
       this.salaSelecionada = null
     },
-    async salvarSala(sala) {
+    salvarSala(sala) {
       const payload = {
         rows: sala.rows,
         columns: sala.columns,
@@ -310,23 +348,26 @@ export default {
         cinema: this.cinemaSelecionado.id,
       }
 
-      try {
-        if (sala.id) {
-          await roomService.update(sala.id, payload)
-          this.$q.notify({ type: 'positive', message: 'Sala atualizada com sucesso' })
-        } else {
-          await roomService.create(payload)
-          this.$q.notify({ type: 'positive', message: 'Sala cadastrada com sucesso' })
-        }
+      const request = sala.id
+        ? updateSala(sala.id, payload)
+        : createSala(payload)
 
-        this.salaSelecionada = null
-        await this.carregarSalas()
-      } catch (error) {
-        this.$q.notify({
-          type: 'negative',
-          message: error.message || 'Erro ao salvar sala',
+      request
+        .then(() => {
+          this.$q.notify({
+            type: 'positive',
+            message: sala.id ? 'Sala atualizada com sucesso' : 'Sala cadastrada com sucesso',
+          })
+          this.salaSelecionada = null
+          this.carregarSalas()
         })
-      }
+        .catch((error) => {
+          console.error(error)
+          this.$q.notify({
+            type: 'negative',
+            message: error.message || 'Erro ao salvar sala',
+          })
+        })
     },
     excluirSala(id) {
       this.$q.dialog({
@@ -334,22 +375,24 @@ export default {
         message: 'Deseja excluir esta sala e todos os seus assentos?',
         cancel: true,
         persistent: true,
-      }).onOk(async () => {
-        try {
-          await roomService.remove(id)
-          this.$q.notify({ type: 'positive', message: 'Sala excluída com sucesso' })
+      }).onOk(() => {
+        deleteSala(id)
+          .then(() => {
+            this.$q.notify({ type: 'positive', message: 'Sala excluída com sucesso' })
 
-          if (this.salaSelecionada?.id === id) {
-            this.salaSelecionada = null
-          }
+            if (this.salaSelecionada?.id === id) {
+              this.salaSelecionada = null
+            }
 
-          await this.carregarSalas()
-        } catch (error) {
-          this.$q.notify({
-            type: 'negative',
-            message: error.message || 'Erro ao excluir sala',
+            this.carregarSalas()
           })
-        }
+          .catch((error) => {
+            console.error(error)
+            this.$q.notify({
+              type: 'negative',
+              message: error.message || 'Erro ao excluir sala',
+            })
+          })
       })
     },
   },

@@ -1,3 +1,3 @@
 export const filmeStore = {
-  movies: [],
+  filmes: [],
 }
