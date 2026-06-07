@@ -67,7 +67,7 @@ const sections = [
   {
     title: 'Pagamentos',
     icon: 'payment',
-    to: '/',
+    to: '/pagamentos',
   },
   {
     title: 'Ingressos',
