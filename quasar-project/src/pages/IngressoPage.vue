@@ -5,21 +5,21 @@
     <h1 class="text-h4 q-mb-md">Ingressos</h1>
 
     <q-table
-      :rows="tickets"
+      :rows="ingressos"
       :columns="columns"
       row-key="id"
       :loading="loading"
       flat
       bordered
     >
-      <template #body-cell-screening="props">
+      <template #body-cell-sessao="props">
         <q-td :props="props">
-          {{ props.row.screening_label || props.row.screening }}
+          {{ props.row.sessao_label || props.row.sessao }}
         </q-td>
       </template>
-      <template #body-cell-seat="props">
+      <template #body-cell-assento="props">
         <q-td :props="props">
-          {{ props.row.seat_label || props.row.seat }}
+          {{ props.row.assento_label || props.row.assento }}
         </q-td>
       </template>
       <template #body-cell-issued_at="props">
@@ -32,7 +32,7 @@
 </template>
 
 <script>
-import { getAllTicketsFromRest } from 'src/services/ingressoService'
+import { getAllIngressosFromRest } from 'src/services/ingressoService'
 
 export default {
   name: 'IngressoPage',
@@ -40,11 +40,11 @@ export default {
   data() {
     return {
       loading: false,
-      tickets: [],
+      ingressos: [],
       columns: [
         { name: 'id', label: 'ID', field: 'id', align: 'left', sortable: true },
-        { name: 'screening', label: 'Sessão', field: 'screening_label', align: 'left', sortable: true },
-        { name: 'seat', label: 'Assento', field: 'seat_label', align: 'left', sortable: true },
+        { name: 'sessao', label: 'Sessão', field: 'sessao_label', align: 'left', sortable: true },
+        { name: 'assento', label: 'Assento', field: 'assento_label', align: 'left', sortable: true },
         { name: 'order', label: 'Pedido', field: 'order', align: 'left', sortable: true },
         { name: 'issued_at', label: 'Emitido em', field: 'issued_at', align: 'left', sortable: true },
       ],
@@ -59,9 +59,9 @@ export default {
     carregar() {
       this.loading = true
 
-      getAllTicketsFromRest(true)
+      getAllIngressosFromRest(true)
         .then((data) => {
-          this.tickets = [...data]
+          this.ingressos = [...data]
         })
         .catch((err) => {
           console.error(err)

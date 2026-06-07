@@ -15,7 +15,7 @@ function getPosterUrl(poster) {
   return `${API_URL}${poster.startsWith('/') ? poster : `/${poster}`}`
 }
 
-function buildMovieFormData(data) {
+function buildFilmeFormData(data) {
   const formData = new FormData()
   formData.append('title', data.title)
   formData.append('synopsis', data.synopsis)
@@ -35,10 +35,27 @@ function buildMovieFormData(data) {
   return formData
 }
 
-function getAllMoviesFromRest(forceReload = false) {
+function buildFilmeBody(data) {
+  if (data.poster instanceof File) {
+    return { body: buildFilmeFormData(data), headers: {} }
+  }
+
+  return {
+    body: JSON.stringify({
+      title: data.title,
+      synopsis: data.synopsis,
+      duration_minutes: data.duration_minutes,
+      age_rating: data.age_rating,
+      genres: data.genres,
+    }),
+    headers: { 'Content-Type': 'application/json' },
+  }
+}
+
+function getAllFilmesFromRest(forceReload = false) {
   return new Promise((resolve, reject) => {
-    if (!forceReload && filmeStore.movies.length > 0) {
-      resolve(filmeStore.movies)
+    if (!forceReload && filmeStore.filmes.length > 0) {
+      resolve(filmeStore.filmes)
       return
     }
 
@@ -73,11 +90,13 @@ function getFilmeById(id) {
 }
 
 function createFilme(data) {
+  const { body, headers } = buildFilmeBody(data)
+
   return new Promise((resolve, reject) => {
     fetch(BASE, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(data),
+      headers,
+      body,
     })
       .then((response) => {
         if (!response.ok) {
@@ -104,11 +123,13 @@ function createFilme(data) {
 }
 
 function updateFilme(id, data) {
+  const { body, headers } = buildFilmeBody(data)
+
   return new Promise((resolve, reject) => {
     fetch(`${BASE}${id}/`, {
       method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(data),
+      headers,
+      body,
     })
       .then((response) => {
         if (!response.ok) {
@@ -159,4 +180,5 @@ export {
   createFilme,
   updateFilme,
   deleteFilme,
+  getPosterUrl,
 }
