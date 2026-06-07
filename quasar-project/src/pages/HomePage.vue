@@ -72,7 +72,7 @@ const sections = [
   {
     title: 'Ingressos',
     icon: 'confirmation_number',
-    to: '/',
+    to: '/ingressos',
   },
 ]
 </script>
