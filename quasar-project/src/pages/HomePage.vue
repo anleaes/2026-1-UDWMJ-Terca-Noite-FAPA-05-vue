@@ -36,7 +36,7 @@ const sections = [
 
   {
     title: 'Pedidos',
-    icon: '',
+    icon: 'receipt_long',
     to: '/orders',
   },
   {
@@ -46,7 +46,7 @@ const sections = [
   },
   {
     title: 'Cinemas',
-    icon: '',
+    icon: 'store',
     to: '/cinemas',
   },
   {
@@ -56,22 +56,22 @@ const sections = [
   },
   {
     title: 'Gêneros',
-    icon: '',
+    icon: 'movie_filter',
     to: '/',
   },
   {
     title: 'Cadastros',
-    icon: 'person',
-    to: '/cadastros',
+    icon: 'person_add',
+    to: '/',
   },
   {
     title: 'Pagamentos',
-    icon: '',
+    icon: 'payment',
     to: '/',
   },
   {
     title: 'Ingressos',
-    icon: '',
+    icon: 'confirmation_number',
     to: '/',
   },
 ]
