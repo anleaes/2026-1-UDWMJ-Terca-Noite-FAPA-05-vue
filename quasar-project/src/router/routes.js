@@ -7,6 +7,7 @@ const routes = [
       { path: 'cinemas', component: () => import('pages/CinemaPage.vue')},
       { path: 'movies', component: () => import('pages/FilmesPage.vue') },
       { path: 'ingressos', component: () => import('pages/IngressoPage.vue') },
+      { path: 'pagamentos', component: () => import('pages/PagamentosPage.vue') },
       { path: 'generos', component: () => import('pages/GeneroPage.vue') },
       { path: 'cadastros', component: () => import('pages/CadastrosPage.vue') },
       { path: 'cadastros/funcionario', component: () => import('pages/FuncionarioPage.vue') },
