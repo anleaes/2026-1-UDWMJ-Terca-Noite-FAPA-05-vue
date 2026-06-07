@@ -46,7 +46,7 @@ const sections = [
   },
   {
     title: 'Cinemas',
-    icon: '',
+    icon: 'store',
     to: '/cinemas',
   },
   {
