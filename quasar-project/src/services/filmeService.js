@@ -3,10 +3,42 @@ import { filmeStore } from 'src/stores/filme-store.js'
 
 const BASE = `${API_URL}/movie/api/`
 
-function getAllFilmesFromRest(forceReload = false) {
+function getPosterUrl(poster) {
+  if (!poster) {
+    return null
+  }
+
+  if (poster.startsWith('http://') || poster.startsWith('https://')) {
+    return poster
+  }
+
+  return `${API_URL}${poster.startsWith('/') ? poster : `/${poster}`}`
+}
+
+function buildMovieFormData(data) {
+  const formData = new FormData()
+  formData.append('title', data.title)
+  formData.append('synopsis', data.synopsis)
+  formData.append('duration_minutes', data.duration_minutes)
+  formData.append('age_rating', data.age_rating)
+
+  if (Array.isArray(data.genres)) {
+    data.genres.forEach((genreId) => {
+      formData.append('genres', genreId)
+    })
+  }
+
+  if (data.poster instanceof File) {
+    formData.append('poster', data.poster)
+  }
+
+  return formData
+}
+
+function getAllMoviesFromRest(forceReload = false) {
   return new Promise((resolve, reject) => {
-    if (!forceReload && filmeStore.filmes.length > 0) {
-      resolve(filmeStore.filmes)
+    if (!forceReload && filmeStore.movies.length > 0) {
+      resolve(filmeStore.movies)
       return
     }
 

@@ -4,9 +4,13 @@ const routes = [
     component: () => import('layouts/MainLayout.vue'),
     children: [
       { path: '', component: () => import('pages/HomePage.vue') },
+
       { path: 'cinemas', component: () => import('pages/CinemaPage.vue') },
-      { path: 'filme', component: () => import('pages/FilmePage.vue') },
-      { path: 'sessao', component: () => import('pages/SessaoPage.vue') },
+      { path: 'filmes', component: () => import('pages/FilmePage.vue') },
+      { path: 'sessoes', component: () => import('pages/SessaoPage.vue') },
+      { path: 'ingressos', component: () => import('pages/IngressoPage.vue') },
+      { path: 'pagamentos', component: () => import('pages/PagamentosPage.vue') },
+      { path: 'generos', component: () => import('pages/GeneroPage.vue') },
       { path: 'cadastros', component: () => import('pages/CadastrosPage.vue') },
       { path: 'cadastros/funcionario', component: () => import('pages/FuncionarioPage.vue') },
       { path: 'cadastros/cliente', component: () => import('pages/ClientePage.vue') },

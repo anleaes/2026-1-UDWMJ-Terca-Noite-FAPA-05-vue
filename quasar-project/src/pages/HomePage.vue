@@ -57,7 +57,7 @@ const sections = [
   {
     title: 'Gêneros',
     icon: 'movie_filter',
-    to: '/',
+    to: '/generos',
   },
   {
     title: 'Cadastros',
@@ -67,12 +67,12 @@ const sections = [
   {
     title: 'Pagamentos',
     icon: 'payment',
-    to: '/',
+    to: '/pagamentos',
   },
   {
     title: 'Ingressos',
     icon: 'confirmation_number',
-    to: '/',
+    to: '/ingressos',
   },
 ]
 </script>
