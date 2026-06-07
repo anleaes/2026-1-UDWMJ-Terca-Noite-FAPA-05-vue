@@ -60,13 +60,8 @@ const sections = [
     to: '/',
   },
   {
-    title: 'Clientes',
+    title: 'Cadastros',
     icon: 'client',
-    to: '/',
-  },
-  {
-    title: 'Funcionários',
-    icon: '',
     to: '/',
   },
   {
