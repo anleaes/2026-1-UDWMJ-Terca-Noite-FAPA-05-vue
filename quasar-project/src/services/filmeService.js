@@ -1,46 +1,46 @@
 import { API_URL } from './api'
-import { cinemaStore } from 'src/stores/cinema-store.js'
+import { filmeStore } from 'src/stores/filme-store.js'
 
-const BASE = `${API_URL}/cinema/api/`
+const BASE = `${API_URL}/movie/api/`
 
-function getAllCinemasFromRest(forceReload = false) {
+function getAllFilmesFromRest(forceReload = false) {
   return new Promise((resolve, reject) => {
-    if (!forceReload && cinemaStore.cinemas.length > 0) {
-      resolve(cinemaStore.cinemas)
+    if (!forceReload && filmeStore.filmes.length > 0) {
+      resolve(filmeStore.filmes)
       return
     }
 
     fetch(BASE)
       .then((response) => {
         if (!response.ok) {
-          reject(new Error('Erro ao buscar cinemas'))
+          reject(new Error('Erro ao buscar filmes'))
           return
         }
 
         response
           .json()
           .then((data) => {
-            const cinemas = Array.isArray(data) ? data : (data.results || [])
-            cinemaStore.cinemas = cinemas
-            resolve(cinemas)
+            const filmes = Array.isArray(data) ? data : (data.results || [])
+            filmeStore.filmes = filmes
+            resolve(filmes)
           })
           .catch((error) => {
-            console.error('Error fetching cinemas:', error)
+            console.error('Error fetching filmes:', error)
             reject(error)
           })
       })
       .catch((error) => {
-        console.error('Error fetching cinemas:', error)
+        console.error('Error fetching filmes:', error)
         reject(error)
       })
   })
 }
 
-function getCinemaById(id) {
-  return cinemaStore.cinemas.find((item) => item.id == id)
+function getFilmeById(id) {
+  return filmeStore.filmes.find((item) => item.id == id)
 }
 
-function createCinema(data) {
+function createFilme(data) {
   return new Promise((resolve, reject) => {
     fetch(BASE, {
       method: 'POST',
@@ -49,29 +49,29 @@ function createCinema(data) {
     })
       .then((response) => {
         if (!response.ok) {
-          reject(new Error('Erro ao cadastrar cinema'))
+          reject(new Error('Erro ao cadastrar filme'))
           return
         }
 
         response
           .json()
           .then((created) => {
-            cinemaStore.cinemas = []
+            filmeStore.filmes = []
             resolve(created)
           })
           .catch((error) => {
-            console.error('Error creating cinema:', error)
+            console.error('Error creating filme:', error)
             reject(error)
           })
       })
       .catch((error) => {
-        console.error('Error creating cinema:', error)
+        console.error('Error creating filme:', error)
         reject(error)
       })
   })
 }
 
-function updateCinema(id, data) {
+function updateFilme(id, data) {
   return new Promise((resolve, reject) => {
     fetch(`${BASE}${id}/`, {
       method: 'PUT',
@@ -80,51 +80,51 @@ function updateCinema(id, data) {
     })
       .then((response) => {
         if (!response.ok) {
-          reject(new Error('Erro ao atualizar cinema'))
+          reject(new Error('Erro ao atualizar filme'))
           return
         }
 
         response
           .json()
           .then((updated) => {
-            cinemaStore.cinemas = []
+            filmeStore.filmes = []
             resolve(updated)
           })
           .catch((error) => {
-            console.error('Error updating cinema:', error)
+            console.error('Error updating filme:', error)
             reject(error)
           })
       })
       .catch((error) => {
-        console.error('Error updating cinema:', error)
+        console.error('Error updating filme:', error)
         reject(error)
       })
   })
 }
 
-function deleteCinema(id) {
+function deleteFilme(id) {
   return new Promise((resolve, reject) => {
     fetch(`${BASE}${id}/`, { method: 'DELETE' })
       .then((response) => {
         if (!response.ok) {
-          reject(new Error('Erro ao excluir cinema'))
+          reject(new Error('Erro ao excluir filme'))
           return
         }
 
-        cinemaStore.cinemas = []
+        filmeStore.filmes = []
         resolve()
       })
       .catch((error) => {
-        console.error('Error deleting cinema:', error)
+        console.error('Error deleting filme:', error)
         reject(error)
       })
   })
 }
 
 export {
-  getAllCinemasFromRest,
-  getCinemaById,
-  createCinema,
-  updateCinema,
-  deleteCinema,
+  getAllFilmesFromRest,
+  getFilmeById,
+  createFilme,
+  updateFilme,
+  deleteFilme,
 }

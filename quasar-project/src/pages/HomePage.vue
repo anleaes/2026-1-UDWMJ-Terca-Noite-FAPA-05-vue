@@ -42,7 +42,7 @@ const sections = [
   {
     title: 'Filmes',
     icon: 'movie',
-    to: '/movies',
+    to: '/filme',
   },
   {
     title: 'Cinemas',
@@ -50,9 +50,9 @@ const sections = [
     to: '/cinemas',
   },
   {
-    title: 'Sessões',
+    title: 'Sessão',
     icon: 'theaters',
-    to: '/screenings',
+    to: '/sessao',
   },
   {
     title: 'Gêneros',

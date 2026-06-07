@@ -4,7 +4,9 @@ const routes = [
     component: () => import('layouts/MainLayout.vue'),
     children: [
       { path: '', component: () => import('pages/HomePage.vue') },
-      { path: 'cinemas', component: () => import('pages/CinemaPage.vue')},
+      { path: 'cinemas', component: () => import('pages/CinemaPage.vue') },
+      { path: 'filme', component: () => import('pages/FilmePage.vue') },
+      { path: 'sessao', component: () => import('pages/SessaoPage.vue') },
       { path: 'cadastros', component: () => import('pages/CadastrosPage.vue') },
       { path: 'cadastros/funcionario', component: () => import('pages/FuncionarioPage.vue') },
       { path: 'cadastros/cliente', component: () => import('pages/ClientePage.vue') },

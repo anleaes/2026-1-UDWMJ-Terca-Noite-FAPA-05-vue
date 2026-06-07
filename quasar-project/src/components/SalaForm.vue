@@ -1,5 +1,5 @@
 <template>
-  <q-card flat bordered class="room-form q-mt-md">
+  <q-card flat bordered class="sala-form q-mt-md">
     <q-card-section>
       <div class="text-subtitle1 text-weight-medium">{{ titulo }}</div>
     </q-card-section>
@@ -8,9 +8,9 @@
 
     <q-form @validation-success="salvar">
       <q-card-section class="q-gutter-y-md">
-        <div class="room-id">
-          <div class="room-id__label">ID</div>
-          <div class="room-id__value">{{ salaLocal.id }}</div>
+        <div class="sala-id">
+          <div class="sala-id__label">ID</div>
+          <div class="sala-id__value">{{ salaLocal.id }}</div>
         </div>
 
         <div class="row q-col-gutter-md">
@@ -78,7 +78,7 @@ const salaVazia = () => ({
 })
 
 export default {
-  name: 'RoomForm',
+  name: 'SalaForm',
   emits: ['cancelar', 'salvar'],
   props: {
     sala: {
@@ -115,23 +115,23 @@ export default {
 </script>
 
 <style scoped>
-.room-form {
+.sala-form {
   border-radius: 12px;
 }
 
-.room-id {
+.sala-id {
   padding-bottom: 4px;
   margin-bottom: 4px;
   border-bottom: 1px solid rgba(0, 0, 0, 0.08);
 }
 
-.room-id__label {
+.sala-id__label {
   font-size: 12px;
   color: rgba(0, 0, 0, 0.55);
   margin-bottom: 2px;
 }
 
-.room-id__value {
+.sala-id__value {
   font-size: 14px;
   font-weight: 500;
 }
