@@ -1,15 +1,24 @@
 <template>
   <q-page class="q-pa-md">
+    <q-btn
+      flat
+      icon="arrow_back"
+      label="Voltar"
+      to="/"
+      class="q-mb-md"
+    />
+
     <div class="text-center q-mb-xl q-pt-lg">
-      <q-icon name="local_movies" size="4rem" color="primary" />
-      <h1 class="text-h3 text-weight-bold q-mt-md">Cinema App</h1>
+      <q-icon name="app_registration" size="4rem" color="primary" />
+      <h1 class="text-h3 text-weight-bold q-mt-md">Cadastros</h1>
+      <p class="text-grey-7">Escolha o tipo de cadastro</p>
     </div>
 
     <div class="row q-col-gutter-md justify-center">
       <div
         v-for="section in sections"
         :key="section.title"
-        class="col-12 col-sm-6 col-md-4"
+        class="col-12 col-sm-6"
         style="max-width: 320px"
       >
         <q-card
@@ -33,49 +42,21 @@
 
 <script setup>
 const sections = [
-
   {
-    title: 'Pedidos',
-    icon: '',
-    to: '/orders',
+    title: 'Funcionário',
+    icon: 'badge',
+    caption: 'Cadastro de funcionários',
+    to: '/cadastros/funcionario',
   },
   {
-    title: 'Filmes',
-    icon: 'movie',
-    to: '/movies',
-  },
-  {
-    title: 'Cinemas',
-    icon: '',
-    to: '/cinemas',
-  },
-  {
-    title: 'Sessões',
-    icon: 'theaters',
-    to: '/screenings',
-  },
-  {
-    title: 'Gêneros',
-    icon: '',
-    to: '/',
-  },
-  {
-    title: 'Cadastros',
+    title: 'Cliente',
     icon: 'person',
-    to: '/cadastros',
-  },
-  {
-    title: 'Pagamentos',
-    icon: '',
-    to: '/',
-  },
-  {
-    title: 'Ingressos',
-    icon: '',
-    to: '/',
+    caption: 'Cadastro de clientes',
+    to: '/cadastros/cliente',
   },
 ]
 </script>
+
 <style scoped>
 .home-card {
   transition: box-shadow 0.2s ease, transform 0.2s ease;
@@ -86,4 +67,3 @@ const sections = [
   transform: translateY(-2px);
 }
 </style>
-
