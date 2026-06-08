@@ -1,10 +1,6 @@
 <template>
   <q-page class="q-pa-md cinema-home">
-    <p class="cinema-home__welcome">
-      Navegue pelas seções abaixo para gerenciar o cinema.
-    </p>
-
-    <div class="row q-col-gutter-md justify-center">
+    <div class="row q-col-gutter-md justify-center q-pt-xl">
       <div
         v-for="section in sections"
         :key="section.title"
