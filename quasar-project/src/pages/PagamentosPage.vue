@@ -1,115 +1,152 @@
 <template>
-  <q-page class="q-pa-md">
-    <q-btn flat icon="arrow_back" label="Voltar" to="/" class="q-mb-md" />
+  <BaseCrudPage
+    v-model:show-form="showForm"
+    title="Pagamentos"
+    back-to="/"
+    :rows="pagamentos"
+    :columns="columns"
+    :loading="loading"
+    :selected-id="editingId"
+    :form-title="tituloFormulario"
+    :show-novo="false"
+    empty-message="Nenhum pagamento cadastrado."
+    @row-click="editar"
+    @delete="excluir"
+    @cancel-form="fecharForm"
+  >
+    <template #body-cell-payment_method="props">
+      <q-td :props="props">
+        {{ formatPaymentMethod(props.row.payment_method) }}
+      </q-td>
+    </template>
 
-    <h1 class="text-h4 q-mb-md">Pagamentos</h1>
+    <template #body-cell-transaction_status="props">
+      <q-td :props="props">
+        {{ formatTransactionStatus(props.row.transaction_status) }}
+      </q-td>
+    </template>
 
-    <div class="row q-col-gutter-lg">
-      <div class="col-12 col-md-5 col-lg-4">
-        <h2 class="text-h6 q-mb-md">
-          {{ editingId ? 'Editar pagamento' : 'Selecione um pagamento' }}
-        </h2>
+    <template #body-cell-charged_amount="props">
+      <q-td :props="props">
+        {{ formatCurrency(props.row.charged_amount) }}
+      </q-td>
+    </template>
 
-        <q-form v-if="editingId" @submit.prevent="salvar" class="q-gutter-md">
-          <q-input
-            :model-value="form.order"
-            label="Pedido"
-            outlined
-            readonly
+    <template #body-cell-created_at="props">
+      <q-td :props="props">
+        {{ formatDate(props.row.created_at) }}
+      </q-td>
+    </template>
+
+    <template #actions="{ row }">
+      <q-btn
+        v-if="!pagamentoAprovado(row)"
+        flat
+        round
+        dense
+        icon="delete"
+        color="negative"
+        @click="excluir(row)"
+      />
+    </template>
+
+    <template #form>
+      <q-banner
+        v-if="pagamentoFechado"
+        class="bg-blue-1 text-primary q-mb-md"
+        rounded
+        dense
+      >
+        Pagamento aprovado. Não é possível alterar os dados.
+      </q-banner>
+
+      <q-form @submit.prevent="salvar" class="q-gutter-md">
+        <q-input :model-value="form.order" label="Pedido" outlined readonly />
+
+        <q-select
+          v-if="!pagamentoFechado"
+          v-model="form.payment_method"
+          :options="paymentMethodOptions"
+          label="Método de pagamento"
+          outlined
+          emit-value
+          map-options
+          required
+        />
+        <q-input
+          v-else
+          :model-value="formatPaymentMethod(form.payment_method)"
+          label="Método de pagamento"
+          outlined
+          readonly
+        />
+
+        <q-select
+          v-if="!pagamentoFechado"
+          v-model="form.transaction_status"
+          :options="transactionStatusOptions"
+          label="Status"
+          outlined
+          emit-value
+          map-options
+          required
+        />
+        <q-input
+          v-else
+          :model-value="formatTransactionStatus(form.transaction_status)"
+          label="Status"
+          outlined
+          readonly
+        />
+
+        <q-input
+          :model-value="formatCurrency(form.charged_amount)"
+          label="Valor cobrado"
+          outlined
+          readonly
+          hint="Definido automaticamente pelo total do pedido"
+        />
+
+        <div class="row q-gutter-sm justify-end">
+          <q-btn flat :label="pagamentoFechado ? 'Fechar' : 'Cancelar'" @click="fecharForm" />
+          <q-btn
+            v-if="!pagamentoFechado"
+            type="submit"
+            color="primary"
+            unelevated
+            label="Atualizar"
+            :loading="loading"
           />
-          <q-select
-            v-model="form.payment_method"
-            :options="paymentMethodOptions"
-            label="Método de pagamento"
-            outlined
-            emit-value
-            map-options
-            required
-          />
-          <q-select
-            v-model="form.transaction_status"
-            :options="transactionStatusOptions"
-            label="Status"
-            outlined
-            emit-value
-            map-options
-            required
-          />
-          <q-input
-            v-model.number="form.charged_amount"
-            label="Valor cobrado"
-            type="number"
-            step="0.01"
-            min="0"
-            outlined
-            required
-          />
-          <div class="row q-gutter-sm">
-            <q-btn type="submit" color="primary" label="Atualizar" :loading="loading" />
-            <q-btn flat label="Cancelar" @click="cancelarEdicao" />
-          </div>
-        </q-form>
-
-        <p v-else class="text-grey-7">
-          Clique em editar na tabela para alterar um pagamento.
-        </p>
-      </div>
-
-      <div class="col-12 col-md-7 col-lg-8">
-        <h2 class="text-h6 q-mb-md">Cadastrados</h2>
-        <q-table
-          :rows="pagamentos"
-          :columns="columns"
-          row-key="id"
-          :loading="loading"
-          flat
-          bordered
-        >
-          <template #body-cell-payment_method="props">
-            <q-td :props="props">
-              {{ formatPaymentMethod(props.row.payment_method) }}
-            </q-td>
-          </template>
-          <template #body-cell-transaction_status="props">
-            <q-td :props="props">
-              {{ formatTransactionStatus(props.row.transaction_status) }}
-            </q-td>
-          </template>
-          <template #body-cell-charged_amount="props">
-            <q-td :props="props">
-              {{ formatCurrency(props.row.charged_amount) }}
-            </q-td>
-          </template>
-          <template #body-cell-created_at="props">
-            <q-td :props="props">
-              {{ formatDate(props.row.created_at) }}
-            </q-td>
-          </template>
-          <template #body-cell-actions="props">
-            <q-td :props="props">
-              <q-btn flat round dense icon="edit" color="primary" @click="editar(props.row)" />
-              <q-btn flat round dense icon="delete" color="negative" @click="excluir(props.row)" />
-            </q-td>
-          </template>
-        </q-table>
-      </div>
-    </div>
-  </q-page>
+        </div>
+      </q-form>
+    </template>
+  </BaseCrudPage>
 </template>
 
 <script>
+import BaseCrudPage from 'components/BaseCrudPage.vue'
 import {
   getAllPagamentosFromRest,
   updatePagamento,
   deletePagamento,
 } from 'src/services/pagamentoService'
 
+const formVazio = () => ({
+  order: null,
+  payment_method: '',
+  transaction_status: '',
+  charged_amount: null,
+})
+
 export default {
   name: 'PagamentosPage',
+
+  components: { BaseCrudPage },
 
   data() {
     return {
       loading: false,
+      showForm: false,
       editingId: null,
       pagamentos: [],
       paymentMethodOptions: [
@@ -122,12 +159,7 @@ export default {
         { label: 'Aprovado', value: 'approved' },
         { label: 'Rejeitado', value: 'rejected' },
       ],
-      form: {
-        order: null,
-        payment_method: '',
-        transaction_status: '',
-        charged_amount: null,
-      },
+      form: formVazio(),
       columns: [
         { name: 'id', label: 'ID', field: 'id', align: 'left' },
         { name: 'order', label: 'Pedido', field: 'order', align: 'left' },
@@ -135,9 +167,18 @@ export default {
         { name: 'transaction_status', label: 'Status', field: 'transaction_status', align: 'left' },
         { name: 'charged_amount', label: 'Valor', field: 'charged_amount', align: 'left' },
         { name: 'created_at', label: 'Criado em', field: 'created_at', align: 'left' },
-        { name: 'actions', label: 'Ações', field: 'actions', align: 'center' },
       ],
     }
+  },
+
+  computed: {
+    pagamentoFechado() {
+      return this.form.transaction_status === 'approved'
+    },
+
+    tituloFormulario() {
+      return this.pagamentoFechado ? 'Visualizar pagamento' : 'Editar pagamento'
+    },
   },
 
   mounted() {
@@ -145,26 +186,42 @@ export default {
   },
 
   methods: {
+    pagamentoAprovado(pagamento) {
+      return pagamento.transaction_status === 'approved'
+    },
     carregar() {
       this.loading = true
-
       getAllPagamentosFromRest(true)
-        .then((data) => {
-          this.pagamentos = [...data]
-        })
+        .then((data) => { this.pagamentos = [...data] })
         .catch((err) => {
           console.error(err)
-          this.$q.notify({
-            type: 'negative',
-            message: 'Não foi possível carregar pagamentos',
-          })
+          this.$q.notify({ type: 'negative', message: 'Não foi possível carregar pagamentos' })
         })
-        .finally(() => {
-          this.loading = false
-        })
+        .finally(() => { this.loading = false })
+    },
+
+    editar(pagamento) {
+      this.editingId = pagamento.id
+      this.form = {
+        order: pagamento.order,
+        payment_method: pagamento.payment_method,
+        transaction_status: pagamento.transaction_status,
+        charged_amount: Number(pagamento.charged_amount),
+      }
+      this.showForm = true
+    },
+
+    fecharForm() {
+      this.showForm = false
+      this.editingId = null
+      this.form = formVazio()
     },
 
     salvar() {
+      if (this.pagamentoFechado) {
+        return
+      }
+
       this.loading = true
 
       const payload = {
@@ -176,41 +233,27 @@ export default {
 
       updatePagamento(this.editingId, payload)
         .then(() => {
-          this.$q.notify({
-            type: 'positive',
-            message: 'Pagamento atualizado!',
-          })
-          this.limparForm()
+          this.$q.notify({ type: 'positive', message: 'Pagamento atualizado!' })
+          this.fecharForm()
           return getAllPagamentosFromRest(true)
         })
-        .then((data) => {
-          if (data) {
-            this.pagamentos = [...data]
-          }
-        })
+        .then((data) => { if (data) this.pagamentos = [...data] })
         .catch((err) => {
           console.error(err)
-          this.$q.notify({
-            type: 'negative',
-            message: 'Erro ao atualizar pagamento',
-          })
+          this.$q.notify({ type: 'negative', message: 'Erro ao atualizar pagamento' })
         })
-        .finally(() => {
-          this.loading = false
-        })
-    },
-
-    editar(pagamento) {
-      this.editingId = pagamento.id
-      this.form = {
-        order: pagamento.order,
-        payment_method: pagamento.payment_method,
-        transaction_status: pagamento.transaction_status,
-        charged_amount: Number(pagamento.charged_amount),
-      }
+        .finally(() => { this.loading = false })
     },
 
     excluir(pagamento) {
+      if (this.pagamentoAprovado(pagamento)) {
+        this.$q.notify({
+          type: 'warning',
+          message: 'Pagamento aprovado não pode ser excluído',
+        })
+        return
+      }
+
       this.$q.dialog({
         title: 'Excluir pagamento',
         message: `Deseja excluir o pagamento #${pagamento.id} do pedido #${pagamento.order}?`,
@@ -218,73 +261,35 @@ export default {
         persistent: true,
       }).onOk(() => {
         this.loading = true
-
         deletePagamento(pagamento.id)
           .then(() => {
-            this.$q.notify({
-              type: 'positive',
-              message: 'Pagamento excluído!',
-            })
-            if (this.editingId === pagamento.id) {
-              this.limparForm()
-            }
+            this.$q.notify({ type: 'positive', message: 'Pagamento excluído!' })
+            if (this.editingId === pagamento.id) this.fecharForm()
             return getAllPagamentosFromRest(true)
           })
-          .then((data) => {
-            if (data) {
-              this.pagamentos = [...data]
-            }
-          })
+          .then((data) => { if (data) this.pagamentos = [...data] })
           .catch((err) => {
             console.error(err)
-            this.$q.notify({
-              type: 'negative',
-              message: 'Erro ao excluir pagamento',
-            })
+            this.$q.notify({ type: 'negative', message: 'Erro ao excluir pagamento' })
           })
-          .finally(() => {
-            this.loading = false
-          })
+          .finally(() => { this.loading = false })
       })
     },
 
     formatPaymentMethod(value) {
-      const option = this.paymentMethodOptions.find((item) => item.value === value)
-      return option ? option.label : value
+      return this.paymentMethodOptions.find((o) => o.value === value)?.label || value
     },
 
     formatTransactionStatus(value) {
-      const option = this.transactionStatusOptions.find((item) => item.value === value)
-      return option ? option.label : value
+      return this.transactionStatusOptions.find((o) => o.value === value)?.label || value
     },
 
     formatCurrency(value) {
-      return Number(value).toLocaleString('pt-BR', {
-        style: 'currency',
-        currency: 'BRL',
-      })
+      return Number(value).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
     },
 
     formatDate(value) {
-      if (!value) {
-        return '—'
-      }
-
-      return new Date(value).toLocaleString('pt-BR')
-    },
-
-    cancelarEdicao() {
-      this.limparForm()
-    },
-
-    limparForm() {
-      this.editingId = null
-      this.form = {
-        order: null,
-        payment_method: '',
-        transaction_status: '',
-        charged_amount: null,
-      }
+      return value ? new Date(value).toLocaleString('pt-BR') : '—'
     },
   },
 }

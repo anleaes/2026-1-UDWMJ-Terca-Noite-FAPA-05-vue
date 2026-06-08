@@ -494,3 +494,46 @@ body {
   margin: 8px 0 0;
   font-size: 14px;
 }
+
+// ── Base CRUD page ───────────────────────────────────────────────
+
+.cinema-crud-page {
+  .cinema-crud-card {
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
+  }
+
+  .cinema-crud-card__title {
+    color: var(--cinema-gold);
+  }
+
+  .cinema-crud-table {
+    .q-table__top,
+    .q-table__bottom {
+      display: none;
+    }
+  }
+
+  .cinema-crud-row--clickable {
+    cursor: pointer;
+  }
+
+  .cinema-crud-row--active td {
+    background: rgba(212, 168, 67, 0.15) !important;
+  }
+
+  .cinema-crud-row--clickable:hover td {
+    background: rgba(255, 255, 255, 0.06) !important;
+  }
+
+  .cinema-crud-table__actions {
+    width: 56px;
+  }
+
+  .cinema-form-dialog {
+    background: var(--cinema-surface);
+    border: 1px solid var(--cinema-border);
+    border-radius: 12px;
+  }
+}
