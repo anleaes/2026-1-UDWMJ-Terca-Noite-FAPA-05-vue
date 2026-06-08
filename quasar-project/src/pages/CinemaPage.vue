@@ -1,84 +1,55 @@
 <template>
-  <q-page class="q-pa-md">
-    <div class="row q-col-gutter-md">
-      <div class="col-12 col-md-5">
-        <q-card bordered>
-          <q-card-section class="row items-center justify-between">
-            <span class="text-h6">Cinemas</span>
-            <q-btn color="primary" icon="add" label="Novo" @click="novoCinema" />
-          </q-card-section>
-          <q-separator />
-          <q-inner-loading :showing="carregando" />
-          <q-list v-if="cinemas.length" separator>
-            <q-item
-              v-for="item in cinemas"
-              :key="item.id"
-              clickable
-              v-ripple
-              :active="cinemaSelecionado.id === item.id"
-              active-class="bg-blue-1"
-              @click="selecionarCinema(item)"
-            >
-              <q-item-section>
-                <q-item-label>{{ item.name }}</q-item-label>
-                <q-item-label caption>{{ item.address }}</q-item-label>
-              </q-item-section>
-              <q-item-section side>
-                <q-btn
-                  flat
-                  round
-                  icon="delete"
-                  color="negative"
-                  @click.stop="excluirCinema(item.id)"
-                />
-              </q-item-section>
-            </q-item>
-          </q-list>
-          <q-card-section v-else class="text-grey-7 text-center">
-            Nenhum cinema cadastrado
-          </q-card-section>
-        </q-card>
-      </div>
+  <BaseCrudPage
+    v-model:show-form="showForm"
+    title="Cinemas"
+    back-to="/"
+    :rows="cinemas"
+    :columns="columns"
+    :loading="carregando"
+    :selected-id="editingId"
+    :form-title="editingId ? 'Editar cinema' : 'Novo cinema'"
+    form-max-width="720px"
+    empty-message="Nenhum cinema cadastrado."
+    @novo="abrirNovo"
+    @row-click="editar"
+    @delete="excluir"
+    @cancel-form="fecharForm"
+  >
+    <template #form>
+      <q-form @submit.prevent="salvar" class="q-gutter-md">
+        <q-input v-model="form.name" label="Nome" outlined required />
+        <q-input v-model="form.address" label="Endereço" outlined required />
+        <q-input v-model="form.phone" label="Telefone" outlined required />
+        <q-input v-model="form.cnpj" label="CNPJ" outlined required />
 
-      <div class="col-12 col-md-7">
-        <CinemaForm
-          v-if="exibirFormulario"
-          :key="cinemaSelecionado.id ?? 'novo'"
-          :cinema="cinemaSelecionado"
-          :titulo="tituloFormulario"
-          @cancelar="cancelar"
-          @salvar="salvar"
-        />
-
-        <q-card v-if="modoEdicao && cinemaSelecionado.id" bordered class="q-mt-md">
-          <q-card-section class="row items-center justify-between">
-            <div>
-              <div class="text-h6">Salas</div>
-              <div class="text-caption text-grey-7">
-                {{ cinemaSelecionado.name }}
-              </div>
-            </div>
+        <template v-if="editingId">
+          <q-separator class="q-my-md" />
+          <div class="row items-center justify-between q-mb-sm">
+            <div class="text-subtitle1 text-weight-medium">Salas</div>
             <q-btn
               color="primary"
               icon="add"
               label="Nova sala"
+              dense
+              unelevated
               :disable="!!salaSelecionada"
               @click="novaSala"
             />
-          </q-card-section>
-
-          <q-separator />
+          </div>
 
           <q-inner-loading :showing="carregandoSalas" />
 
           <q-table
             v-if="salas.length"
             flat
+            bordered
             :rows="salas"
             :columns="colunasSalas"
             row-key="id"
             hide-pagination
             :pagination="{ rowsPerPage: 0 }"
+            class="cinema-crud-table q-mb-md"
+            @row-click="(_evt, row) => editarSala(row)"
           >
             <template #body-cell-accessibility="props">
               <q-td :props="props">
@@ -88,32 +59,16 @@
                 />
               </q-td>
             </template>
-
             <template #body-cell-actions="props">
-              <q-td :props="props">
-                <q-btn
-                  flat
-                  round
-                  dense
-                  icon="edit"
-                  color="primary"
-                  @click="editarSala(props.row)"
-                />
-                <q-btn
-                  flat
-                  round
-                  dense
-                  icon="delete"
-                  color="negative"
-                  @click="excluirSala(props.row.id)"
-                />
+              <q-td :props="props" @click.stop>
+                <q-btn flat round dense icon="delete" color="negative" @click="excluirSala(props.row.id)" />
               </q-td>
             </template>
           </q-table>
 
-          <q-card-section v-else-if="!carregandoSalas" class="text-grey-7 text-center">
-            Nenhuma sala cadastrada para este cinema
-          </q-card-section>
+          <p v-else-if="!carregandoSalas" class="text-grey-7 text-center q-mb-md">
+            Nenhuma sala cadastrada
+          </p>
 
           <SalaForm
             v-if="salaSelecionada"
@@ -123,15 +78,19 @@
             @cancelar="cancelarSala"
             @salvar="salvarSala"
           />
-        </q-card>
-      </div>
-    </div>
-  </q-page>
+        </template>
+
+        <div class="row q-gutter-sm justify-end q-mt-md">
+          <q-btn flat label="Cancelar" @click="fecharForm" />
+          <q-btn type="submit" color="primary" unelevated :label="editingId ? 'Atualizar' : 'Salvar'" />
+        </div>
+      </q-form>
+    </template>
+  </BaseCrudPage>
 </template>
 
 <script>
-import { useQuasar } from 'quasar'
-import CinemaForm from 'components/CinemaForm.vue'
+import BaseCrudPage from 'components/BaseCrudPage.vue'
 import SalaForm from 'components/SalaForm.vue'
 import {
   getAllCinemasFromRest,
@@ -146,8 +105,7 @@ import {
   deleteSala,
 } from 'src/services/salaService'
 
-const cinemaVazio = () => ({
-  id: null,
+const formVazio = () => ({
   name: '',
   address: '',
   phone: '',
@@ -164,211 +122,184 @@ const salaVazia = () => ({
 
 export default {
   name: 'CinemaPage',
-  components: { CinemaForm, SalaForm },
-  setup() {
-    const $q = useQuasar()
-    return { $q }
-  },
+
+  components: { BaseCrudPage, SalaForm },
+
   data() {
     return {
       cinemas: [],
       salas: [],
-      cinemaSelecionado: cinemaVazio(),
+      showForm: false,
+      editingId: null,
+      form: formVazio(),
       salaSelecionada: null,
-      exibirFormulario: false,
-      modoEdicao: false,
       carregando: false,
       carregandoSalas: false,
+      columns: [
+        { name: 'id', label: 'ID', field: 'id', align: 'left' },
+        { name: 'name', label: 'Nome', field: 'name', align: 'left' },
+        { name: 'address', label: 'Endereço', field: 'address', align: 'left' },
+        { name: 'phone', label: 'Telefone', field: 'phone', align: 'left' },
+        { name: 'cnpj', label: 'CNPJ', field: 'cnpj', align: 'left' },
+      ],
       colunasSalas: [
         { name: 'id', label: 'ID', field: 'id', align: 'left' },
         { name: 'rows', label: 'Fileiras', field: 'rows', align: 'center' },
         { name: 'columns', label: 'Colunas', field: 'columns', align: 'center' },
         { name: 'projection_type', label: 'Projeção', field: 'projection_type', align: 'left' },
         { name: 'accessibility', label: 'Acessível', field: 'accessibility', align: 'center' },
-        { name: 'seat_count', label: 'Assentos', field: 'seat_count', align: 'center' },
         { name: 'actions', label: '', field: 'actions', align: 'right' },
       ],
     }
   },
-  computed: {
-    tituloFormulario() {
-      return this.modoEdicao ? 'Editar Cinema' : 'Novo Cinema'
-    },
-  },
+
   mounted() {
     this.carregarCinemas()
   },
+
   methods: {
     carregarCinemas() {
       this.carregando = true
-
       getAllCinemasFromRest(true)
-        .then((data) => {
-          this.cinemas = [...data]
-        })
+        .then((data) => { this.cinemas = [...data] })
         .catch((error) => {
           console.error(error)
-          this.$q.notify({
-            type: 'negative',
-            message: error.message || 'Erro ao carregar cinemas',
-          })
+          this.$q.notify({ type: 'negative', message: error.message || 'Erro ao carregar cinemas' })
         })
-        .finally(() => {
-          this.carregando = false
-        })
+        .finally(() => { this.carregando = false })
     },
+
     carregarSalas() {
-      if (!this.cinemaSelecionado.id) {
+      if (!this.editingId) {
         this.salas = []
         return
       }
 
       this.carregandoSalas = true
-
-      getSalasByCinemaFromRest(this.cinemaSelecionado.id, true)
-        .then((data) => {
-          this.salas = [...data]
-        })
+      getSalasByCinemaFromRest(this.editingId, true)
+        .then((data) => { this.salas = [...data] })
         .catch((error) => {
           console.error(error)
-          this.$q.notify({
-            type: 'negative',
-            message: error.message || 'Erro ao carregar salas',
-          })
+          this.$q.notify({ type: 'negative', message: error.message || 'Erro ao carregar salas' })
         })
-        .finally(() => {
-          this.carregandoSalas = false
-        })
+        .finally(() => { this.carregandoSalas = false })
     },
-    novoCinema() {
-      this.cinemaSelecionado = cinemaVazio()
-      this.modoEdicao = false
-      this.exibirFormulario = true
+
+    abrirNovo() {
+      this.editingId = null
+      this.form = formVazio()
       this.salas = []
       this.salaSelecionada = null
+      this.showForm = true
     },
-    selecionarCinema(cinema) {
-      this.cinemaSelecionado = { ...cinema }
-      this.modoEdicao = true
-      this.exibirFormulario = true
-      this.salaSelecionada = null
-      this.carregarSalas()
-    },
-    cancelar() {
-      this.exibirFormulario = false
-      this.cinemaSelecionado = cinemaVazio()
-      this.salas = []
-      this.salaSelecionada = null
-    },
-    salvar(cinema) {
-      const payload = {
+
+    editar(cinema) {
+      this.editingId = cinema.id
+      this.form = {
         name: cinema.name,
         address: cinema.address,
         phone: cinema.phone,
         cnpj: cinema.cnpj,
       }
+      this.salaSelecionada = null
+      this.showForm = true
+      this.carregarSalas()
+    },
 
-      const eraEdicao = this.modoEdicao
-      const request = eraEdicao
-        ? updateCinema(cinema.id, payload)
+    fecharForm() {
+      this.showForm = false
+      this.editingId = null
+      this.form = formVazio()
+      this.salas = []
+      this.salaSelecionada = null
+    },
+
+    salvar() {
+      const payload = { ...this.form }
+      const request = this.editingId
+        ? updateCinema(this.editingId, payload)
         : createCinema(payload)
 
       request
         .then((salvo) => {
-          this.cinemaSelecionado = { ...salvo }
-          if (!eraEdicao) {
-            this.modoEdicao = true
-          }
           this.$q.notify({
             type: 'positive',
-            message: eraEdicao ? 'Cinema atualizado com sucesso' : 'Cinema cadastrado com sucesso',
+            message: this.editingId ? 'Cinema atualizado!' : 'Cinema cadastrado!',
           })
+          if (!this.editingId) {
+            this.editingId = salvo.id
+            this.carregarSalas()
+          }
           return getAllCinemasFromRest(true)
         })
         .then((data) => {
-          if (data) {
-            this.cinemas = [...data]
-          }
-          this.carregarSalas()
+          if (data) this.cinemas = [...data]
         })
         .catch((error) => {
           console.error(error)
-          this.$q.notify({
-            type: 'negative',
-            message: error.message || 'Erro ao salvar cinema',
-          })
+          this.$q.notify({ type: 'negative', message: error.message || 'Erro ao salvar cinema' })
         })
     },
-    excluirCinema(id) {
+
+    excluir(cinema) {
       this.$q.dialog({
         title: 'Excluir cinema',
         message: 'Deseja realmente excluir este cinema?',
         cancel: true,
         persistent: true,
       }).onOk(() => {
-        deleteCinema(id)
+        deleteCinema(cinema.id)
           .then(() => {
-            this.$q.notify({ type: 'positive', message: 'Cinema excluído com sucesso' })
-
-            if (this.cinemaSelecionado.id === id) {
-              this.cancelar()
-            }
-
+            this.$q.notify({ type: 'positive', message: 'Cinema excluído!' })
+            if (this.editingId === cinema.id) this.fecharForm()
             return getAllCinemasFromRest(true)
           })
-          .then((data) => {
-            if (data) {
-              this.cinemas = [...data]
-            }
-          })
+          .then((data) => { if (data) this.cinemas = [...data] })
           .catch((error) => {
             console.error(error)
-            this.$q.notify({
-              type: 'negative',
-              message: error.message || 'Erro ao excluir cinema',
-            })
+            this.$q.notify({ type: 'negative', message: error.message || 'Erro ao excluir cinema' })
           })
       })
     },
+
     novaSala() {
       this.salaSelecionada = salaVazia()
     },
+
     editarSala(sala) {
       this.salaSelecionada = { ...sala }
     },
+
     cancelarSala() {
       this.salaSelecionada = null
     },
+
     salvarSala(sala) {
       const payload = {
         rows: sala.rows,
         columns: sala.columns,
         projection_type: sala.projection_type,
         accessibility: sala.accessibility,
-        cinema: this.cinemaSelecionado.id,
+        cinema: this.editingId,
       }
 
-      const request = sala.id
-        ? updateSala(sala.id, payload)
-        : createSala(payload)
+      const request = sala.id ? updateSala(sala.id, payload) : createSala(payload)
 
       request
         .then(() => {
           this.$q.notify({
             type: 'positive',
-            message: sala.id ? 'Sala atualizada com sucesso' : 'Sala cadastrada com sucesso',
+            message: sala.id ? 'Sala atualizada!' : 'Sala cadastrada!',
           })
           this.salaSelecionada = null
           this.carregarSalas()
         })
         .catch((error) => {
           console.error(error)
-          this.$q.notify({
-            type: 'negative',
-            message: error.message || 'Erro ao salvar sala',
-          })
+          this.$q.notify({ type: 'negative', message: error.message || 'Erro ao salvar sala' })
         })
     },
+
     excluirSala(id) {
       this.$q.dialog({
         title: 'Excluir sala',
@@ -378,20 +309,13 @@ export default {
       }).onOk(() => {
         deleteSala(id)
           .then(() => {
-            this.$q.notify({ type: 'positive', message: 'Sala excluída com sucesso' })
-
-            if (this.salaSelecionada?.id === id) {
-              this.salaSelecionada = null
-            }
-
+            this.$q.notify({ type: 'positive', message: 'Sala excluída!' })
+            if (this.salaSelecionada?.id === id) this.salaSelecionada = null
             this.carregarSalas()
           })
           .catch((error) => {
             console.error(error)
-            this.$q.notify({
-              type: 'negative',
-              message: error.message || 'Erro ao excluir sala',
-            })
+            this.$q.notify({ type: 'negative', message: error.message || 'Erro ao excluir sala' })
           })
       })
     },

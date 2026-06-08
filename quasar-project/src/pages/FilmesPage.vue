@@ -1,114 +1,80 @@
 <template>
-  <q-page class="q-pa-md">
-    <q-btn flat icon="arrow_back" label="Voltar" to="/" class="q-mb-md" />
+  <BaseCrudPage
+    v-model:show-form="showForm"
+    title="Filmes"
+    back-to="/"
+    :rows="filmes"
+    :columns="columns"
+    :loading="loading"
+    :selected-id="editingId"
+    :form-title="editingId ? 'Editar filme' : 'Novo filme'"
+    form-max-width="640px"
+    empty-message="Nenhum filme cadastrado."
+    @novo="abrirNovo"
+    @row-click="editar"
+    @delete="excluir"
+    @cancel-form="fecharForm"
+  >
+    <template #body-cell-poster="props">
+      <q-td :props="props">
+        <q-img
+          v-if="getPosterUrl(props.row.poster)"
+          :src="getPosterUrl(props.row.poster)"
+          alt="Poster"
+          style="width: 48px; height: 72px; border-radius: 4px"
+        />
+        <span v-else class="text-grey-6">-</span>
+      </q-td>
+    </template>
 
-    <h1 class="text-h4 q-mb-md">Filmes</h1>
+    <template #body-cell-genres="props">
+      <q-td :props="props">
+        {{ formatGenres(props.row.genres) }}
+      </q-td>
+    </template>
 
-    <div class="row q-col-gutter-lg">
-      <div class="col-12 col-md-5 col-lg-4">
-        <h2 class="text-h6 q-mb-md">{{ editingId ? 'Editar cadastro' : 'Novo cadastro' }}</h2>
-        <q-form @submit.prevent="salvar" class="q-gutter-md">
-          <q-input v-model="form.title" label="Título" outlined required />
-          <q-input
-            v-model="form.synopsis"
-            label="Sinopse"
-            type="textarea"
-            outlined
-            required
-            autogrow
-          />
-          <q-input
-            v-model.number="form.duration_minutes"
-            label="Duração (minutos)"
-            type="number"
-            outlined
-            required
-            min="1"
-          />
-          <q-input
-            v-model.number="form.age_rating"
-            label="Classificação etária"
-            type="number"
-            outlined
-            required
-            min="0"
-            max="18"
-          />
-          <q-select
-            v-model="form.genres"
-            :options="genreOptions"
-            label="Gêneros"
-            outlined
-            multiple
-            emit-value
-            map-options
-            use-chips
-          />
-          <q-file
-            v-model="posterFile"
-            label="Poster do filme"
-            outlined
-            accept="image/*"
-            clearable
-            @update:model-value="onPosterChange"
-          >
-            <template #prepend>
-              <q-icon name="image" />
-            </template>
-          </q-file>
-          <div v-if="posterPreview" class="q-mt-sm">
-            <q-img
-              :src="posterPreview"
-              alt="Pré-visualização do poster"
-              style="max-width: 200px; border-radius: 4px"
-            />
-          </div>
-          <div class="row q-gutter-sm">
-            <q-btn type="submit" color="primary" :label="editingId ? 'Atualizar' : 'Salvar'" :loading="loading" />
-            <q-btn v-if="editingId" flat label="Cancelar" @click="cancelarEdicao" />
-          </div>
-        </q-form>
-      </div>
-
-      <div class="col-12 col-md-7 col-lg-8">
-        <h2 class="text-h6 q-mb-md">Cadastrados</h2>
-        <q-table
-          :rows="filmes"
-          :columns="columns"
-          row-key="id"
-          :loading="loading"
-          flat
-          bordered
+    <template #form>
+      <q-form @submit.prevent="salvar" class="q-gutter-md">
+        <q-input v-model="form.title" label="Título" outlined required />
+        <q-input v-model="form.synopsis" label="Sinopse" type="textarea" outlined required autogrow />
+        <q-input v-model.number="form.duration_minutes" label="Duração (minutos)" type="number" outlined required min="1" />
+        <q-input v-model.number="form.age_rating" label="Classificação etária" type="number" outlined required min="0" max="18" />
+        <q-select
+          v-model="form.genres"
+          :options="genreOptions"
+          label="Gêneros"
+          outlined
+          multiple
+          emit-value
+          map-options
+          use-chips
+        />
+        <q-file
+          v-model="posterFile"
+          label="Poster do filme"
+          outlined
+          accept="image/*"
+          clearable
+          @update:model-value="onPosterChange"
         >
-          <template #body-cell-poster="props">
-            <q-td :props="props">
-              <q-img
-                v-if="getPosterUrl(props.row.poster)"
-                :src="getPosterUrl(props.row.poster)"
-                alt="Poster"
-                style="width: 48px; height: 72px; border-radius: 4px"
-              />
-              <span v-else class="text-grey-6">-</span>
-            </q-td>
+          <template #prepend>
+            <q-icon name="image" />
           </template>
-          <template #body-cell-genres="props">
-            <q-td :props="props">
-              {{ formatGenres(props.row.genres) }}
-            </q-td>
-          </template>
-          <template #body-cell-actions="props">
-            <q-td :props="props">
-              <q-btn flat round dense icon="edit" color="primary" @click="editar(props.row)" />
-              <q-btn flat round dense icon="delete" color="negative" @click="excluir(props.row)" />
-            </q-td>
-          </template>
-        </q-table>
-      </div>
-    </div>
-  </q-page>
+        </q-file>
+        <div v-if="posterPreview" class="q-mt-sm">
+          <q-img :src="posterPreview" alt="Pré-visualização" style="max-width: 200px; border-radius: 4px" />
+        </div>
+        <div class="row q-gutter-sm justify-end">
+          <q-btn flat label="Cancelar" @click="fecharForm" />
+          <q-btn type="submit" color="primary" unelevated :label="editingId ? 'Atualizar' : 'Salvar'" :loading="loading" />
+        </div>
+      </q-form>
+    </template>
+  </BaseCrudPage>
 </template>
 
 <script>
+import BaseCrudPage from 'components/BaseCrudPage.vue'
 import {
   getAllFilmesFromRest,
   createFilme,
@@ -118,34 +84,37 @@ import {
 } from 'src/services/filmeService'
 import { getAllGenresFromRest } from 'src/services/generoService'
 
+const formVazio = () => ({
+  title: '',
+  synopsis: '',
+  duration_minutes: null,
+  age_rating: null,
+  genres: [],
+})
+
 export default {
   name: 'FilmesPage',
+
+  components: { BaseCrudPage },
 
   data() {
     return {
       loading: false,
+      showForm: false,
       editingId: null,
       filmes: [],
       genreOptions: [],
       genreMap: {},
       posterFile: null,
       posterPreview: null,
-      form: {
-        title: '',
-        synopsis: '',
-        duration_minutes: null,
-        age_rating: null,
-        genres: [],
-      },
+      form: formVazio(),
       columns: [
         { name: 'id', label: 'ID', field: 'id', align: 'left' },
         { name: 'poster', label: 'Poster', field: 'poster', align: 'center' },
         { name: 'title', label: 'Título', field: 'title', align: 'left' },
-        { name: 'synopsis', label: 'Sinopse', field: 'synopsis', align: 'left', style: 'max-width: 240px; white-space: normal' },
-        { name: 'duration_minutes', label: 'Duração (min)', field: 'duration_minutes', align: 'left' },
+        { name: 'duration_minutes', label: 'Duração', field: 'duration_minutes', align: 'left' },
         { name: 'age_rating', label: 'Classificação', field: 'age_rating', align: 'left' },
         { name: 'genres', label: 'Gêneros', field: 'genres', align: 'left' },
-        { name: 'actions', label: 'Ações', field: 'actions', align: 'center' },
       ],
     }
   },
@@ -161,83 +130,32 @@ export default {
     carregarGenres() {
       getAllGenresFromRest()
         .then((data) => {
-          this.genreOptions = data.map((genre) => ({
-            label: genre.name,
-            value: genre.id,
-          }))
-          this.genreMap = Object.fromEntries(data.map((genre) => [genre.id, genre.name]))
+          this.genreOptions = data.map((g) => ({ label: g.name, value: g.id }))
+          this.genreMap = Object.fromEntries(data.map((g) => [g.id, g.name]))
         })
         .catch((err) => {
           console.error(err)
-          this.$q.notify({
-            type: 'negative',
-            message: 'Não foi possível carregar gêneros',
-          })
+          this.$q.notify({ type: 'negative', message: 'Não foi possível carregar gêneros' })
         })
     },
 
     carregar() {
       this.loading = true
-
       getAllFilmesFromRest(true)
-        .then((data) => {
-          this.filmes = [...data]
-        })
+        .then((data) => { this.filmes = [...data] })
         .catch((err) => {
           console.error(err)
-          this.$q.notify({
-            type: 'negative',
-            message: 'Não foi possível carregar filmes',
-          })
+          this.$q.notify({ type: 'negative', message: 'Não foi possível carregar filmes' })
         })
-        .finally(() => {
-          this.loading = false
-        })
+        .finally(() => { this.loading = false })
     },
 
-    salvar() {
-      this.loading = true
-
-      const payload = {
-        title: this.form.title,
-        synopsis: this.form.synopsis,
-        duration_minutes: this.form.duration_minutes,
-        age_rating: this.form.age_rating,
-        genres: this.form.genres,
-      }
-
-      if (this.posterFile) {
-        payload.poster = this.posterFile
-      }
-
-      const request = this.editingId
-        ? updateFilme(this.editingId, payload)
-        : createFilme(payload)
-
-      request
-        .then(() => {
-          this.$q.notify({
-            type: 'positive',
-            message: this.editingId ? 'Filme atualizado!' : 'Filme cadastrado!',
-          })
-          this.limparForm()
-          return getAllFilmesFromRest(true)
-        })
-        .then((data) => {
-          if (data) {
-            this.filmes = [...data]
-          }
-        })
-        .catch((err) => {
-          console.error(err)
-          this.$q.notify({
-            type: 'negative',
-            message: this.editingId ? 'Erro ao atualizar filme' : 'Erro ao salvar filme',
-          })
-        })
-        .finally(() => {
-          this.loading = false
-        })
+    abrirNovo() {
+      this.editingId = null
+      this.posterFile = null
+      this.posterPreview = null
+      this.form = formVazio()
+      this.showForm = true
     },
 
     editar(filme) {
@@ -251,21 +169,60 @@ export default {
         age_rating: filme.age_rating,
         genres: Array.isArray(filme.genres) ? [...filme.genres] : [],
       }
+      this.showForm = true
+    },
+
+    fecharForm() {
+      if (this.posterPreview?.startsWith('blob:')) {
+        URL.revokeObjectURL(this.posterPreview)
+      }
+      this.showForm = false
+      this.editingId = null
+      this.posterFile = null
+      this.posterPreview = null
+      this.form = formVazio()
     },
 
     onPosterChange(file) {
-      if (this.posterPreview && this.posterPreview.startsWith('blob:')) {
+      if (this.posterPreview?.startsWith('blob:')) {
         URL.revokeObjectURL(this.posterPreview)
       }
-
       if (!file) {
         this.posterPreview = this.editingId
-          ? getPosterUrl(this.filmes.find((item) => item.id === this.editingId)?.poster)
+          ? getPosterUrl(this.filmes.find((f) => f.id === this.editingId)?.poster)
           : null
         return
       }
-
       this.posterPreview = URL.createObjectURL(file)
+    },
+
+    salvar() {
+      this.loading = true
+      const payload = { ...this.form }
+      if (this.posterFile) payload.poster = this.posterFile
+
+      const request = this.editingId
+        ? updateFilme(this.editingId, payload)
+        : createFilme(payload)
+
+      request
+        .then(() => {
+          this.$q.notify({
+            type: 'positive',
+            message: this.editingId ? 'Filme atualizado!' : 'Filme cadastrado!',
+          })
+          this.fecharForm()
+          return getAllFilmesFromRest(true)
+        })
+        .then((data) => { if (data) this.filmes = [...data] })
+        .catch((err) => {
+          console.error(err)
+          this.$q.notify({
+            type: 'negative',
+            message: this.editingId ? 'Erro ao atualizar filme' : 'Erro ao salvar filme',
+          })
+        })
+        .finally(() => { this.loading = false })
     },
 
     excluir(filme) {
@@ -276,65 +233,24 @@ export default {
         persistent: true,
       }).onOk(() => {
         this.loading = true
-
         deleteFilme(filme.id)
           .then(() => {
-            this.$q.notify({
-              type: 'positive',
-              message: 'Filme excluído!',
-            })
-            if (this.editingId === filme.id) {
-              this.limparForm()
-            }
+            this.$q.notify({ type: 'positive', message: 'Filme excluído!' })
+            if (this.editingId === filme.id) this.fecharForm()
             return getAllFilmesFromRest(true)
           })
-          .then((data) => {
-            if (data) {
-              this.filmes = [...data]
-            }
-          })
+          .then((data) => { if (data) this.filmes = [...data] })
           .catch((err) => {
             console.error(err)
-            this.$q.notify({
-              type: 'negative',
-              message: 'Erro ao excluir filme',
-            })
+            this.$q.notify({ type: 'negative', message: 'Erro ao excluir filme' })
           })
-          .finally(() => {
-            this.loading = false
-          })
+          .finally(() => { this.loading = false })
       })
     },
 
     formatGenres(genreIds) {
-      if (!Array.isArray(genreIds) || genreIds.length === 0) {
-        return '-'
-      }
-
-      return genreIds
-        .map((id) => this.genreMap[id] || id)
-        .join(', ')
-    },
-
-    cancelarEdicao() {
-      this.limparForm()
-    },
-
-    limparForm() {
-      if (this.posterPreview && this.posterPreview.startsWith('blob:')) {
-        URL.revokeObjectURL(this.posterPreview)
-      }
-
-      this.editingId = null
-      this.posterFile = null
-      this.posterPreview = null
-      this.form = {
-        title: '',
-        synopsis: '',
-        duration_minutes: null,
-        age_rating: null,
-        genres: [],
-      }
+      if (!Array.isArray(genreIds) || genreIds.length === 0) return '-'
+      return genreIds.map((id) => this.genreMap[id] || id).join(', ')
     },
   },
 }

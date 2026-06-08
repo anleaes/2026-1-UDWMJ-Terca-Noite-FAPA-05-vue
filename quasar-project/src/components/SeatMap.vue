@@ -32,7 +32,7 @@
               type="button"
               class="seat-item"
               :class="seatStateClass(seat.id)"
-              :disabled="isOccupied(seat.id)"
+              :disabled="readonly || isOccupied(seat.id)"
               :aria-label="`Assento ${seat.label || seat.row + seat.number}`"
               :aria-pressed="isSelected(seat.id)"
               @click="onSeatClick(seat)"
@@ -68,6 +68,10 @@ export default {
       default: null,
     },
     loading: {
+      type: Boolean,
+      default: false,
+    },
+    readonly: {
       type: Boolean,
       default: false,
     },
@@ -122,7 +126,7 @@ export default {
     },
 
     onSeatClick(seat) {
-      if (this.isOccupied(seat.id)) {
+      if (this.readonly || this.isOccupied(seat.id)) {
         return
       }
 

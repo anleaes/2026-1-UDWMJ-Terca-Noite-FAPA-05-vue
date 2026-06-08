@@ -1,59 +1,54 @@
 <template>
-  <q-page class="q-pa-md">
-    <q-btn flat icon="arrow_back" label="Voltar" to="/cadastros" class="q-mb-md" />
-
-    <h1 class="text-h4 q-mb-md">Clientes</h1>
-
-    <div class="row q-col-gutter-lg">
-      <div class="col-12 col-md-5 col-lg-4">
-        <h2 class="text-h6 q-mb-md">{{ editingId ? 'Editar cadastro' : 'Novo cadastro' }}</h2>
-        <q-form @submit.prevent="salvar" class="q-gutter-md">
-          <q-input v-model="form.first_name" label="Nome" outlined required />
-          <q-input v-model="form.last_name" label="Sobrenome" outlined required />
-          <q-input v-model="form.address" label="Endereço" outlined required />
-          <q-input v-model="form.phone" label="Telefone" outlined required />
-          <q-input v-model="form.email" label="E-mail" type="email" outlined required />
-          <q-select
-            v-model="form.gender"
-            :options="genderOptions"
-            label="Gênero"
-            outlined
-            emit-value
-            map-options
-            required
+  <BaseCrudPage
+    v-model:show-form="showForm"
+    title="Clientes"
+    back-to="/cadastros"
+    :rows="clients"
+    :columns="columns"
+    :loading="loading"
+    :selected-id="editingId"
+    :form-title="editingId ? 'Editar cliente' : 'Novo cliente'"
+    empty-message="Nenhum cliente cadastrado."
+    @novo="abrirNovo"
+    @row-click="editar"
+    @delete="excluir"
+    @cancel-form="fecharForm"
+  >
+    <template #form>
+      <q-form @submit.prevent="salvar" class="q-gutter-md">
+        <q-input v-model="form.first_name" label="Nome" outlined required />
+        <q-input v-model="form.last_name" label="Sobrenome" outlined required />
+        <q-input v-model="form.address" label="Endereço" outlined required />
+        <q-input v-model="form.phone" label="Telefone" outlined required />
+        <q-input v-model="form.email" label="E-mail" type="email" outlined required />
+        <q-select
+          v-model="form.gender"
+          :options="genderOptions"
+          label="Gênero"
+          outlined
+          emit-value
+          map-options
+          required
+        />
+        <q-input v-model="form.cpf" label="CPF" outlined required maxlength="11" />
+        <q-input v-model="form.date_of_birth" label="Data de nascimento" type="date" outlined required />
+        <div class="row q-gutter-sm justify-end">
+          <q-btn flat label="Cancelar" @click="fecharForm" />
+          <q-btn
+            type="submit"
+            color="primary"
+            unelevated
+            :label="editingId ? 'Atualizar' : 'Salvar'"
+            :loading="loading"
           />
-          <q-input v-model="form.cpf" label="CPF" outlined required maxlength="11" />
-          <q-input v-model="form.date_of_birth" label="Data de nascimento" type="date" outlined required />
-          <div class="row q-gutter-sm">
-            <q-btn type="submit" color="primary" :label="editingId ? 'Atualizar' : 'Salvar'" :loading="loading" />
-            <q-btn v-if="editingId" flat label="Cancelar" @click="cancelarEdicao" />
-          </div>
-        </q-form>
-      </div>
-
-      <div class="col-12 col-md-7 col-lg-8">
-        <h2 class="text-h6 q-mb-md">Cadastrados</h2>
-        <q-table
-          :rows="clients"
-          :columns="columns"
-          row-key="id"
-          :loading="loading"
-          flat
-          bordered
-        >
-          <template #body-cell-actions="props">
-            <q-td :props="props">
-              <q-btn flat round dense icon="edit" color="primary" @click="editar(props.row)" />
-              <q-btn flat round dense icon="delete" color="negative" @click="excluir(props.row)" />
-            </q-td>
-          </template>
-        </q-table>
-      </div>
-    </div>
-  </q-page>
+        </div>
+      </q-form>
+    </template>
+  </BaseCrudPage>
 </template>
 
 <script>
+import BaseCrudPage from 'components/BaseCrudPage.vue'
 import {
   getAllClientsFromRest,
   createClient,
@@ -61,12 +56,26 @@ import {
   deleteClient,
 } from 'src/services/clienteService'
 
+const formVazio = () => ({
+  first_name: '',
+  last_name: '',
+  address: '',
+  phone: '',
+  email: '',
+  gender: '',
+  cpf: '',
+  date_of_birth: '',
+})
+
 export default {
   name: 'ClientePage',
+
+  components: { BaseCrudPage },
 
   data() {
     return {
       loading: false,
+      showForm: false,
       editingId: null,
       clients: [],
       genderOptions: [
@@ -74,27 +83,14 @@ export default {
         { label: 'Feminino', value: 'F' },
         { label: 'Outro', value: 'O' },
       ],
-      form: {
-        first_name: '',
-        last_name: '',
-        address: '',
-        phone: '',
-        email: '',
-        gender: '',
-        cpf: '',
-        date_of_birth: '',
-      },
+      form: formVazio(),
       columns: [
         { name: 'id', label: 'ID', field: 'id', align: 'left' },
         { name: 'first_name', label: 'Nome', field: 'first_name', align: 'left' },
         { name: 'last_name', label: 'Sobrenome', field: 'last_name', align: 'left' },
-        { name: 'address', label: 'Endereço', field: 'address', align: 'left' },
         { name: 'phone', label: 'Telefone', field: 'phone', align: 'left' },
         { name: 'email', label: 'E-mail', field: 'email', align: 'left' },
-        { name: 'gender', label: 'Gênero', field: 'gender', align: 'left' },
         { name: 'cpf', label: 'CPF', field: 'cpf', align: 'left' },
-        { name: 'date_of_birth', label: 'Nascimento', field: 'date_of_birth', align: 'left' },
-        { name: 'actions', label: 'Ações', field: 'actions', align: 'center' },
       ],
     }
   },
@@ -113,14 +109,38 @@ export default {
         })
         .catch((err) => {
           console.error(err)
-          this.$q.notify({
-            type: 'negative',
-            message: 'Não foi possível carregar clientes',
-          })
+          this.$q.notify({ type: 'negative', message: 'Não foi possível carregar clientes' })
         })
         .finally(() => {
           this.loading = false
         })
+    },
+
+    abrirNovo() {
+      this.editingId = null
+      this.form = formVazio()
+      this.showForm = true
+    },
+
+    editar(client) {
+      this.editingId = client.id
+      this.form = {
+        first_name: client.first_name,
+        last_name: client.last_name,
+        address: client.address,
+        phone: client.phone,
+        email: client.email,
+        gender: client.gender,
+        cpf: client.cpf,
+        date_of_birth: client.date_of_birth,
+      }
+      this.showForm = true
+    },
+
+    fecharForm() {
+      this.showForm = false
+      this.editingId = null
+      this.form = formVazio()
     },
 
     salvar() {
@@ -136,13 +156,11 @@ export default {
             type: 'positive',
             message: this.editingId ? 'Cliente atualizado!' : 'Cliente cadastrado!',
           })
-          this.limparForm()
+          this.fecharForm()
           return getAllClientsFromRest(true)
         })
         .then((data) => {
-          if (data) {
-            this.clients = [...data]
-          }
+          if (data) this.clients = [...data]
         })
         .catch((err) => {
           console.error(err)
@@ -156,20 +174,6 @@ export default {
         })
     },
 
-    editar(client) {
-      this.editingId = client.id
-      this.form = {
-        first_name: client.first_name,
-        last_name: client.last_name,
-        address: client.address,
-        phone: client.phone,
-        email: client.email,
-        gender: client.gender,
-        cpf: client.cpf,
-        date_of_birth: client.date_of_birth,
-      }
-    },
-
     excluir(client) {
       this.$q.dialog({
         title: 'Excluir cliente',
@@ -181,49 +185,21 @@ export default {
 
         deleteClient(client.id)
           .then(() => {
-            this.$q.notify({
-              type: 'positive',
-              message: 'Cliente excluído!',
-            })
-            if (this.editingId === client.id) {
-              this.limparForm()
-            }
+            this.$q.notify({ type: 'positive', message: 'Cliente excluído!' })
+            if (this.editingId === client.id) this.fecharForm()
             return getAllClientsFromRest(true)
           })
           .then((data) => {
-            if (data) {
-              this.clients = [...data]
-            }
+            if (data) this.clients = [...data]
           })
           .catch((err) => {
             console.error(err)
-            this.$q.notify({
-              type: 'negative',
-              message: 'Erro ao excluir cliente',
-            })
+            this.$q.notify({ type: 'negative', message: 'Erro ao excluir cliente' })
           })
           .finally(() => {
             this.loading = false
           })
       })
-    },
-
-    cancelarEdicao() {
-      this.limparForm()
-    },
-
-    limparForm() {
-      this.editingId = null
-      this.form = {
-        first_name: '',
-        last_name: '',
-        address: '',
-        phone: '',
-        email: '',
-        gender: '',
-        cpf: '',
-        date_of_birth: '',
-      }
     },
   },
 }

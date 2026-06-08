@@ -1,52 +1,47 @@
 <template>
-  <q-page class="q-pa-md">
-    <q-btn flat icon="arrow_back" label="Voltar" to="/" class="q-mb-md" />
-
-    <h1 class="text-h4 q-mb-md">Gêneros</h1>
-
-    <div class="row q-col-gutter-lg">
-      <div class="col-12 col-md-5 col-lg-4">
-        <h2 class="text-h6 q-mb-md">{{ editingId ? 'Editar gênero' : 'Novo gênero' }}</h2>
-        <q-form @submit.prevent="salvar" class="q-gutter-md">
-          <q-input v-model="form.name" label="Nome" outlined required />
-          <q-input
-            v-model="form.description"
-            label="Descrição"
-            type="textarea"
-            outlined
-            autogrow
-            required
+  <BaseCrudPage
+    v-model:show-form="showForm"
+    title="Gêneros"
+    back-to="/"
+    :rows="genres"
+    :columns="columns"
+    :loading="loading"
+    :selected-id="editingId"
+    :form-title="editingId ? 'Editar gênero' : 'Novo gênero'"
+    empty-message="Nenhum gênero cadastrado."
+    @novo="abrirNovo"
+    @row-click="editar"
+    @delete="excluir"
+    @cancel-form="fecharForm"
+  >
+    <template #form>
+      <q-form @submit.prevent="salvar" class="q-gutter-md">
+        <q-input v-model="form.name" label="Nome" outlined required />
+        <q-input
+          v-model="form.description"
+          label="Descrição"
+          type="textarea"
+          outlined
+          autogrow
+          required
+        />
+        <div class="row q-gutter-sm justify-end">
+          <q-btn flat label="Cancelar" @click="fecharForm" />
+          <q-btn
+            type="submit"
+            color="primary"
+            unelevated
+            :label="editingId ? 'Atualizar' : 'Salvar'"
+            :loading="loading"
           />
-          <div class="row q-gutter-sm">
-            <q-btn type="submit" color="primary" :label="editingId ? 'Atualizar' : 'Salvar'" :loading="loading" />
-            <q-btn v-if="editingId" flat label="Cancelar" @click="cancelarEdicao" />
-          </div>
-        </q-form>
-      </div>
-
-      <div class="col-12 col-md-7 col-lg-8">
-        <h2 class="text-h6 q-mb-md">Cadastrados</h2>
-        <q-table
-          :rows="genres"
-          :columns="columns"
-          row-key="id"
-          :loading="loading"
-          flat
-          bordered
-        >
-          <template #body-cell-actions="props">
-            <q-td :props="props">
-              <q-btn flat round dense icon="edit" color="primary" @click="editar(props.row)" />
-              <q-btn flat round dense icon="delete" color="negative" @click="excluir(props.row)" />
-            </q-td>
-          </template>
-        </q-table>
-      </div>
-    </div>
-  </q-page>
+        </div>
+      </q-form>
+    </template>
+  </BaseCrudPage>
 </template>
 
 <script>
+import BaseCrudPage from 'components/BaseCrudPage.vue'
 import {
   getAllGenresFromRest,
   createGenre,
@@ -54,23 +49,27 @@ import {
   deleteGenre,
 } from 'src/services/generoService'
 
+const formVazio = () => ({
+  name: '',
+  description: '',
+})
+
 export default {
   name: 'GeneroPage',
+
+  components: { BaseCrudPage },
 
   data() {
     return {
       loading: false,
+      showForm: false,
       editingId: null,
       genres: [],
-      form: {
-        name: '',
-        description: '',
-      },
+      form: formVazio(),
       columns: [
         { name: 'id', label: 'ID', field: 'id', align: 'left' },
         { name: 'name', label: 'Nome', field: 'name', align: 'left' },
         { name: 'description', label: 'Descrição', field: 'description', align: 'left' },
-        { name: 'actions', label: 'Ações', field: 'actions', align: 'center' },
       ],
     }
   },
@@ -89,14 +88,32 @@ export default {
         })
         .catch((err) => {
           console.error(err)
-          this.$q.notify({
-            type: 'negative',
-            message: 'Não foi possível carregar gêneros',
-          })
+          this.$q.notify({ type: 'negative', message: 'Não foi possível carregar gêneros' })
         })
         .finally(() => {
           this.loading = false
         })
+    },
+
+    abrirNovo() {
+      this.editingId = null
+      this.form = formVazio()
+      this.showForm = true
+    },
+
+    editar(genre) {
+      this.editingId = genre.id
+      this.form = {
+        name: genre.name,
+        description: genre.description,
+      }
+      this.showForm = true
+    },
+
+    fecharForm() {
+      this.showForm = false
+      this.editingId = null
+      this.form = formVazio()
     },
 
     salvar() {
@@ -112,13 +129,11 @@ export default {
             type: 'positive',
             message: this.editingId ? 'Gênero atualizado!' : 'Gênero cadastrado!',
           })
-          this.limparForm()
+          this.fecharForm()
           return getAllGenresFromRest(true)
         })
         .then((data) => {
-          if (data) {
-            this.genres = [...data]
-          }
+          if (data) this.genres = [...data]
         })
         .catch((err) => {
           console.error(err)
@@ -132,14 +147,6 @@ export default {
         })
     },
 
-    editar(genre) {
-      this.editingId = genre.id
-      this.form = {
-        name: genre.name,
-        description: genre.description,
-      }
-    },
-
     excluir(genre) {
       this.$q.dialog({
         title: 'Excluir gênero',
@@ -151,43 +158,21 @@ export default {
 
         deleteGenre(genre.id)
           .then(() => {
-            this.$q.notify({
-              type: 'positive',
-              message: 'Gênero excluído!',
-            })
-            if (this.editingId === genre.id) {
-              this.limparForm()
-            }
+            this.$q.notify({ type: 'positive', message: 'Gênero excluído!' })
+            if (this.editingId === genre.id) this.fecharForm()
             return getAllGenresFromRest(true)
           })
           .then((data) => {
-            if (data) {
-              this.genres = [...data]
-            }
+            if (data) this.genres = [...data]
           })
           .catch((err) => {
             console.error(err)
-            this.$q.notify({
-              type: 'negative',
-              message: 'Erro ao excluir gênero',
-            })
+            this.$q.notify({ type: 'negative', message: 'Erro ao excluir gênero' })
           })
           .finally(() => {
             this.loading = false
           })
       })
-    },
-
-    cancelarEdicao() {
-      this.limparForm()
-    },
-
-    limparForm() {
-      this.editingId = null
-      this.form = {
-        name: '',
-        description: '',
-      }
     },
   },
 }

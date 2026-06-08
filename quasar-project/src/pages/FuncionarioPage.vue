@@ -1,52 +1,47 @@
 <template>
-  <q-page class="q-pa-md">
-    <q-btn flat icon="arrow_back" label="Voltar" to="/cadastros" class="q-mb-md" />
+  <BaseCrudPage
+    v-model:show-form="showForm"
+    title="Funcionários"
+    back-to="/cadastros"
+    :rows="employees"
+    :columns="columns"
+    :loading="loading"
+    :selected-id="editingId"
+    :form-title="editingId ? 'Editar funcionário' : 'Novo funcionário'"
+    empty-message="Nenhum funcionário cadastrado."
+    @novo="abrirNovo"
+    @row-click="editar"
+    @delete="excluir"
+    @cancel-form="fecharForm"
+  >
+    <template #body-cell-active="props">
+      <q-td :props="props">
+        <q-badge :color="props.row.active ? 'positive' : 'grey-6'" :label="props.row.active ? 'Sim' : 'Não'" />
+      </q-td>
+    </template>
 
-    <h1 class="text-h4 q-mb-md">Funcionários</h1>
-
-    <div class="row q-col-gutter-lg">
-      <div class="col-12 col-md-5 col-lg-4">
-        <h2 class="text-h6 q-mb-md">{{ editingId ? 'Editar cadastro' : 'Novo cadastro' }}</h2>
-        <q-form @submit.prevent="salvar" class="q-gutter-md">
-          <q-input v-model="form.first_name" label="Nome" outlined required />
-          <q-input v-model="form.last_name" label="Sobrenome" outlined required />
-          <q-input v-model="form.address" label="Endereço" outlined required />
-          <q-input v-model="form.phone" label="Telefone" outlined required />
-          <q-input v-model="form.email" label="E-mail" type="email" outlined required />
-          <q-input v-model="form.role" label="Cargo" outlined required />
-          <q-input v-model="form.salary" label="Salário" type="number" outlined required />
-          <q-input v-model="form.hire_date" label="Data de contratação" type="date" outlined required />
-          <q-toggle v-model="form.active" label="Ativo" />
-          <div class="row q-gutter-sm">
-            <q-btn type="submit" color="primary" :label="editingId ? 'Atualizar' : 'Salvar'" :loading="loading" />
-            <q-btn v-if="editingId" flat label="Cancelar" @click="cancelarEdicao" />
-          </div>
-        </q-form>
-      </div>
-
-      <div class="col-12 col-md-7 col-lg-8">
-        <h2 class="text-h6 q-mb-md">Cadastrados</h2>
-        <q-table
-          :rows="employees"
-          :columns="columns"
-          row-key="id"
-          :loading="loading"
-          flat
-          bordered
-        >
-          <template #body-cell-actions="props">
-            <q-td :props="props">
-              <q-btn flat round dense icon="edit" color="primary" @click="editar(props.row)" />
-              <q-btn flat round dense icon="delete" color="negative" @click="excluir(props.row)" />
-            </q-td>
-          </template>
-        </q-table>
-      </div>
-    </div>
-  </q-page>
+    <template #form>
+      <q-form @submit.prevent="salvar" class="q-gutter-md">
+        <q-input v-model="form.first_name" label="Nome" outlined required />
+        <q-input v-model="form.last_name" label="Sobrenome" outlined required />
+        <q-input v-model="form.address" label="Endereço" outlined required />
+        <q-input v-model="form.phone" label="Telefone" outlined required />
+        <q-input v-model="form.email" label="E-mail" type="email" outlined required />
+        <q-input v-model="form.role" label="Cargo" outlined required />
+        <q-input v-model="form.salary" label="Salário" type="number" outlined required />
+        <q-input v-model="form.hire_date" label="Data de contratação" type="date" outlined required />
+        <q-toggle v-model="form.active" label="Ativo" />
+        <div class="row q-gutter-sm justify-end">
+          <q-btn flat label="Cancelar" @click="fecharForm" />
+          <q-btn type="submit" color="primary" unelevated :label="editingId ? 'Atualizar' : 'Salvar'" :loading="loading" />
+        </div>
+      </q-form>
+    </template>
+  </BaseCrudPage>
 </template>
 
 <script>
+import BaseCrudPage from 'components/BaseCrudPage.vue'
 import {
   getAllEmployeesFromRest,
   createEmployee,
@@ -54,38 +49,38 @@ import {
   deleteEmployee,
 } from 'src/services/funcionarioService'
 
+const formVazio = () => ({
+  first_name: '',
+  last_name: '',
+  address: '',
+  phone: '',
+  email: '',
+  role: '',
+  salary: '',
+  hire_date: '',
+  active: true,
+})
+
 export default {
   name: 'FuncionarioPage',
+
+  components: { BaseCrudPage },
 
   data() {
     return {
       loading: false,
+      showForm: false,
       editingId: null,
       employees: [],
-      form: {
-        first_name: '',
-        last_name: '',
-        address: '',
-        phone: '',
-        email: '',
-        role: '',
-        salary: '',
-        hire_date: '',
-        active: true,
-      },
-        columns: [
+      form: formVazio(),
+      columns: [
         { name: 'id', label: 'ID', field: 'id', align: 'left' },
         { name: 'first_name', label: 'Nome', field: 'first_name', align: 'left' },
         { name: 'last_name', label: 'Sobrenome', field: 'last_name', align: 'left' },
-        { name: 'address', label: 'Endereço', field: 'address', align: 'left' },
-        { name: 'phone', label: 'Telefone', field: 'phone', align: 'left' },
-        { name: 'email', label: 'E-mail', field: 'email', align: 'left' },
         { name: 'role', label: 'Cargo', field: 'role', align: 'left' },
         { name: 'salary', label: 'Salário', field: 'salary', align: 'left' },
-        { name: 'hire_date', label: 'Contratação', field: 'hire_date', align: 'left' },
-        { name: 'active', label: 'Ativo', field: 'active', align: 'left' },
-        { name: 'actions', label: 'Ações', field: 'actions', align: 'center' },
-        ],
+        { name: 'active', label: 'Ativo', field: 'active', align: 'center' },
+      ],
     }
   },
 
@@ -103,52 +98,17 @@ export default {
         })
         .catch((err) => {
           console.error(err)
-          this.$q.notify({
-            type: 'negative',
-            message: 'Não foi possível carregar funcionários',
-          })
+          this.$q.notify({ type: 'negative', message: 'Não foi possível carregar funcionários' })
         })
         .finally(() => {
           this.loading = false
         })
     },
 
-    salvar() {
-      this.loading = true
-
-      const payload = {
-        ...this.form,
-        salary: Number(this.form.salary),
-      }
-
-      const request = this.editingId
-        ? updateEmployee(this.editingId, payload)
-        : createEmployee(payload)
-
-      request
-        .then(() => {
-          this.$q.notify({
-            type: 'positive',
-            message: this.editingId ? 'Funcionário atualizado!' : 'Funcionário cadastrado!',
-          })
-          this.limparForm()
-          return getAllEmployeesFromRest(true)
-        })
-        .then((data) => {
-          if (data) {
-            this.employees = [...data]
-          }
-        })
-        .catch((err) => {
-          console.error(err)
-          this.$q.notify({
-            type: 'negative',
-            message: this.editingId ? 'Erro ao atualizar funcionário' : 'Erro ao salvar funcionário',
-          })
-        })
-        .finally(() => {
-          this.loading = false
-        })
+    abrirNovo() {
+      this.editingId = null
+      this.form = formVazio()
+      this.showForm = true
     },
 
     editar(employee) {
@@ -164,6 +124,45 @@ export default {
         hire_date: employee.hire_date,
         active: employee.active,
       }
+      this.showForm = true
+    },
+
+    fecharForm() {
+      this.showForm = false
+      this.editingId = null
+      this.form = formVazio()
+    },
+
+    salvar() {
+      this.loading = true
+
+      const payload = { ...this.form, salary: Number(this.form.salary) }
+      const request = this.editingId
+        ? updateEmployee(this.editingId, payload)
+        : createEmployee(payload)
+
+      request
+        .then(() => {
+          this.$q.notify({
+            type: 'positive',
+            message: this.editingId ? 'Funcionário atualizado!' : 'Funcionário cadastrado!',
+          })
+          this.fecharForm()
+          return getAllEmployeesFromRest(true)
+        })
+        .then((data) => {
+          if (data) this.employees = [...data]
+        })
+        .catch((err) => {
+          console.error(err)
+          this.$q.notify({
+            type: 'negative',
+            message: this.editingId ? 'Erro ao atualizar funcionário' : 'Erro ao salvar funcionário',
+          })
+        })
+        .finally(() => {
+          this.loading = false
+        })
     },
 
     excluir(employee) {
@@ -177,50 +176,21 @@ export default {
 
         deleteEmployee(employee.id)
           .then(() => {
-            this.$q.notify({
-              type: 'positive',
-              message: 'Funcionário excluído!',
-            })
-            if (this.editingId === employee.id) {
-              this.limparForm()
-            }
+            this.$q.notify({ type: 'positive', message: 'Funcionário excluído!' })
+            if (this.editingId === employee.id) this.fecharForm()
             return getAllEmployeesFromRest(true)
           })
           .then((data) => {
-            if (data) {
-              this.employees = [...data]
-            }
+            if (data) this.employees = [...data]
           })
           .catch((err) => {
             console.error(err)
-            this.$q.notify({
-              type: 'negative',
-              message: 'Erro ao excluir funcionário',
-            })
+            this.$q.notify({ type: 'negative', message: 'Erro ao excluir funcionário' })
           })
           .finally(() => {
             this.loading = false
           })
       })
-    },
-
-    cancelarEdicao() {
-      this.limparForm()
-    },
-
-    limparForm() {
-      this.editingId = null
-      this.form = {
-        first_name: '',
-        last_name: '',
-        address: '',
-        phone: '',
-        email: '',
-        role: '',
-        salary: '',
-        hire_date: '',
-        active: true,
-      }
     },
   },
 }

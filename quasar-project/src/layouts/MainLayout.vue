@@ -101,7 +101,7 @@ const navSections = [
   {
     title: 'Vendas',
     links: [
-      { label: 'Pedidos', to: '/orders', icon: 'receipt_long' },
+      { label: 'Pedidos', to: '/pedidos', icon: 'receipt_long' },
       { label: 'Ingressos', to: '/ingressos', icon: 'confirmation_number' },
       { label: 'Pagamentos', to: '/pagamentos', icon: 'payment' },
     ],

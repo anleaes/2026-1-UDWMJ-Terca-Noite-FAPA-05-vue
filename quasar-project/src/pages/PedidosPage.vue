@@ -1,15 +1,63 @@
 <template>
-  <q-page class="q-pa-md">
-    <q-btn flat icon="arrow_back" label="Voltar" to="/" class="q-mb-md" />
+  <BaseCrudPage
+    v-model:show-form="showForm"
+    title="Pedidos"
+    back-to="/"
+    :rows="pedidos"
+    :columns="columns"
+    :loading="loading"
+    :selected-id="editingId"
+    :form-title="tituloFormulario"
+    form-max-width="900px"
+    empty-message="Nenhum pedido cadastrado."
+    @novo="abrirNovo"
+    @row-click="editar"
+    @delete="excluir"
+    @cancel-form="limparForm"
+  >
+    <template #body-cell-date_created="props">
+      <q-td :props="props">
+        {{ formatDate(props.row.date_created) }}
+      </q-td>
+    </template>
 
-    <h1 class="text-h4 q-mb-md">Pedidos</h1>
+    <template #body-cell-status="props">
+      <q-td :props="props">
+        {{ formatStatus(props.row.status) }}
+      </q-td>
+    </template>
 
-    <div class="row q-col-gutter-lg">
-      <div class="col-12 col-md-5 col-lg-4">
-        <h2 class="text-h6 q-mb-md">
-          {{ tituloFormulario }}
-        </h2>
+    <template #body-cell-total_price="props">
+      <q-td :props="props">
+        {{ formatCurrency(props.row.total_price) }}
+      </q-td>
+    </template>
 
+    <template #body-cell-cliente_label="props">
+      <q-td :props="props">
+        {{ props.row.cliente_label || '—' }}
+      </q-td>
+    </template>
+
+    <template #body-cell-pagamento_status="props">
+      <q-td :props="props">
+        {{ formatPaymentStatus(props.row.pagamento_status) }}
+      </q-td>
+    </template>
+
+    <template #actions="{ row }">
+      <q-btn
+        v-if="!pedidoEstaFechado(row)"
+        flat
+        round
+        dense
+        icon="delete"
+        color="negative"
+        @click="excluir(row)"
+      />
+    </template>
+
+    <template #form>
         <q-banner
           v-if="pedidoFechado"
           class="bg-blue-1 text-primary q-mb-md"
@@ -170,71 +218,11 @@
               :loading="loading"
               @click="cancelarPedido"
             />
-            <q-btn v-if="editingId || formPreenchido" flat label="Fechar" @click="limparForm" />
+            <q-btn flat label="Fechar" @click="limparForm" />
           </div>
         </q-form>
-      </div>
-
-      <div class="col-12 col-md-7 col-lg-8">
-        <h2 class="text-h6 q-mb-md">Cadastrados</h2>
-        <q-table
-          :rows="pedidos"
-          :columns="columns"
-          row-key="id"
-          :loading="loading"
-          flat
-          bordered
-        >
-          <template #body-cell-date_created="props">
-            <q-td :props="props">
-              {{ formatDate(props.row.date_created) }}
-            </q-td>
-          </template>
-          <template #body-cell-status="props">
-            <q-td :props="props">
-              {{ formatStatus(props.row.status) }}
-            </q-td>
-          </template>
-          <template #body-cell-total_price="props">
-            <q-td :props="props">
-              {{ formatCurrency(props.row.total_price) }}
-            </q-td>
-          </template>
-          <template #body-cell-cliente_label="props">
-            <q-td :props="props">
-              {{ props.row.cliente_label || '—' }}
-            </q-td>
-          </template>
-          <template #body-cell-pagamento_status="props">
-            <q-td :props="props">
-              {{ formatPaymentStatus(props.row.pagamento_status) }}
-            </q-td>
-          </template>
-          <template #body-cell-actions="props">
-            <q-td :props="props">
-              <q-btn
-                flat
-                round
-                dense
-                :icon="pedidoEstaFechado(props.row) ? 'visibility' : 'edit'"
-                color="primary"
-                @click="editar(props.row)"
-              />
-              <q-btn
-                v-if="!pedidoEstaFechado(props.row)"
-                flat
-                round
-                dense
-                icon="delete"
-                color="negative"
-                @click="excluir(props.row)"
-              />
-            </q-td>
-          </template>
-        </q-table>
-      </div>
-    </div>
-  </q-page>
+    </template>
+  </BaseCrudPage>
 </template>
 
 <script>
@@ -260,6 +248,7 @@ import { getAllSessoesFromRest, getSessaoById } from 'src/services/sessaoService
 import { getAllFilmesFromRest } from 'src/services/filmeService'
 import { getAssentosBySalaFromRest } from 'src/services/assentoService'
 import SeatMap from 'components/SeatMap.vue'
+import BaseCrudPage from 'components/BaseCrudPage.vue'
 
 const formVazio = () => ({
   cliente: null,
@@ -274,11 +263,13 @@ export default {
 
   components: {
     SeatMap,
+    BaseCrudPage,
   },
 
   data() {
     return {
       loading: false,
+      showForm: false,
       carregandoAssentos: false,
       editingId: null,
       pedidos: [],
@@ -313,7 +304,6 @@ export default {
         { name: 'total_price', label: 'Total', field: 'total_price', align: 'left' },
         { name: 'cliente_label', label: 'Cliente', field: 'cliente_label', align: 'left' },
         { name: 'pagamento_status', label: 'Pagamento', field: 'pagamento_status', align: 'left' },
-        { name: 'actions', label: 'Ações', field: 'actions', align: 'center' },
       ],
     }
   },
@@ -404,15 +394,6 @@ export default {
       }, 0)
     },
 
-    formPreenchido() {
-      return (
-        this.form.cliente ||
-        this.form.sessao ||
-        this.form.assento ||
-        this.form.payment_method ||
-        this.ingressosPendentes.length > 0
-      )
-    },
   },
 
   mounted() {
@@ -517,6 +498,20 @@ export default {
         })
         .catch((err) => {
           console.error(err)
+
+          if (pedidoCriado?.id) {
+            deletePedido(pedidoCriado.id)
+              .then(() => getAllPedidosFromRest(true))
+              .then((data) => {
+                if (data) {
+                  this.pedidos = [...data]
+                }
+              })
+              .catch((rollbackErr) => {
+                console.error(rollbackErr)
+              })
+          }
+
           this.$q.notify({
             type: 'negative',
             message: err.message || 'Erro ao salvar pedido',
@@ -713,8 +708,20 @@ export default {
       this.excluirIngresso(ingresso)
     },
 
+    abrirNovo() {
+      this.editingId = null
+      this.pedidoAtual = {}
+      this.ingressos = []
+      this.ingressosPendentes = []
+      this.assentosSala = []
+      this.assentosOcupadosIds = []
+      this.form = formVazio()
+      this.showForm = true
+    },
+
     editar(pedido) {
       this.editingId = pedido.id
+      this.showForm = true
       this.ingressosPendentes = []
       this.assentosSala = []
       this.assentosOcupadosIds = []
@@ -918,6 +925,7 @@ export default {
     },
 
     limparForm() {
+      this.showForm = false
       this.editingId = null
       this.pedidoAtual = {}
       this.ingressos = []
