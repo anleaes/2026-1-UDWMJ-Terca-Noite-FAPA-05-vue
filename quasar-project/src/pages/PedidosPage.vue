@@ -7,8 +7,17 @@
     <div class="row q-col-gutter-lg">
       <div class="col-12 col-md-5 col-lg-4">
         <h2 class="text-h6 q-mb-md">
-          {{ editingId ? `Editar pedido #${editingId}` : 'Novo pedido' }}
+          {{ tituloFormulario }}
         </h2>
+
+        <q-banner
+          v-if="pedidoFechado"
+          class="bg-blue-1 text-primary q-mb-md"
+          rounded
+          dense
+        >
+          Pedido finalizado. Ingressos e pagamento não podem ser alterados.
+        </q-banner>
 
         <q-form @submit.prevent="salvar" class="q-gutter-md">
           <q-select
@@ -23,6 +32,7 @@
           />
 
           <q-select
+            v-if="!pedidoFechado"
             v-model="form.payment_method"
             :options="paymentMethodOptions"
             label="Método de pagamento"
@@ -31,40 +41,49 @@
             map-options
             :required="!editingId || !pedidoAtual.pagamento"
           />
+          <q-input
+            v-else-if="editingId"
+            :model-value="formatPaymentMethod(form.payment_method)"
+            label="Método de pagamento"
+            outlined
+            readonly
+          />
 
           <q-separator />
 
           <div class="text-subtitle2">Ingressos</div>
 
-          <q-select
-            v-model="form.sessao"
-            :options="sessoesOpcoes"
-            label="Sessão"
-            outlined
-            emit-value
-            map-options
-            @update:model-value="carregarAssentosDisponiveis"
-          />
+          <template v-if="!pedidoFechado">
+            <q-select
+              v-model="form.sessao"
+              :options="sessoesOpcoes"
+              label="Sessão"
+              outlined
+              emit-value
+              map-options
+              @update:model-value="carregarAssentosDisponiveis"
+            />
 
-          <q-select
-            v-model="form.assento"
-            :options="assentosOpcoes"
-            label="Assento"
-            outlined
-            emit-value
-            map-options
-            :disable="!form.sessao || carregandoAssentos"
-            :loading="carregandoAssentos"
-          />
+            <q-select
+              v-model="form.assento"
+              :options="assentosOpcoes"
+              label="Assento"
+              outlined
+              emit-value
+              map-options
+              :disable="!form.sessao || carregandoAssentos"
+              :loading="carregandoAssentos"
+            />
 
-          <q-btn
-            type="button"
-            color="secondary"
-            icon="add"
-            label="Adicionar ingresso"
-            :disable="!form.sessao || !form.assento"
-            @click="adicionarIngresso"
-          />
+            <q-btn
+              type="button"
+              color="secondary"
+              icon="add"
+              label="Adicionar ingresso"
+              :disable="!form.sessao || !form.assento"
+              @click="adicionarIngresso"
+            />
+          </template>
 
           <q-list v-if="ingressosExibidos.length" bordered separator dense>
             <q-item v-for="ingresso in ingressosExibidos" :key="ingresso.chave">
@@ -77,6 +96,7 @@
               </q-item-section>
               <q-item-section side>
                 <q-btn
+                  v-if="ingresso.pode_excluir"
                   flat
                   round
                   dense
@@ -88,12 +108,13 @@
             </q-item>
           </q-list>
 
-          <p v-else class="text-grey-7 q-mb-none">
+          <p v-else-if="!pedidoFechado" class="text-grey-7 q-mb-none">
             Adicione pelo menos um ingresso ao pedido.
           </p>
 
           <template v-if="editingId && pedidoAtual.pagamento">
             <q-select
+              v-if="!pedidoFechado"
               v-model="form.transaction_status"
               :options="transactionStatusOptions"
               label="Status do pagamento"
@@ -101,6 +122,13 @@
               emit-value
               map-options
               required
+            />
+            <q-input
+              v-else
+              :model-value="formatPaymentStatus(form.transaction_status)"
+              label="Status do pagamento"
+              outlined
+              readonly
             />
           </template>
 
@@ -130,6 +158,7 @@
 
           <div class="row q-gutter-sm">
             <q-btn
+              v-if="!pedidoFechado"
               type="submit"
               color="primary"
               :label="editingId ? 'Atualizar' : 'Salvar'"
@@ -186,8 +215,23 @@
           </template>
           <template #body-cell-actions="props">
             <q-td :props="props">
-              <q-btn flat round dense icon="edit" color="primary" @click="editar(props.row)" />
-              <q-btn flat round dense icon="delete" color="negative" @click="excluir(props.row)" />
+              <q-btn
+                flat
+                round
+                dense
+                :icon="pedidoEstaFechado(props.row) ? 'visibility' : 'edit'"
+                color="primary"
+                @click="editar(props.row)"
+              />
+              <q-btn
+                v-if="!pedidoEstaFechado(props.row)"
+                flat
+                round
+                dense
+                icon="delete"
+                color="negative"
+                @click="excluir(props.row)"
+              />
             </q-td>
           </template>
         </q-table>
@@ -272,6 +316,36 @@ export default {
   },
 
   computed: {
+    pedidoFechado() {
+      if (!this.editingId) {
+        return false
+      }
+
+      if (this.pedidoAtual.pode_modificar_ingressos === false) {
+        return true
+      }
+
+      if (this.pedidoAtual.pode_modificar_ingressos === true) {
+        return false
+      }
+
+      return (
+        this.pedidoAtual.status === 'paid' ||
+        this.pedidoAtual.status === 'cancelled' ||
+        this.pedidoAtual.pagamento_status === 'approved'
+      )
+    },
+
+    tituloFormulario() {
+      if (!this.editingId) {
+        return 'Novo pedido'
+      }
+
+      return this.pedidoFechado
+        ? `Visualizar pedido #${this.editingId}`
+        : `Editar pedido #${this.editingId}`
+    },
+
     clientesOpcoes() {
       return this.clientes.map((cliente) => ({
         label: `${cliente.first_name} ${cliente.last_name}`,
@@ -302,14 +376,14 @@ export default {
         sessao_label: ingresso.sessao_label || this.legendaSessao(getSessaoById(ingresso.sessao)),
         assento_label: ingresso.assento_label || ingresso.assento,
         pendente: false,
-        pode_excluir: this.pedidoAtual.pode_modificar_ingressos,
+        pode_excluir: !this.pedidoFechado,
       }))
 
       const pendentes = this.ingressosPendentes.map((ingresso, index) => ({
         ...ingresso,
         chave: `pendente-${index}`,
         pendente: true,
-        pode_excluir: true,
+        pode_excluir: !this.pedidoFechado,
       }))
 
       if (this.editingId) {
@@ -379,6 +453,9 @@ export default {
 
     salvar() {
       if (this.editingId) {
+        if (this.pedidoFechado) {
+          return
+        }
         this.salvarEdicao()
         return
       }
@@ -455,6 +532,10 @@ export default {
     },
 
     salvarEdicao() {
+      if (this.pedidoFechado) {
+        return
+      }
+
       const temIngressosPendentes = this.ingressosPendentes.length > 0
       const temPagamento = this.pedidoAtual.pagamento?.id || this.form.payment_method
 
@@ -576,6 +657,10 @@ export default {
     },
 
     adicionarIngresso() {
+      if (this.pedidoFechado) {
+        return
+      }
+
       if (!this.form.sessao || !this.form.assento) {
         return
       }
@@ -853,6 +938,27 @@ export default {
       }
       const option = this.transactionStatusOptions.find((item) => item.value === value)
       return option ? option.label : value
+    },
+
+    formatPaymentMethod(value) {
+      const option = this.paymentMethodOptions.find((item) => item.value === value)
+      return option ? option.label : value || '—'
+    },
+
+    pedidoEstaFechado(pedido) {
+      if (pedido.pode_modificar_ingressos === false) {
+        return true
+      }
+
+      if (pedido.pode_modificar_ingressos === true) {
+        return false
+      }
+
+      return (
+        pedido.status === 'paid' ||
+        pedido.status === 'cancelled' ||
+        pedido.pagamento_status === 'approved'
+      )
     },
 
     formatCurrency(value) {
