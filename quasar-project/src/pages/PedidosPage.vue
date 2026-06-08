@@ -517,6 +517,20 @@ export default {
         })
         .catch((err) => {
           console.error(err)
+
+          if (pedidoCriado?.id) {
+            deletePedido(pedidoCriado.id)
+              .then(() => getAllPedidosFromRest(true))
+              .then((data) => {
+                if (data) {
+                  this.pedidos = [...data]
+                }
+              })
+              .catch((rollbackErr) => {
+                console.error(rollbackErr)
+              })
+          }
+
           this.$q.notify({
             type: 'negative',
             message: err.message || 'Erro ao salvar pedido',

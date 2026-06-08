@@ -27,6 +27,14 @@
                 <q-btn
                   flat
                   round
+                  icon="visibility"
+                  color="primary"
+                  aria-label="Ver mapa de assentos"
+                  @click.stop="abrirMapaAssentos(item)"
+                />
+                <q-btn
+                  flat
+                  round
                   icon="delete"
                   color="negative"
                   @click.stop="excluirSessao(item.id)"
@@ -53,12 +61,36 @@
         />
       </div>
     </div>
+
+    <q-dialog v-model="exibirMapaAssentos" persistent>
+      <q-card style="min-width: 320px; max-width: 720px; width: 100%">
+        <q-card-section class="row items-center justify-between q-pb-none">
+          <div>
+            <div class="text-h6">Mapa de assentos</div>
+            <div v-if="sessaoMapa" class="text-caption text-grey-7">
+              {{ sessaoMapa.filme_titulo }} • {{ legendaSessao(sessaoMapa) }}
+            </div>
+          </div>
+          <q-btn flat round dense icon="close" @click="fecharMapaAssentos" />
+        </q-card-section>
+
+        <q-card-section>
+          <SeatMap
+            :seats="assentosSala"
+            :occupied-ids="assentosOcupadosIds"
+            :loading="carregandoMapa"
+            readonly
+          />
+        </q-card-section>
+      </q-card>
+    </q-dialog>
   </q-page>
 </template>
 
 <script>
 import { useQuasar } from 'quasar'
 import SessaoForm from 'components/SessaoForm.vue'
+import SeatMap from 'components/SeatMap.vue'
 import {
   getAllSessoesFromRest,
   createSessao,
@@ -67,6 +99,8 @@ import {
 } from 'src/services/sessaoService'
 import { getAllFilmesFromRest } from 'src/services/filmeService'
 import { getAllSalasFromRest } from 'src/services/salaService'
+import { getAssentosBySalaFromRest } from 'src/services/assentoService'
+import { getIngressosBySessaoFromRest } from 'src/services/ingressoService'
 
 const sessaoVazia = () => ({
   id: null,
@@ -79,7 +113,7 @@ const sessaoVazia = () => ({
 
 export default {
   name: 'SessaoPage',
-  components: { SessaoForm },
+  components: { SessaoForm, SeatMap },
   setup() {
     const $q = useQuasar()
     return { $q }
@@ -93,6 +127,11 @@ export default {
       exibirFormulario: false,
       modoEdicao: false,
       carregando: false,
+      exibirMapaAssentos: false,
+      sessaoMapa: null,
+      assentosSala: [],
+      assentosOcupadosIds: [],
+      carregandoMapa: false,
     }
   },
   computed: {
@@ -184,6 +223,49 @@ export default {
           })
         })
     },
+    abrirMapaAssentos(sessao) {
+      if (!sessao?.sala) {
+        this.$q.notify({
+          type: 'warning',
+          message: 'Esta sessão não possui sala vinculada',
+        })
+        return
+      }
+
+      this.sessaoMapa = { ...sessao }
+      this.exibirMapaAssentos = true
+      this.assentosSala = []
+      this.assentosOcupadosIds = []
+      this.carregandoMapa = true
+
+      Promise.all([
+        getAssentosBySalaFromRest(sessao.sala),
+        getIngressosBySessaoFromRest(sessao.id),
+      ])
+        .then(([assentos, ingressos]) => {
+          this.assentosSala = assentos
+          this.assentosOcupadosIds = ingressos.map((item) => Number(item.assento))
+        })
+        .catch((error) => {
+          console.error(error)
+          this.$q.notify({
+            type: 'negative',
+            message: error.message || 'Erro ao carregar mapa de assentos',
+          })
+          this.fecharMapaAssentos()
+        })
+        .finally(() => {
+          this.carregandoMapa = false
+        })
+    },
+
+    fecharMapaAssentos() {
+      this.exibirMapaAssentos = false
+      this.sessaoMapa = null
+      this.assentosSala = []
+      this.assentosOcupadosIds = []
+    },
+
     excluirSessao(id) {
       this.$q.dialog({
         title: 'Excluir sessão',
