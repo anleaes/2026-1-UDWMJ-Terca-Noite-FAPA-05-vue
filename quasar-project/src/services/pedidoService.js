@@ -1,5 +1,6 @@
 import { API_URL } from './api'
 import { pedidoStore } from 'src/stores/pedido-store.js'
+import { pagamentoStore } from 'src/stores/pagamento-store.js'
 
 const BASE = `${API_URL}/order/api/`
 
@@ -135,6 +136,7 @@ function updatePedido(id, data) {
           .json()
           .then((updated) => {
             pedidoStore.pedidos = []
+            pagamentoStore.pagamentos = []
             resolve(daApi(updated))
           })
           .catch((error) => {
