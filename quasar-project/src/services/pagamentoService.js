@@ -40,6 +40,39 @@ function getPagamentoById(id) {
   return pagamentoStore.pagamentos.find((item) => item.id == id)
 }
 
+function createPagamento(data) {
+  return new Promise((resolve, reject) => {
+    fetch(BASE, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data),
+    })
+      .then(async (response) => {
+        if (!response.ok) {
+          const erro = await response.json().catch(() => ({}))
+          const msg = Object.values(erro).flat().join(' ') || 'Erro ao cadastrar pagamento'
+          reject(new Error(msg))
+          return
+        }
+
+        response
+          .json()
+          .then((created) => {
+            pagamentoStore.pagamentos = []
+            resolve(created)
+          })
+          .catch((error) => {
+            console.error('Error creating pagamento:', error)
+            reject(error)
+          })
+      })
+      .catch((error) => {
+        console.error('Error creating pagamento:', error)
+        reject(error)
+      })
+  })
+}
+
 function updatePagamento(id, data) {
   return new Promise((resolve, reject) => {
     fetch(`${BASE}${id}/`, {
@@ -47,9 +80,11 @@ function updatePagamento(id, data) {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(data),
     })
-      .then((response) => {
+      .then(async (response) => {
         if (!response.ok) {
-          reject(new Error('Erro ao atualizar pagamento'))
+          const erro = await response.json().catch(() => ({}))
+          const msg = Object.values(erro).flat().join(' ') || 'Erro ao atualizar pagamento'
+          reject(new Error(msg))
           return
         }
 
@@ -93,6 +128,7 @@ function deletePagamento(id) {
 export {
   getAllPagamentosFromRest,
   getPagamentoById,
+  createPagamento,
   updatePagamento,
   deletePagamento,
 }
