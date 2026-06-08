@@ -1,24 +1,80 @@
 <template>
-  <q-layout view="lHh Lpr lFf">
-    <q-header elevated>
-      <q-toolbar>
-        <q-btn flat dense round icon="menu" aria-label="Menu" @click="toggleLeftDrawer" />
+  <q-layout view="hHh lpR fFf" class="cinema-layout">
+    <q-header class="cinema-header" elevated>
+      <div class="cinema-header__top">
+        <q-btn
+          class="cinema-header__menu lt-md"
+          flat
+          dense
+          round
+          icon="menu"
+          aria-label="Menu"
+          @click="leftDrawerOpen = true"
+        />
 
-        <q-toolbar-title> Quasar App </q-toolbar-title>
+        <router-link to="/" class="cinema-title">Cinema App</router-link>
 
-        <div>Quasar v{{ $q.version }}</div>
-      </q-toolbar>
+        <div class="cinema-header__spacer lt-md" />
+      </div>
+
+      <nav class="cinema-nav gt-sm" aria-label="Navegação principal">
+        <div class="cinema-nav__groups">
+          <div
+            v-for="section in navSections"
+            :key="section.title"
+            class="cinema-nav__section"
+          >
+            <span class="cinema-nav__section-title">{{ section.title }}</span>
+            <div class="cinema-nav__links">
+              <router-link
+                v-for="link in section.links"
+                :key="link.to"
+                :to="link.to"
+                class="cinema-nav-btn"
+                :class="{ 'cinema-nav-btn--active': isActive(link.to) }"
+              >
+                {{ link.label }}
+              </router-link>
+            </div>
+          </div>
+        </div>
+      </nav>
     </q-header>
 
-    <q-drawer v-model="leftDrawerOpen" show-if-above bordered>
-      <q-list>
-        <q-item-label header> Essential Links </q-item-label>
+    <q-drawer
+      v-model="leftDrawerOpen"
+      side="left"
+      bordered
+      class="cinema-drawer lt-md"
+      :width="300"
+    >
+      <q-scroll-area class="fit">
+        <div class="cinema-drawer__content">
+          <div class="cinema-drawer__brand">Cinema App</div>
 
-        <EssentialLink v-for="link in linksList" :key="link.title" v-bind="link" />
-      </q-list>
+          <div
+            v-for="section in navSections"
+            :key="section.title"
+            class="cinema-drawer__section"
+          >
+            <div class="cinema-drawer__section-title">{{ section.title }}</div>
+            <router-link
+              v-for="link in section.links"
+              :key="link.to"
+              :to="link.to"
+              class="cinema-drawer__link"
+              :class="{ 'cinema-drawer__link--active': isActive(link.to) }"
+              @click="leftDrawerOpen = false"
+            >
+              <q-icon :name="link.icon" size="20px" />
+              <span>{{ link.label }}</span>
+            </router-link>
+          </div>
+        </div>
+      </q-scroll-area>
     </q-drawer>
 
-    <q-page-container>
+    <q-page-container class="cinema-page-container">
       <router-view />
     </q-page-container>
   </q-layout>
@@ -26,56 +82,44 @@
 
 <script setup>
 import { ref } from 'vue'
-import EssentialLink from 'components/EssentialLink.vue'
+import { useRoute } from 'vue-router'
 
-const linksList = [
+const route = useRoute()
+const leftDrawerOpen = ref(false)
+
+const navSections = [
   {
-    title: 'Docs',
-    caption: 'quasar.dev',
-    icon: 'school',
-    link: 'https://quasar.dev',
+    title: 'Navegação',
+    links: [
+      { label: 'Home', to: '/', icon: 'home' },
+      { label: 'Sessões', to: '/sessoes', icon: 'theaters' },
+      { label: 'Cinemas', to: '/cinemas', icon: 'store' },
+      { label: 'Filmes', to: '/filmes', icon: 'movie' },
+      { label: 'Gêneros', to: '/generos', icon: 'movie_filter' },
+    ],
   },
   {
-    title: 'Github',
-    caption: 'github.com/quasarframework',
-    icon: 'code',
-    link: 'https://github.com/quasarframework',
+    title: 'Vendas',
+    links: [
+      { label: 'Pedidos', to: '/orders', icon: 'receipt_long' },
+      { label: 'Ingressos', to: '/ingressos', icon: 'confirmation_number' },
+      { label: 'Pagamentos', to: '/pagamentos', icon: 'payment' },
+    ],
   },
   {
-    title: 'Discord Chat Channel',
-    caption: 'chat.quasar.dev',
-    icon: 'chat',
-    link: 'https://chat.quasar.dev',
-  },
-  {
-    title: 'Forum',
-    caption: 'forum.quasar.dev',
-    icon: 'record_voice_over',
-    link: 'https://forum.quasar.dev',
-  },
-  {
-    title: 'Twitter',
-    caption: '@quasarframework',
-    icon: 'rss_feed',
-    link: 'https://twitter.quasar.dev',
-  },
-  {
-    title: 'Facebook',
-    caption: '@QuasarFramework',
-    icon: 'public',
-    link: 'https://facebook.quasar.dev',
-  },
-  {
-    title: 'Quasar Awesome',
-    caption: 'Community Quasar projects',
-    icon: 'favorite',
-    link: 'https://awesome.quasar.dev',
+    title: 'Gestão',
+    links: [
+      { label: 'Clientes', to: '/cadastros/cliente', icon: 'person' },
+      { label: 'Funcionários', to: '/cadastros/funcionario', icon: 'badge' },
+    ],
   },
 ]
 
-const leftDrawerOpen = ref(false)
+function isActive(path) {
+  if (path === '/') {
+    return route.path === '/'
+  }
 
-function toggleLeftDrawer() {
-  leftDrawerOpen.value = !leftDrawerOpen.value
+  return route.path === path || route.path.startsWith(`${path}/`)
 }
 </script>

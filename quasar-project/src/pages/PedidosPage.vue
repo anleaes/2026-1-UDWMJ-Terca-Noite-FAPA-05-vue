@@ -64,14 +64,11 @@
               @update:model-value="carregarAssentosDisponiveis"
             />
 
-            <q-select
-              v-model="form.assento"
-              :options="assentosOpcoes"
-              label="Assento"
-              outlined
-              emit-value
-              map-options
-              :disable="!form.sessao || carregandoAssentos"
+            <SeatMap
+              v-if="form.sessao"
+              v-model:selected-id="form.assento"
+              :seats="assentosSala"
+              :occupied-ids="assentosOcupadosIds"
               :loading="carregandoAssentos"
             />
 
@@ -262,6 +259,7 @@ import {
 import { getAllSessoesFromRest, getSessaoById } from 'src/services/sessaoService'
 import { getAllFilmesFromRest } from 'src/services/filmeService'
 import { getAssentosBySalaFromRest } from 'src/services/assentoService'
+import SeatMap from 'components/SeatMap.vue'
 
 const formVazio = () => ({
   cliente: null,
@@ -273,6 +271,10 @@ const formVazio = () => ({
 
 export default {
   name: 'PedidosPage',
+
+  components: {
+    SeatMap,
+  },
 
   data() {
     return {
@@ -286,7 +288,8 @@ export default {
       clientes: [],
       sessoes: [],
       filmes: [],
-      assentosDisponiveis: [],
+      assentosSala: [],
+      assentosOcupadosIds: [],
       statusOptions: [
         { label: 'Pendente', value: 'pending' },
         { label: 'Pago', value: 'paid' },
@@ -357,13 +360,6 @@ export default {
       return this.sessoes.map((sessao) => ({
         label: this.legendaSessao(sessao),
         value: sessao.id,
-      }))
-    },
-
-    assentosOpcoes() {
-      return this.assentosDisponiveis.map((assento) => ({
-        label: assento.label || `${assento.row}${assento.number}`,
-        value: assento.id,
       }))
     },
 
@@ -680,7 +676,7 @@ export default {
       }
 
       const sessao = getSessaoById(this.form.sessao)
-      const assento = this.assentosDisponiveis.find(
+      const assento = this.assentosSala.find(
         (item) => Number(item.id) === Number(this.form.assento)
       )
 
@@ -693,7 +689,8 @@ export default {
 
       this.form.sessao = null
       this.form.assento = null
-      this.assentosDisponiveis = []
+      this.assentosSala = []
+      this.assentosOcupadosIds = []
     },
 
     removerIngresso(ingresso) {
@@ -719,7 +716,8 @@ export default {
     editar(pedido) {
       this.editingId = pedido.id
       this.ingressosPendentes = []
-      this.assentosDisponiveis = []
+      this.assentosSala = []
+      this.assentosOcupadosIds = []
 
       Promise.all([
         getPedidoFromRest(pedido.id),
@@ -763,7 +761,8 @@ export default {
           this.form.transaction_status = detalhe.pagamento?.transaction_status || 'pending'
           this.form.sessao = null
           this.form.assento = null
-          this.assentosDisponiveis = []
+          this.assentosSala = []
+      this.assentosOcupadosIds = []
 
           const index = this.pedidos.findIndex((item) => item.id === detalhe.id)
           if (index >= 0) {
@@ -876,7 +875,8 @@ export default {
 
     carregarAssentosDisponiveis() {
       this.form.assento = null
-      this.assentosDisponiveis = []
+      this.assentosSala = []
+      this.assentosOcupadosIds = []
 
       if (!this.form.sessao) {
         return
@@ -902,9 +902,8 @@ export default {
             ...ingressosOcupados.map((item) => Number(item.assento)),
             ...reservados,
           ]
-          this.assentosDisponiveis = assentos.filter(
-            (assento) => !ocupados.includes(Number(assento.id))
-          )
+          this.assentosSala = assentos
+          this.assentosOcupadosIds = ocupados
         })
         .catch((err) => {
           console.error(err)
@@ -923,7 +922,8 @@ export default {
       this.pedidoAtual = {}
       this.ingressos = []
       this.ingressosPendentes = []
-      this.assentosDisponiveis = []
+      this.assentosSala = []
+      this.assentosOcupadosIds = []
       this.form = formVazio()
     },
 

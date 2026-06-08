@@ -1,9 +1,8 @@
 <template>
-  <q-page class="q-pa-md">
-    <div class="text-center q-mb-xl q-pt-lg">
-      <q-icon name="local_movies" size="4rem" color="primary" />
-      <h1 class="text-h3 text-weight-bold q-mt-md">Cinema App</h1>
-    </div>
+  <q-page class="q-pa-md cinema-home">
+    <p class="cinema-home__welcome">
+      Navegue pelas seções abaixo para gerenciar o cinema.
+    </p>
 
     <div class="row q-col-gutter-md justify-center">
       <div
@@ -15,14 +14,14 @@
         <q-card
           flat
           bordered
-          class="home-card cursor-pointer"
+          class="cinema-home-card cursor-pointer"
           @click="$router.push(section.to)"
         >
           <q-card-section class="row items-center no-wrap">
-            <q-icon :name="section.icon" size="2.5rem" color="primary" class="q-mr-md" />
-            <div>
+            <q-icon :name="section.icon" size="2.5rem" class="q-mr-md" />
+            <div class="text-left">
               <div class="text-h6">{{ section.title }}</div>
-              <div class="text-caption text-grey-7">{{ section.caption }}</div>
+              <div v-if="section.caption" class="text-caption">{{ section.caption }}</div>
             </div>
           </q-card-section>
         </q-card>
@@ -33,57 +32,53 @@
 
 <script setup>
 const sections = [
-
   {
     title: 'Pedidos',
+    caption: 'Vendas e ingressos',
     icon: 'receipt_long',
     to: '/orders',
   },
   {
     title: 'Filmes',
+    caption: 'Catálogo de filmes',
     icon: 'movie',
     to: '/filmes',
   },
   {
     title: 'Cinemas',
+    caption: 'Unidades e salas',
     icon: 'store',
     to: '/cinemas',
   },
   {
-    title: 'Sessão',
+    title: 'Sessões',
+    caption: 'Programação',
     icon: 'theaters',
     to: '/sessoes',
   },
   {
     title: 'Gêneros',
+    caption: 'Classificação',
     icon: 'movie_filter',
     to: '/generos',
   },
   {
     title: 'Cadastros',
+    caption: 'Clientes e funcionários',
     icon: 'person_add',
     to: '/cadastros',
   },
   {
     title: 'Pagamentos',
+    caption: 'Transações',
     icon: 'payment',
     to: '/pagamentos',
   },
   {
     title: 'Ingressos',
+    caption: 'Tickets emitidos',
     icon: 'confirmation_number',
     to: '/ingressos',
   },
 ]
 </script>
-<style scoped>
-.home-card {
-  transition: box-shadow 0.2s ease, transform 0.2s ease;
-}
-
-.home-card:hover {
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
-  transform: translateY(-2px);
-}
-</style>
-
