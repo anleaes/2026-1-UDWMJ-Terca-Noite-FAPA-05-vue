@@ -36,7 +36,7 @@ const sections = [
     title: 'Pedidos',
     caption: 'Vendas e ingressos',
     icon: 'receipt_long',
-    to: '/orders',
+    to: '/pedidos',
   },
   {
     title: 'Filmes',
