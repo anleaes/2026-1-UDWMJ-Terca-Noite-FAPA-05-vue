@@ -1,19 +1,7 @@
 <template>
   <q-page class="q-pa-lg">
-    <h5 class="q-my-none">Sistema de Cinema</h5>
-    <p class="text-grey-7 q-mb-lg">Resumo dos cadastros</p>
 
     <div class="row q-col-gutter-md">
-      <div class="col-auto">
-        <q-card class="home-card bg-primary text-white">
-          <q-card-section>
-            <q-icon name="movie" size="32px" class="q-mb-sm" />
-            <span class="text-h6">Filmes</span>
-            <p>Voce tem {{ filmesCount }} filmes</p>
-          </q-card-section>
-        </q-card>
-      </div>
-
       <div class="col-auto">
         <q-card class="home-card bg-primary text-white">
           <q-card-section>
@@ -24,26 +12,36 @@
         </q-card>
       </div>
 
-      <div class="col-auto">
-        <q-card class="home-card bg-primary text-white">
-          <q-card-section>
-            <q-icon name="people" size="32px" class="q-mb-sm" />
-            <span class="text-h6">Clientes</span>
-            <p>Voce tem {{ clientesCount }} clientes</p>
-          </q-card-section>
-        </q-card>
-      </div>
-
-      <div class="col-auto">
-        <q-card class="home-card bg-primary text-white">
-          <q-card-section>
-            <q-icon name="receipt_long" size="32px" class="q-mb-sm" />
-            <span class="text-h6">Pedidos</span>
-            <p>Voce tem {{ pedidosCount }} pedidos</p>
-          </q-card-section>
-        </q-card>
-      </div>
+    <div class="col-auto">
+      <q-card class="home-card bg-primary text-white">
+        <q-card-section>
+          <q-icon name="movie" size="32px" class="q-mb-sm" />
+          <span class="text-h6">Filmes</span>
+          <p>Voce tem {{ filmesCount }} filmes</p>
+        </q-card-section>
+      </q-card>
     </div>
+
+    <div class="col-auto">
+      <q-card class="home-card bg-primary text-white">
+        <q-card-section>
+          <q-icon name="people" size="32px" class="q-mb-sm" />
+          <span class="text-h6">Clientes</span>
+          <p>Voce tem {{ clientesCount }} clientes</p>
+        </q-card-section>
+      </q-card>
+    </div>
+
+    <div class="col-auto">
+      <q-card class="home-card bg-primary text-white">
+        <q-card-section>
+          <q-icon name="receipt_long" size="32px" class="q-mb-sm" />
+          <span class="text-h6">Pedidos</span>
+          <p>Voce tem {{ pedidosCount }} pedidos</p>
+        </q-card-section>
+      </q-card>
+    </div>
+  </div>
   </q-page>
 </template>
 
