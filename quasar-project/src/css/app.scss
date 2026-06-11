@@ -1,3 +1,13 @@
 .home-card {
   width: 220px;
 }
+
+.home-card-link {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
+
+.home-card-link .home-card:hover {
+  filter: brightness(1.08);
+}
