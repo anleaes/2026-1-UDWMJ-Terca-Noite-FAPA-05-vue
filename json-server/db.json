@@ -3,7 +3,13 @@
     { "id": 1, "titulo": "Titanic", "duracao": 194 }
   ],
   "cinemas": [
-    { "id": 1, "nome": "Cinemark Center", "cidade": "Sao Paulo" }
+    {
+      "id": 1,
+      "nome": "Cinemark Center",
+      "endereco": "Av Paulista 1000",
+      "telefone": "11999999999",
+      "cnpj": "12345678000199"
+    }
   ],
   "clientes": [
     { "id": 1, "nome": "Joao Silva", "cpf": "11111111111" },
