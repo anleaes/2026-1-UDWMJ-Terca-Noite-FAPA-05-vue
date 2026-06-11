@@ -1,0 +1,22 @@
+{
+  "filmes": [
+    { "id": 1, "titulo": "Titanic", "duracao": 194 }
+  ],
+  "cinemas": [
+    { "id": 1, "nome": "Cinemark Center", "cidade": "Sao Paulo" }
+  ],
+  "clientes": [
+    { "id": 1, "nome": "Joao Silva", "cpf": "11111111111" },
+    { "id": 2, "nome": "Maria Souza", "cpf": "22222222222" }
+  ],
+  "pedidos": [
+    { "id": 1, "cliente_id": 1, "status": "pago", "valor_total": 50 }
+  ],
+  "generos": [],
+  "salas": [],
+  "sessoes": [],
+  "funcionarios": [],
+  "ingressos": [],
+  "pagamentos": [],
+  "assentos": []
+}
