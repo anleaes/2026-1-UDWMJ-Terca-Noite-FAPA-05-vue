@@ -3,13 +3,15 @@
 
     <div class="row q-col-gutter-md">
       <div class="col-auto">
-        <q-card class="home-card bg-primary text-white">
-          <q-card-section>
-            <q-icon name="location_city" size="32px" class="q-mb-sm" />
-            <span class="text-h6">Cinemas</span>
-            <p>Voce tem {{ cinemasCount }} cinemas</p>
-          </q-card-section>
-        </q-card>
+        <router-link to="/cinemas" class="home-card-link">
+          <q-card class="home-card bg-primary text-white">
+            <q-card-section>
+              <q-icon name="location_city" size="32px" class="q-mb-sm" />
+              <span class="text-h6">Cinemas</span>
+              <p>Voce tem {{ cinemasCount }} cinemas</p>
+            </q-card-section>
+          </q-card>
+        </router-link>
       </div>
 
     <div class="col-auto">
