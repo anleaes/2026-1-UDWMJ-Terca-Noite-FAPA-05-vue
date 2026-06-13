@@ -132,7 +132,7 @@ onMounted(() => {
       console.log('Erro ao carregar cinemas:', err)
       cinemasCount.value = '?'
     })
-
+/*
   buscarQuantidade('http://localhost:3000/generos')
     .then((count) => {
       generosCount.value = count
@@ -186,6 +186,7 @@ onMounted(() => {
       console.log('Erro ao carregar ingressos:', err)
       ingressosCount.value = '?'
     })
+    */
 })
 </script>
 

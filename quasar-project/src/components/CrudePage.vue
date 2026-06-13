@@ -165,7 +165,7 @@
       <template #body-cell-acoes="props">
         <q-td :props="props">
           <q-btn flat round icon="edit" color="primary" @click="editar(props.row)" />
-          <q-btn flat round icon="delete" color="negative" @click="confirmarExclusao(props.row)" />
+          <q-btn flat round icon="delete" color="negative" @click="solicitarExclusao(props.row)" />
         </q-td>
       </template>
     </q-table>
@@ -522,7 +522,7 @@ function editar(registro) {
   })
 }
 
-function confirmarExclusao(registro) {
+function solicitarExclusao(registro) {
   if (props.confirmarExclusao) {
     registroExcluirId.value = registro.id
     dialogExcluir.value = true
