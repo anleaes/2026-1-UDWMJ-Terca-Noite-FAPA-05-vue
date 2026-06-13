@@ -15,13 +15,15 @@
       </div>
 
     <div class="col-auto">
-      <q-card class="home-card bg-primary text-white">
-        <q-card-section>
-          <q-icon name="movie" size="32px" class="q-mb-sm" />
-          <span class="text-h6"> Filmes</span>
-          <p>Voce tem {{ filmesCount }} filmes</p>
-        </q-card-section>
-      </q-card>
+      <router-link to="/filmes" class="home-card-link">
+        <q-card class="home-card bg-primary text-white">
+          <q-card-section>
+            <q-icon name="movie" size="32px" class="q-mb-sm" />
+            <span class="text-h6"> Filmes</span>
+            <p>Voce tem {{ filmesCount }} filmes</p>
+          </q-card-section>
+        </q-card>
+      </router-link>
     </div>
 
     <div class="col-auto">
