@@ -26,6 +26,24 @@
             />
 
             <q-input
+              v-else-if="campo.type === 'email'"
+              v-model="form[campo.name]"
+              :label="campo.label"
+              type="email"
+              outlined
+              dense
+            />
+
+            <q-input
+              v-else-if="campo.type === 'date'"
+              v-model="form[campo.name]"
+              :label="campo.label"
+              mask="####-##-##"
+              outlined
+              dense
+            />
+
+            <q-input
               v-else-if="campo.type === 'number'"
               v-model.number="form[campo.name]"
               :label="campo.label"
