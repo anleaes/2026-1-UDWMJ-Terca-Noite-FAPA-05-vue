@@ -37,13 +37,15 @@
     </div>
 
     <div class="col-auto">
-      <q-card class="home-card bg-primary text-white">
-        <q-card-section>
-          <q-icon name="people" size="32px" class="q-mb-sm" />
-          <span class="text-h6"> Clientes</span>
-          <p>Voce tem {{ clientesCount }} clientes</p>
-        </q-card-section>
-      </q-card>
+      <router-link to="/clientes" class="home-card-link">
+        <q-card class="home-card bg-primary text-white">
+          <q-card-section>
+            <q-icon name="people" size="32px" class="q-mb-sm" />
+            <span class="text-h6"> Clientes</span>
+            <p>Voce tem {{ clientesCount }} clientes</p>
+          </q-card-section>
+        </q-card>
+      </router-link>
     </div>
 
     <div class="col-auto">
