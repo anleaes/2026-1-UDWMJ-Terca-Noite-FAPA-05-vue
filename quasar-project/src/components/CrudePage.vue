@@ -288,8 +288,32 @@ function mascaraDoCampo(campo) {
   if (campo.mask) return campo.mask
   if (campo.type === 'cpf') return '###.###.###-##'
   if (campo.type === 'cnpj') return '##.###.###/####-##'
-  if (campo.type === 'tel') return '(##) #####-####'
+  if (campo.type === 'tel') return mascaraTelefone(form.value[campo.name])
   return undefined
+}
+
+function digitosTelefone(valor) {
+  return limparMascara(String(valor || ''))
+}
+
+function mascaraTelefone(valor) {
+  const digitos = digitosTelefone(valor)
+  if (digitos.length > 10) return '(##) #####-####'
+  return '(##) ####-####'
+}
+
+function formatarTelefone(valor) {
+  const digitos = digitosTelefone(valor)
+
+  if (digitos.length === 11) {
+    return digitos.replace(/(\d{2})(\d{5})(\d{4})/, '($1) $2-$3')
+  }
+
+  if (digitos.length === 10) {
+    return digitos.replace(/(\d{2})(\d{4})(\d{4})/, '($1) $2-$3')
+  }
+
+  return valor ?? ''
 }
 
 function colPadrao(campo) {
@@ -378,6 +402,7 @@ function formatarMoeda(valor) {
 }
 
 function formatarValorColuna(coluna, valor) {
+  if (coluna.type === 'tel') return formatarTelefone(valor) || '-'
   if (coluna.type === 'money') return formatarMoeda(valor)
   if (coluna.type === 'select-multiple') {
     return formatarMultiplos(coluna.optionsEndpoint, valor)
@@ -486,7 +511,14 @@ function editar(registro) {
   registroId.value = registro.id
 
   props.campos.forEach((campo) => {
-    form.value[campo.name] = registro[campo.name] ?? valorInicial(campo)
+    const valor = registro[campo.name]
+
+    if (campo.type === 'tel') {
+      form.value[campo.name] = formatarTelefone(valor)
+      return
+    }
+
+    form.value[campo.name] = valor ?? valorInicial(campo)
   })
 }
 
