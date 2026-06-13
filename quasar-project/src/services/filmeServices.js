@@ -1,20 +1,17 @@
-function getFilmesCountFromRest() {
-  return new Promise((resolve, reject) => {
-    fetch('http://localhost:3000/filmes')
-      .then((response) => {
-        response
-          .json()
-          .then((data) => {
-            resolve(data.length)
-          })
-          .catch((error) => {
-            reject(error)
-          })
-      })
-      .catch((error) => {
-        reject(error)
-      })
-  })
-}
+import { createCrudService } from '@/services/createCrudService.js'
 
-export { getFilmesCountFromRest }
+const {
+  getAllFromRest: getAllFilmesFromRest,
+  getCountFromRest: getFilmesCountFromRest,
+  createFromRest: createFilmeFromRest,
+  updateFromRest: updateFilmeFromRest,
+  deleteFromRest: deleteFilmeFromRest,
+} = createCrudService('filmes')
+
+export {
+  getAllFilmesFromRest,
+  getFilmesCountFromRest,
+  createFilmeFromRest,
+  updateFilmeFromRest,
+  deleteFilmeFromRest,
+}

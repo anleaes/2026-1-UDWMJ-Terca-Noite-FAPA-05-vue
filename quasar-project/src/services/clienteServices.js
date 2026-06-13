@@ -1,20 +1,17 @@
-function getClientesCountFromRest() {
-  return new Promise((resolve, reject) => {
-    fetch('http://localhost:3000/clientes')
-      .then((response) => {
-        response
-          .json()
-          .then((data) => {
-            resolve(data.length)
-          })
-          .catch((error) => {
-            reject(error)
-          })
-      })
-      .catch((error) => {
-        reject(error)
-      })
-  })
-}
+import { createCrudService } from '@/services/createCrudService.js'
 
-export { getClientesCountFromRest }
+const {
+  getAllFromRest: getAllClientesFromRest,
+  getCountFromRest: getClientesCountFromRest,
+  createFromRest: createClienteFromRest,
+  updateFromRest: updateClienteFromRest,
+  deleteFromRest: deleteClienteFromRest,
+} = createCrudService('clientes')
+
+export {
+  getAllClientesFromRest,
+  getClientesCountFromRest,
+  createClienteFromRest,
+  updateClienteFromRest,
+  deleteClienteFromRest,
+}
