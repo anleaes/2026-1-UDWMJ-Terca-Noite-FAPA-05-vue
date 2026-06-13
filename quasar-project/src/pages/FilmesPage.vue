@@ -1,5 +1,5 @@
 <template>
-  <CrudePage
+  <CrudPage
     titulo="Filmes"
     descricao="Cadastro de filmes"
     nome-entidade="filme"
@@ -11,7 +11,7 @@
 
 <script setup>
 import { ref, onMounted } from 'vue'
-import CrudePage from '@/components/CrudePage.vue'
+import CrudPage from '@/components/CrudPage.vue'
 import {
   getAllFilmesFromRest,
   createFilmeFromRest,
