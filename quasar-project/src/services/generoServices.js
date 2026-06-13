@@ -1,25 +1,8 @@
-import { createCrudService } from '@/services/createCrudService.js'
-
-const {
-  getAllFromRest: getAllFilmesFromRest,
-  getCountFromRest: getFilmesCountFromRest,
-  createFromRest: createFilmeFromRest,
-  updateFromRest: updateFilmeFromRest,
-  deleteFromRest: deleteFilmeFromRest,
-} = createCrudService('filmes')
-
-export {
-  getAllFilmesFromRest,
-  getFilmesCountFromRest,
-  createFilmeFromRest,
-  updateFilmeFromRest,
-  deleteFilmeFromRest,
-}
 import { API_URL } from '@/services/api.js'
 
-function getAllFilmesFromRest() {
+function getAllGenerosFromRest() {
   return new Promise((resolve, reject) => {
-    fetch(`${API_URL}/filmes`)
+    fetch(`${API_URL}/generos`)
       .then((response) => {
         response
           .json()
@@ -36,9 +19,9 @@ function getAllFilmesFromRest() {
   })
 }
 
-function getFilmesCountFromRest() {
+function getGenerosCountFromRest() {
   return new Promise((resolve, reject) => {
-    getAllFilmesFromRest()
+    getAllGenerosFromRest()
       .then((data) => {
         resolve(data.length)
       })
@@ -48,9 +31,9 @@ function getFilmesCountFromRest() {
   })
 }
 
-function createFilmeFromRest(filme) {
+function createGeneroFromRest(genero) {
   return new Promise((resolve, reject) => {
-    fetch(`${API_URL}/filmes`, {
+    fetch(`${API_URL}/generos`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(filme),
@@ -71,9 +54,9 @@ function createFilmeFromRest(filme) {
   })
 }
 
-function updateFilmeFromRest(id, filme) {
+function updateGeneroFromRest(id, genero) {
   return new Promise((resolve, reject) => {
-    fetch(`${API_URL}/filmes/${id}`, {
+    fetch(`${API_URL}/generos/${id}`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(filme),
@@ -94,9 +77,9 @@ function updateFilmeFromRest(id, filme) {
   })
 }
 
-function deleteFilmeFromRest(id) {
+function deleteGeneroFromRest(id) {
   return new Promise((resolve, reject) => {
-    fetch(`${API_URL}/filmes/${id}`, {
+    fetch(`${API_URL}/generos/${id}`, {
       method: 'DELETE',
     })
       .then(() => {
@@ -109,9 +92,9 @@ function deleteFilmeFromRest(id) {
 }
 
 export { 
-  getAllFilmesFromRest, 
-  getFilmesCountFromRest, 
-  createFilmeFromRest, 
-  updateFilmeFromRest, 
-  deleteFilmeFromRest,
+  getAllGenerosFromRest, 
+  getGenerosCountFromRest, 
+  createGeneroFromRest, 
+  updateGeneroFromRest, 
+  deleteGeneroFromRest,
  }
