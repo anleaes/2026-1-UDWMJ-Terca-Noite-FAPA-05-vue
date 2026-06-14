@@ -41,6 +41,18 @@
             <div class="text-caption text-grey-7">
               {{ filme.duracao ? `${filme.duracao} min` : 'Duracao nao informada' }}
             </div>
+            <div v-if="nomesGeneros(filme).length" class="row q-gutter-xs q-mt-xs">
+              <q-chip
+                v-for="nome in nomesGeneros(filme)"
+                :key="nome"
+                dense
+                size="sm"
+                outline
+                color="primary"
+              >
+                {{ nome }}
+              </q-chip>
+            </div>
           </q-card-section>
         </q-card>
       </div>
@@ -134,6 +146,7 @@ const dialogAberto = ref(false)
 const editando = ref(false)
 const filmeId = ref(null)
 const opcoesGeneros = ref([])
+const generosPorId = ref({})
 
 const form = ref(criarFormVazio())
 
@@ -164,10 +177,19 @@ function carregarGeneros() {
         label: genero.nome,
         value: genero.id,
       }))
+      generosPorId.value = Object.fromEntries(
+        generos.map((genero) => [genero.id, genero.nome]),
+      )
     })
     .catch((err) => {
       console.log('Erro ao carregar generos:', err)
     })
+}
+
+function nomesGeneros(filme) {
+  return (filme.genero_ids ?? [])
+    .map((id) => generosPorId.value[id])
+    .filter(Boolean)
 }
 
 function abrirNovo() {
