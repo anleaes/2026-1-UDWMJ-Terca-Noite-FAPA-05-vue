@@ -36,7 +36,7 @@ function createGeneroFromRest(genero) {
     fetch(`${API_URL}/generos`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(filme),
+      body: JSON.stringify(genero),
     })
       .then((response) => {
         response
@@ -59,7 +59,7 @@ function updateGeneroFromRest(id, genero) {
     fetch(`${API_URL}/generos/${id}`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(filme),
+      body: JSON.stringify(genero),
     })
       .then((response) => {
         response

@@ -25,13 +25,15 @@
     </div>
 
     <div class="col-auto">
-      <q-card class="home-card bg-primary text-white">
-        <q-card-section>
-          <q-icon name="category" size="32px" class="q-mb-sm" />
-          <span class="text-h6"> Gêneros</span>
-          <p>Voce tem {{ generosCount }} generos</p>
-        </q-card-section>
-      </q-card>
+      <router-link to="/generos" class="home-card-link">
+        <q-card class="home-card bg-primary text-white">
+          <q-card-section>
+            <q-icon name="category" size="32px" class="q-mb-sm" />
+            <span class="text-h6"> Gêneros</span>
+            <p>Voce tem {{ generosCount }} generos</p>
+          </q-card-section>
+        </q-card>
+      </router-link>
     </div>
 
     <div class="col-auto">
@@ -103,6 +105,7 @@ import { ref, onMounted } from 'vue'
 
 const filmesCount = ref('-')
 const cinemasCount = ref('-')
+const generosCount = ref('-')
 const clientesCount = ref('-')
 const pedidosCount = ref('-')
 
