@@ -10,7 +10,8 @@ const routes = [
       { path: 'generos', component: () => import('@/pages/GenerosPage.vue') },
       { path: 'clientes', component: () => import('@/pages/ClientesPage.vue') },
       { path: 'funcionarios', component: () => import('@/pages/FuncionariosPage.vue') },
-     { path: 'pagamentos', component: () => import('@/pages/PagamentosPage.vue') },
+      { path: 'ingressos', component: () => import('@/pages/IngressosPage.vue') },
+      { path: 'pagamentos', component: () => import('@/pages/PagamentosPage.vue') },
     ],
   },
 
