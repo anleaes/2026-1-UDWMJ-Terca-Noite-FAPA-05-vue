@@ -1,11 +1,13 @@
-function getPedidosCountFromRest() {
+import { API_URL } from '@/services/api.js'
+
+function getAllPedidosFromRest() {
   return new Promise((resolve, reject) => {
-    fetch('http://localhost:3000/pedidos')
+    fetch(`${API_URL}/pedidos`)
       .then((response) => {
         response
           .json()
           .then((data) => {
-            resolve(data.length)
+            resolve(data)
           })
           .catch((error) => {
             reject(error)
@@ -17,4 +19,16 @@ function getPedidosCountFromRest() {
   })
 }
 
-export { getPedidosCountFromRest }
+function getPedidosCountFromRest() {
+  return new Promise((resolve, reject) => {
+    getAllPedidosFromRest()
+      .then((data) => {
+        resolve(data.length)
+      })
+      .catch((error) => {
+        reject(error)
+      })
+  })
+}
+
+export { getAllPedidosFromRest, getPedidosCountFromRest }

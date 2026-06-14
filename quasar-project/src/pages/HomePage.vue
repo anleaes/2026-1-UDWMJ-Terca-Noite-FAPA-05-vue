@@ -93,13 +93,15 @@
     </div>
 
     <div class="col-auto">
-      <q-card class="home-card bg-primary text-white">
-        <q-card-section>
-          <q-icon name="payments" size="32px" class="q-mb-sm" />
-          <span class="text-h6"> Pagamentos</span>
-          <p>Voce tem {{ pagamentosCount }} pagamentos</p>
-        </q-card-section>
-      </q-card>
+      <router-link to="/pagamentos" class="home-card-link">
+        <q-card class="home-card bg-primary text-white">
+          <q-card-section>
+            <q-icon name="payments" size="32px" class="q-mb-sm" />
+            <span class="text-h6"> Pagamentos</span>
+            <p>Voce tem {{ pagamentosCount }} pagamentos</p>
+          </q-card-section>
+        </q-card>
+      </router-link>
     </div>
 
   </div>
@@ -115,6 +117,7 @@ const generosCount = ref('-')
 const clientesCount = ref('-')
 const funcionariosCount = ref('-')
 const pedidosCount = ref('-')
+const pagamentosCount = ref('-')
 
 function buscarQuantidade(url) {
   return fetch(url)
@@ -148,6 +151,15 @@ onMounted(() => {
     .catch((err) => {
       console.log('Erro ao carregar funcionarios:', err)
       funcionariosCount.value = '?'
+    })
+
+  buscarQuantidade('http://localhost:3000/pagamentos')
+    .then((count) => {
+      pagamentosCount.value = count
+    })
+    .catch((err) => {
+      console.log('Erro ao carregar pagamentos:', err)
+      pagamentosCount.value = '?'
     })
 /*
   buscarQuantidade('http://localhost:3000/generos')
