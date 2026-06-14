@@ -48,7 +48,16 @@
     <div v-else-if="modo === 'filme'" class="row q-col-gutter-md">
       <q-card v-for="filme in filmesComSessoes" :key="filme.id" flat bordered class="col-12 col-lg-6">
         <div class="row no-wrap">
-          <img :src="poster(filme.id)" :alt="filme.titulo" class="poster" />
+          <q-img
+            v-if="filme.imagem"
+            :src="filme.imagem"
+            :alt="filme.titulo"
+            class="poster"
+            fit="cover"
+          />
+          <div v-else class="poster poster--placeholder flex flex-center">
+            <q-icon name="movie" size="48px" color="grey-5" />
+          </div>
           <div class="col q-pa-sm">
             <div class="text-subtitle1 text-weight-bold">{{ filme.titulo }}</div>
             <div class="text-caption text-grey-7 q-mb-sm">{{ filme.duracao }} min</div>
@@ -153,8 +162,6 @@ const form = ref(formVazio())
 const mapaAberto = ref(false)
 const sessaoMapa = ref(null)
 
-const posters = { 1: '/posters/titanic.svg', 2: '/posters/avatar.svg' }
-
 const filmeOptions = computed(() => filmes.value.map((f) => ({ label: f.titulo, value: f.id })))
 
 const salaOptions = computed(() =>
@@ -177,10 +184,6 @@ const cinemasComSessoes = computed(() => {
 
 function formVazio() {
   return { filme_id: null, sala_id: null, data_hora: '', preco: null, dublado: true }
-}
-
-function poster(id) {
-  return posters[id] || `/posters/filme-${id}.svg`
 }
 
 function nomeFilme(id) {
@@ -275,8 +278,13 @@ onMounted(carregarDados)
 <style scoped>
 .poster {
   width: 160px;
+  min-width: 160px;
   height: 240px;
   object-fit: cover;
   background: #1a2332;
+}
+
+.poster--placeholder {
+  background: #f0f0f0;
 }
 </style>
