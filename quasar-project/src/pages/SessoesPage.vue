@@ -119,7 +119,7 @@ import {
   createSessaoFromRest,
   updateSessaoFromRest,
   deleteSessaoFromRest,
-} from '@/services/sessaoServices.js'
+} from '@/services/sessoesServices.js'
 
 const sessoes = ref([])
 const filmes = ref([])
