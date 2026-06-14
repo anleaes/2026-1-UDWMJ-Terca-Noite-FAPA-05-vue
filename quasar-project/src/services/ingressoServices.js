@@ -31,6 +31,44 @@ function getIngressosCountFromRest() {
   })
 }
 
+function getIngressosBySessaoFromRest(sessaoId) {
+  return new Promise((resolve, reject) => {
+    fetch(`${API_URL}/ingressos?sessao_id=${sessaoId}`)
+      .then((response) => {
+        response
+          .json()
+          .then((data) => {
+            resolve(data)
+          })
+          .catch((error) => {
+            reject(error)
+          })
+      })
+      .catch((error) => {
+        reject(error)
+      })
+  })
+}
+
+function getIngressosByPedidoFromRest(pedidoId) {
+  return new Promise((resolve, reject) => {
+    fetch(`${API_URL}/ingressos?pedido_id=${pedidoId}`)
+      .then((response) => {
+        response
+          .json()
+          .then((data) => {
+            resolve(data)
+          })
+          .catch((error) => {
+            reject(error)
+          })
+      })
+      .catch((error) => {
+        reject(error)
+      })
+  })
+}
+
 function createIngressoFromRest(ingresso) {
   return new Promise((resolve, reject) => {
     fetch(`${API_URL}/ingressos`, {
@@ -94,6 +132,8 @@ function deleteIngressoFromRest(id) {
 export {
   getAllIngressosFromRest,
   getIngressosCountFromRest,
+  getIngressosBySessaoFromRest,
+  getIngressosByPedidoFromRest,
   createIngressoFromRest,
   updateIngressoFromRest,
   deleteIngressoFromRest,
