@@ -2,8 +2,7 @@
   <q-page class="q-pa-lg">
     <q-btn flat label="Voltar" to="/" icon="arrow_back" class="q-mb-md" />
 
-    <h5 class="q-my-none">Cinemas</h5>
-    <p class="text-grey-7 q-mb-lg">Cadastro de cinemas</p>
+    <h5 class="q-my-none q-mb-lg">Cinemas</h5>
 
     <q-card flat bordered class="q-mb-lg">
       <q-card-section>

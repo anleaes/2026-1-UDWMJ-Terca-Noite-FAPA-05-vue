@@ -2,7 +2,6 @@
   <q-page class="q-pa-lg">
     <div class="q-mb-lg">
       <h5 class="q-my-none">Painel</h5>
-      <p class="text-grey-7 q-mb-none">Resumo da operacao do cinema</p>
     </div>
 
     <div v-if="carregando" class="text-grey-7">Carregando indicadores...</div>
@@ -59,7 +58,7 @@
               </q-item>
             </q-list>
             <q-card-section v-else class="text-grey-7">
-              Nenhum pedido pendente ou aguardando pagamento.
+              Nenhum pedido pendente.
             </q-card-section>
           </q-card>
         </div>
@@ -123,7 +122,6 @@ const STATUS_LABELS = {
   pendente: 'Pendente',
   aprovado: 'Aprovado',
   cancelado: 'Cancelado',
-  pago: 'Pago',
 }
 
 function buscar(endpoint) {
@@ -146,8 +144,7 @@ function labelStatus(status) {
 
 function corStatus(status) {
   if (status === 'pendente') return 'orange'
-  if (status === 'aprovado') return 'blue'
-  if (status === 'pago') return 'positive'
+  if (status === 'aprovado') return 'positive'
   return 'grey'
 }
 
@@ -173,10 +170,9 @@ function nomeSala(id) {
 }
 
 const pedidosPendentes = computed(() => pedidos.value.filter((p) => p.status === 'pendente'))
-const pedidosPagos = computed(() => pedidos.value.filter((p) => p.status === 'pago'))
-const pedidosEmAberto = computed(() =>
-  pedidos.value.filter((p) => p.status === 'pendente' || p.status === 'aprovado'),
-)
+const pedidosAprovados = computed(() => pedidos.value.filter((p) => p.status === 'aprovado'))
+const pedidosRecusados = computed(() => pedidos.value.filter((p) => p.status === 'cancelado'))
+const pedidosEmAberto = computed(() => pedidosPendentes.value)
 
 const ingressosVendidos = computed(() => {
   const pedidosAtivos = new Set(
@@ -206,25 +202,25 @@ const cardsIndicadores = computed(() => [
   {
     titulo: 'Pedidos em aberto',
     valor: pedidosEmAberto.value.length,
-    descricao: 'Pendentes e aprovados',
+    descricao: 'Aguardando aprovacao',
     icone: 'pending_actions',
     cor: 'orange',
     rota: '/pedidos',
   },
   {
-    titulo: 'Aguardando aprovacao',
-    valor: pedidosPendentes.value.length,
-    descricao: 'Pedidos para revisar',
-    icone: 'hourglass_top',
-    cor: 'deep-orange',
-    rota: '/pedidos',
-  },
-  {
-    titulo: 'Pedidos pagos',
-    valor: pedidosPagos.value.length,
+    titulo: 'Pedidos aprovados',
+    valor: pedidosAprovados.value.length,
     descricao: 'Vendas concluidas',
     icone: 'check_circle',
     cor: 'positive',
+    rota: '/pedidos',
+  },
+  {
+    titulo: 'Pedidos recusados',
+    valor: pedidosRecusados.value.length,
+    descricao: 'Pedidos cancelados',
+    icone: 'cancel',
+    cor: 'negative',
     rota: '/pedidos',
   },
   {

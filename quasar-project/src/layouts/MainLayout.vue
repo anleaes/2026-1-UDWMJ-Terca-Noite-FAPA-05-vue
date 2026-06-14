@@ -69,6 +69,7 @@ const navSections = [
       { label: 'Cinemas', to: '/cinemas', icon: 'location_city' },
       { label: 'Filmes', to: '/filmes', icon: 'movie' },
       { label: 'Gêneros', to: '/generos', icon: 'category' },
+      { label: 'Sessões', to: '/sessoes', icon: 'theaters' },
       { label: 'Clientes', to: '/clientes', icon: 'people' },
       { label: 'Funcionários', to: '/funcionarios', icon: 'badge' },
     ],
@@ -76,7 +77,6 @@ const navSections = [
   {
     title: 'Operação',
     links: [
-      { label: 'Sessões', to: '/sessoes', icon: 'theaters' },
       { label: 'Pedidos', to: '/pedidos', icon: 'receipt_long' },
       { label: 'Ingressos', to: '/ingressos', icon: 'confirmation_number' },
       { label: 'Pagamentos', to: '/pagamentos', icon: 'payments' },

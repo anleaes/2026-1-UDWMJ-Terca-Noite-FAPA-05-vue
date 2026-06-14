@@ -1,7 +1,6 @@
 <template>
   <CrudPage
     titulo="Clientes"
-    descricao="Cadastro de clientes"
     nome-entidade="cliente"
     :campos="campos"
     :colunas="colunas"

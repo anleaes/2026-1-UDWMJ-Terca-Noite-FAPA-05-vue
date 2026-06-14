@@ -3,10 +3,7 @@
     <q-btn flat label="Voltar" to="/" icon="arrow_back" class="q-mb-md" />
 
     <div class="row items-center justify-between q-mb-lg">
-      <div>
-        <h5 class="q-my-none">Filmes</h5>
-        <p class="text-grey-7 q-mb-none">Cadastro de filmes</p>
-      </div>
+      <h5 class="q-my-none">Filmes</h5>
       <q-btn color="primary" icon="add" label="Novo filme" @click="abrirNovo" />
     </div>
 
