@@ -85,6 +85,12 @@
               outlined
               dense
             />
+
+            <q-toggle
+              v-else-if="campo.type === 'toggle'"
+              v-model="form[campo.name]"
+              :label="campo.label"
+            />
           </div>
         </div>
 
@@ -150,6 +156,7 @@ function mascaraDoCampo(campo) {
 function valorInicial(campo) {
   if (campo.type === 'number') return null
   if (campo.type === 'select-multiple') return []
+  if (campo.type === 'toggle') return false
   return ''
 }
 
@@ -163,6 +170,7 @@ function criarFormVazio() {
 
 function campoVazio(campo) {
   const valor = form.value[campo.name]
+  if (campo.type === 'toggle') return false
   if (campo.type === 'select-multiple') return !valor || valor.length === 0
   return valor === null || valor === undefined || valor === ''
 }

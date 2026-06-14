@@ -15,13 +15,15 @@
       </div>
 
     <div class="col-auto">
-      <q-card class="home-card bg-primary text-white">
-        <q-card-section>
-          <q-icon name="movie" size="32px" class="q-mb-sm" />
-          <span class="text-h6"> Filmes</span>
-          <p>Voce tem {{ filmesCount }} filmes</p>
-        </q-card-section>
-      </q-card>
+      <router-link to="/filmes" class="home-card-link">
+        <q-card class="home-card bg-primary text-white">
+          <q-card-section>
+            <q-icon name="movie" size="32px" class="q-mb-sm" />
+            <span class="text-h6"> Filmes</span>
+            <p>Voce tem {{ filmesCount }} filmes</p>
+          </q-card-section>
+        </q-card>
+      </router-link>
     </div>
 
     <div class="col-auto">
@@ -37,23 +39,27 @@
     </div>
 
     <div class="col-auto">
-      <q-card class="home-card bg-primary text-white">
-        <q-card-section>
-          <q-icon name="people" size="32px" class="q-mb-sm" />
-          <span class="text-h6"> Clientes</span>
-          <p>Voce tem {{ clientesCount }} clientes</p>
-        </q-card-section>
-      </q-card>
+      <router-link to="/clientes" class="home-card-link">
+        <q-card class="home-card bg-primary text-white">
+          <q-card-section>
+            <q-icon name="people" size="32px" class="q-mb-sm" />
+            <span class="text-h6"> Clientes</span>
+            <p>Voce tem {{ clientesCount }} clientes</p>
+          </q-card-section>
+        </q-card>
+      </router-link>
     </div>
 
     <div class="col-auto">
-      <q-card class="home-card bg-primary text-white">
-        <q-card-section>
-          <q-icon name="badge" size="32px" class="q-mb-sm" />
-          <span class="text-h6"> Funcionários</span>
-          <p>Voce tem {{ funcionariosCount }} funcionarios</p>
-        </q-card-section>
-      </q-card>
+      <router-link to="/funcionarios" class="home-card-link">
+        <q-card class="home-card bg-primary text-white">
+          <q-card-section>
+            <q-icon name="badge" size="32px" class="q-mb-sm" />
+            <span class="text-h6"> Funcionários</span>
+            <p>Voce tem {{ funcionariosCount }} funcionarios</p>
+          </q-card-section>
+        </q-card>
+      </router-link>
     </div>
 
     <div class="col-auto">
@@ -107,6 +113,7 @@ const filmesCount = ref('-')
 const cinemasCount = ref('-')
 const generosCount = ref('-')
 const clientesCount = ref('-')
+const funcionariosCount = ref('-')
 const pedidosCount = ref('-')
 
 function buscarQuantidade(url) {
@@ -134,6 +141,15 @@ onMounted(() => {
       cinemasCount.value = '?'
     })
 
+  buscarQuantidade('http://localhost:3000/funcionarios')
+    .then((count) => {
+      funcionariosCount.value = count
+    })
+    .catch((err) => {
+      console.log('Erro ao carregar funcionarios:', err)
+      funcionariosCount.value = '?'
+    })
+/*
   buscarQuantidade('http://localhost:3000/generos')
     .then((count) => {
       generosCount.value = count
@@ -187,6 +203,7 @@ onMounted(() => {
       console.log('Erro ao carregar ingressos:', err)
       ingressosCount.value = '?'
     })
+    */
 })
 </script>
 
