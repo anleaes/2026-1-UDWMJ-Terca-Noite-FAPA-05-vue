@@ -61,6 +61,7 @@
                 <div>{{ fmtData(s.data_hora) }}</div>
                 <div class="text-caption text-grey-7">{{ infoSessao(s) }}</div>
               </div>
+              <q-btn flat round dense icon="visibility" color="grey-7" @click="verMapa(s)" />
               <q-btn flat round dense icon="edit" color="primary" @click="editar(s)" />
               <q-btn flat round dense icon="delete" color="negative" @click="excluir(s.id)" />
             </div>
@@ -96,6 +97,7 @@
                     <q-item-label caption>{{ fmtData(s.data_hora) }} · {{ infoSessao(s) }}</q-item-label>
                   </q-item-section>
                   <q-item-section side>
+                    <q-btn flat round dense icon="visibility" color="grey-7" @click="verMapa(s)" />
                     <q-btn flat round dense icon="edit" color="primary" @click="editar(s)" />
                     <q-btn flat round dense icon="delete" color="negative" @click="excluir(s.id)" />
                   </q-item-section>
@@ -106,11 +108,30 @@
         </q-card-section>
       </q-card>
     </div>
+
+    <q-dialog v-model="mapaAberto">
+      <q-card style="min-width: 320px; max-width: 90vw">
+        <q-card-section>
+          <div class="text-h6">Mapa de assentos</div>
+          <div v-if="sessaoMapa" class="text-caption text-grey-7">
+            {{ nomeFilme(sessaoMapa.filme_id) }} · {{ fmtData(sessaoMapa.data_hora) }} ·
+            {{ nomeSala(sessaoMapa.sala_id) }}
+          </div>
+        </q-card-section>
+        <q-card-section class="q-pt-none">
+          <MapaAssentos v-if="sessaoMapa" :sessao-id="sessaoMapa.id" readonly />
+        </q-card-section>
+        <q-card-actions align="right">
+          <q-btn flat label="Fechar" color="primary" v-close-popup />
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
   </q-page>
 </template>
 
 <script setup>
 import { ref, computed, onMounted } from 'vue'
+import MapaAssentos from '@/components/MapaAssentos.vue'
 import { getAllFilmesFromRest } from '@/services/filmeServices.js'
 import { getAllCinemasFromRest } from '@/services/cinemaServices.js'
 import { getAllSalasFromRest } from '@/services/salaServices.js'
@@ -129,6 +150,8 @@ const editando = ref(false)
 const sessaoId = ref(null)
 const modo = ref('filme')
 const form = ref(formVazio())
+const mapaAberto = ref(false)
+const sessaoMapa = ref(null)
 
 const posters = { 1: '/posters/titanic.svg', 2: '/posters/avatar.svg' }
 
@@ -215,6 +238,11 @@ function salvar() {
       carregarDados()
     })
     .catch((err) => console.log('Erro ao salvar sessao:', err))
+}
+
+function verMapa(s) {
+  sessaoMapa.value = s
+  mapaAberto.value = true
 }
 
 function editar(s) {
