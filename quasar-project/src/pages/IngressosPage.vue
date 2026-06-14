@@ -3,7 +3,7 @@
     <q-btn flat label="Voltar" to="/" icon="arrow_back" class="q-mb-md" />
 
     <q-table
-      title="Ingressos"
+      title="Registro de Ingressos"
       :rows="ingressos"
       :columns="colunas"
       row-key="id"
@@ -20,8 +20,8 @@ import { getAllIngressosFromRest } from '@/services/ingressoServices.js'
 
 const ingressos = ref([])
 
-function fileiraLabel(numero) {
-  return String.fromCharCode(64 + numero)
+function fileiraLabel(numero) {  
+  return String.fromCharCode(64 + numero)  /* Converte número em CHAR Unicode */
 }
 
 const colunas = [
