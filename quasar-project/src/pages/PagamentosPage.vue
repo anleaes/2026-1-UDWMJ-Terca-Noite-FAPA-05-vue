@@ -2,13 +2,8 @@
   <q-page class="q-pa-lg">
     <q-btn flat label="Voltar" to="/" icon="arrow_back" class="q-mb-md" />
 
-    <h5 class="q-my-none">Pagamentos</h5>
-    <p class="text-grey-7 q-mb-lg">
-      Historico de pagamentos registrados pelos pedidos
-    </p>
-
     <q-table
-      title="Pagamentos registrados"
+      title="Registro de Pagamentos"
       :rows="pagamentos"
       :columns="colunas"
       row-key="id"
@@ -16,7 +11,7 @@
       bordered
       :no-data-label="'Nenhum pagamento registrado'"
     />
-  </q-page>
+  </q-page> 
 </template>
 
 <script setup>
@@ -40,25 +35,25 @@ const colunas = computed(() => [
     label: 'Pedido',
     field: 'pedido_id',
     align: 'left',
-    format: (val) => {
-      const pedido = pedidosPorId.value[val]
-      if (!pedido) return `#${val}`
-      return `Pedido #${val} - R$ ${pedido.valor_total}`
-    },
+    format: (val) => `#${val}`,
   },
   {
     name: 'metodo',
     label: 'Metodo',
     field: 'metodo',
     align: 'left',
-    format: (val) => METODOS[val] ?? val,
+    format: (val) => METODOS[val],
   },
   {
     name: 'valor',
     label: 'Valor',
-    field: 'valor',
+    field: 'pedido_id', /* Recebe o ID */
     align: 'left',
-    format: (val) => (val != null ? `R$ ${Number(val).toFixed(2)}` : ''),
+    format: (val) => {
+      const pedido = pedidosPorId.value[val] /* Com o ID em val, procura pelo pedido no map */
+      if (pedido?.valor_total == null) return '-'
+      return `R$ ${Number(pedido.valor_total).toFixed(2)}` /* Encontra e formata o valor do pedido */
+    },
   },
 ])
 
@@ -66,7 +61,7 @@ function carregarPedidos() {
   getAllPedidosFromRest()
     .then((pedidos) => {
       pedidosPorId.value = Object.fromEntries(
-        pedidos.map((pedido) => [pedido.id, pedido]),
+        pedidos.map((pedido) => [pedido.id, pedido]), /* Cria o map, listando os pedidos por índice do ID */
       )
     })
     .catch((err) => {
