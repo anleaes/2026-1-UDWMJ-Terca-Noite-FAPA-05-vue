@@ -15,12 +15,30 @@
           <div
             v-for="campo in campos"
             :key="campo.name"
-            :class="campo.col || colPadrao(campo)"
+            :class="campo.col || 'col-12 col-md-6'"
           >
             <q-input
-              v-if="isTexto(campo)"
+              v-if="!campo.type || campo.type === 'text' || campo.type === 'url'"
               v-model="form[campo.name]"
               :label="campo.label"
+              outlined
+              dense
+            />
+
+            <q-input
+              v-else-if="campo.type === 'email'"
+              v-model="form[campo.name]"
+              :label="campo.label"
+              type="email"
+              outlined
+              dense
+            />
+
+            <q-input
+              v-else-if="campo.type === 'date'"
+              v-model="form[campo.name]"
+              :label="campo.label"
+              mask="####-##-##"
               outlined
               dense
             />
@@ -45,34 +63,12 @@
             />
 
             <q-input
-              v-else-if="campo.type === 'date'"
+              v-else-if="isCampoComMascara(campo)"
               v-model="form[campo.name]"
               :label="campo.label"
-              mask="####-##-##"
+              :mask="mascaraDoCampo(campo)"
               outlined
               dense
-            >
-              <template #append>
-                <q-icon name="event" class="cursor-pointer">
-                  <q-popup-proxy cover transition-show="scale" transition-hide="scale">
-                    <q-date v-model="form[campo.name]" mask="YYYY-MM-DD">
-                      <div class="row items-center justify-end">
-                        <q-btn v-close-popup label="Fechar" color="primary" flat />
-                      </div>
-                    </q-date>
-                  </q-popup-proxy>
-                </q-icon>
-              </template>
-            </q-input>
-
-            <q-input
-              v-else-if="campo.type === 'url'"
-              v-model="form[campo.name]"
-              :label="campo.label"
-              type="url"
-              outlined
-              dense
-              hint="Cole o link da imagem"
             />
 
             <q-select
@@ -89,6 +85,12 @@
               outlined
               dense
             />
+
+            <q-toggle
+              v-else-if="campo.type === 'toggle'"
+              v-model="form[campo.name]"
+              :label="campo.label"
+            />
           </div>
         </div>
 
@@ -104,29 +106,14 @@
     </q-card>
 
     <q-table
-      :title="tituloTabela"
+      :title="`${titulo} cadastrados`"
       :rows="registros"
       :columns="colunas"
       row-key="id"
       flat
       bordered
-      :no-data-label="mensagemVazia"
+      :no-data-label="`Nenhum ${nomeEntidade} cadastrado`"
     >
-      <template
-        v-for="coluna in colunasImagem"
-        :key="coluna.name"
-        #[`body-cell-${coluna.name}`]="props"
-      >
-        <q-td :props="props">
-          <q-img
-            v-if="props.row[coluna.name]"
-            :src="props.row[coluna.name]"
-            style="width: 48px; height: 72px"
-            fit="cover"
-          />
-        </q-td>
-      </template>
-
       <template #body-cell-acoes="props">
         <q-td :props="props">
           <q-btn flat round icon="edit" color="primary" @click="editar(props.row)" />
@@ -138,7 +125,7 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from 'vue'
+import { ref, onMounted } from 'vue'
 
 const props = defineProps({
   titulo: { type: String, required: true },
@@ -154,25 +141,22 @@ const editando = ref(false)
 const registroId = ref(null)
 const form = ref(criarFormVazio())
 
-const tituloTabela = computed(() => `${props.titulo} cadastrados`)
-const mensagemVazia = computed(() => `Nenhum ${props.nomeEntidade} cadastrado`)
-const colunasImagem = computed(() => props.colunas.filter((coluna) => coluna.type === 'image'))
-
-function isTexto(campo) {
-  return !campo.type || campo.type === 'text'
+function isCampoComMascara(campo) {
+  return ['cpf', 'cnpj', 'tel'].includes(campo.type) || campo.mask
 }
 
-function colPadrao(campo) {
-  if (campo.type === 'textarea' || campo.type === 'url') {
-    return 'col-12'
-  }
-
-  return 'col-12 col-md-6'
+function mascaraDoCampo(campo) {
+  if (campo.mask) return campo.mask
+  if (campo.type === 'cpf') return '###.###.###-##'
+  if (campo.type === 'cnpj') return '##.###.###/####-##'
+  if (campo.type === 'tel') return '(##) #####-####'
+  return undefined
 }
 
 function valorInicial(campo) {
   if (campo.type === 'number') return null
   if (campo.type === 'select-multiple') return []
+  if (campo.type === 'toggle') return false
   return ''
 }
 
@@ -186,17 +170,33 @@ function criarFormVazio() {
 
 function campoVazio(campo) {
   const valor = form.value[campo.name]
+  if (campo.type === 'toggle') return false
   if (campo.type === 'select-multiple') return !valor || valor.length === 0
   return valor === null || valor === undefined || valor === ''
 }
 
+function limparMascara(valor) {
+  if (typeof valor !== 'string') return valor
+  return valor.replace(/\D/g, '')
+}
+
 function montarDados() {
   const dados = {}
+
   props.campos.forEach((campo) => {
-    const valor = form.value[campo.name]
-    dados[campo.name] =
-      campo.type === 'number' && valor !== null && valor !== '' ? Number(valor) : valor
+    let valor = form.value[campo.name]
+
+    if (['cpf', 'cnpj', 'tel'].includes(campo.type)) {
+      valor = limparMascara(valor)
+    }
+
+    if (campo.type === 'number' && valor !== null && valor !== '') {
+      dados[campo.name] = Number(valor)
+    } else {
+      dados[campo.name] = valor
+    }
   })
+
   return dados
 }
 
@@ -232,6 +232,7 @@ function salvar() {
 function editar(registro) {
   editando.value = true
   registroId.value = registro.id
+
   props.campos.forEach((campo) => {
     form.value[campo.name] = registro[campo.name] ?? valorInicial(campo)
   })
