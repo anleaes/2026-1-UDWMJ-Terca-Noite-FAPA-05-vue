@@ -66,10 +66,6 @@ function fileiraLabel(numero) {
   return String.fromCharCode(64 + numero)
 }
 
-function chaveAssento(fileira, coluna) {
-  return `${fileira}-${coluna}`
-}
-
 function isSelecionado(fileira, coluna) {
   return props.modelValue.some((a) => a.fileira === fileira && a.coluna === coluna)
 }
