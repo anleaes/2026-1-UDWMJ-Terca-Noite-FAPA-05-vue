@@ -48,7 +48,7 @@
           <div class="col-12 col-md-6">
             <q-input
               :model-value="valorTotal"
-              label="Valor do pagamento"
+              label="Valor total"
               prefix="R$"
               outlined
               dense
@@ -318,11 +318,9 @@ function sincronizarIngressos(pedidoIdAtual, sessaoId, assentosSelecionados, pre
 }
 
 function salvarPagamento(pedidoIdAtual) {
-  const valor = Number(valorTotal.value)
   const dados = {
     pedido_id: pedidoIdAtual,
     metodo: form.value.pagamento_metodo,
-    valor,
   }
 
   if (pagamentoId.value) {
