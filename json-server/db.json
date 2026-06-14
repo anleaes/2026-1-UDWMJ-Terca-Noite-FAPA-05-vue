@@ -29,6 +29,16 @@
       "id": 6,
       "nome": "Animacao",
       "descricao": "Filmes produzidos com tecnicas de animacao para todas as idades."
+    },
+    {
+      "id": 7,
+      "nome": "Terror",
+      "descricao": "Filmes de suspense e medo com atmosfera tensa."
+    },
+    {
+      "id": 8,
+      "nome": "Suspense",
+      "descricao": "Narrativas de misterio e expectativa constante."
     }
   ],
   "filmes": [
@@ -55,103 +65,602 @@
       ]
     },
     {
+      "id": 3,
       "titulo": "O Auto da Compadecida",
       "duracao": 104,
       "imagem": "https://upload.wikimedia.org/wikipedia/pt/b/bf/O_auto_da_compadecida.jpg",
-      "sinopse": "As aventuras de Joao Grilo e Chicó no sertao nordestino, entre trapacas, amor e devocao.",
+      "sinopse": "As aventuras de Joao Grilo e Chico no sertao nordestino.",
       "genero_ids": [
         1,
         4
-      ],
-      "id": 3
+      ]
     },
     {
+      "id": 4,
       "titulo": "Interestelar",
       "duracao": 169,
       "imagem": "https://upload.wikimedia.org/wikipedia/pt/3/3a/Interstellar_Filme.png",
-      "sinopse": "Um grupo de exploradores viaja por um buraco de minhoca no espaco em busca de um novo lar para a humanidade.",
+      "sinopse": "Exploradores viajam pelo espaco em busca de um novo lar para a humanidade.",
       "genero_ids": [
         1,
         5
-      ],
-      "id": 4
+      ]
     },
     {
+      "id": 5,
       "titulo": "Coringa",
       "duracao": 122,
       "imagem": "https://upload.wikimedia.org/wikipedia/pt/6/63/Joker_(2019).jpg",
-      "sinopse": "A historia de Arthur Fleck, um comediante fracassado que mergulha na loucura e se torna o Coringa.",
+      "sinopse": "Arthur Fleck mergulha na loucura e se torna o Coringa.",
+      "genero_ids": [
+        1,
+        3
+      ]
+    },
+    {
+      "id": 6,
+      "titulo": "Divertidamente 2",
+      "duracao": 96,
+      "imagem": "https://upload.wikimedia.org/wikipedia/en/f/f7/Inside_Out_2_poster.jpg",
+      "sinopse": "Riley entra na adolescencia e novas emocoes surgem em sua mente.",
+      "genero_ids": [
+        4,
+        6
+      ]
+    },
+    {
+      "id": 7,
+      "titulo": "O Poderoso Chefao",
+      "duracao": 175,
+      "imagem": "https://upload.wikimedia.org/wikipedia/pt/a/af/The_Godfather%2C_The_Game.jpg",
+      "sinopse": "A saga da familia Corleone no submundo do crime italiano-americano.",
+      "genero_ids": [
+        1,
+        3
+      ]
+    },
+    {
+      "id": 8,
+      "titulo": "Matrix",
+      "duracao": 136,
+      "imagem": "https://upload.wikimedia.org/wikipedia/pt/c/c1/The_Matrix_Poster.jpg",
+      "sinopse": "Um hacker descobre que a realidade e uma simulacao controlada por maquinas.",
+      "genero_ids": [
+        3,
+        5
+      ]
+    },
+    {
+      "titulo": "Forrest Gump",
+      "duracao": 142,
+      "imagem": "https://upload.wikimedia.org/wikipedia/pt/thumb/c/c0/ForrestGumpPoster.jpg/250px-ForrestGumpPoster.jpg",
+      "sinopse": "A vida extraordinaria de um homem simples que participa de momentos historicos.",
+      "genero_ids": [
+        1,
+        2,
+        4
+      ],
+      "id": 9
+    },
+    {
+      "titulo": "O Senhor dos Aneis: A Sociedade do Anel",
+      "duracao": 178,
+      "imagem": "https://upload.wikimedia.org/wikipedia/pt/thumb/3/38/Lord_of_the_Rings_Fellowship_of_the_Ring.jpg/250px-Lord_of_the_Rings_Fellowship_of_the_Ring.jpg",
+      "sinopse": "Frodo parte em uma jornada para destruir o Um Anel.",
+      "genero_ids": [
+        3,
+        5
+      ],
+      "id": 10
+    },
+    {
+      "titulo": "Pulp Fiction",
+      "duracao": 154,
+      "imagem": "https://upload.wikimedia.org/wikipedia/en/thumb/3/3b/Pulp_Fiction_%281994%29_poster.jpg/250px-Pulp_Fiction_%281994%29_poster.jpg",
+      "sinopse": "Historias entrelaçadas de crime em Los Angeles.",
+      "genero_ids": [
+        1,
+        3,
+        4
+      ],
+      "id": 11
+    },
+    {
+      "titulo": "Clube da Luta",
+      "duracao": 139,
+      "imagem": "https://upload.wikimedia.org/wikipedia/pt/thumb/2/2b/FightClubPoster.jpg/250px-FightClubPoster.jpg",
+      "sinopse": "Um homem insone forma um clube de lutas clandestinas.",
+      "genero_ids": [
+        1,
+        3,
+        8
+      ],
+      "id": 12
+    },
+    {
+      "titulo": "Gladiador",
+      "duracao": 155,
+      "imagem": "https://upload.wikimedia.org/wikipedia/pt/thumb/4/44/GladiadorPoster.jpg/250px-GladiadorPoster.jpg",
+      "sinopse": "Um general romano busca vinganca contra o imperador corrupto.",
       "genero_ids": [
         1,
         3
       ],
-      "id": 5
+      "id": 13
     },
     {
-      "titulo": "Divertidamente 2",
-      "duracao": 96,
-      "imagem": "https://upload.wikimedia.org/wikipedia/en/f/f7/Inside_Out_2_poster.jpg",
-      "sinopse": "Riley entra na adolescencia e novas emocoes chegam para mexer com a vida dentro da sua mente.",
+      "titulo": "A Origem",
+      "duracao": 148,
+      "imagem": "https://upload.wikimedia.org/wikipedia/pt/thumb/8/84/AOrigemPoster.jpg/250px-AOrigemPoster.jpg",
+      "sinopse": "Um ladrao invade sonhos para plantar uma ideia.",
+      "genero_ids": [
+        3,
+        5,
+        8
+      ],
+      "id": 14
+    },
+    {
+      "titulo": "O Iluminado",
+      "duracao": 146,
+      "imagem": "https://upload.wikimedia.org/wikipedia/en/thumb/1/1d/The_Shining_%281980%29_U.K._release_poster_-_The_tide_of_terror_that_swept_America_IS_HERE.jpg/250px-The_Shining_%281980%29_U.K._release_poster_-_The_tide_of_terror_that_swept_America_IS_HERE.jpg",
+      "sinopse": "Uma familia passa o inverno isolada em um hotel assombrado.",
+      "genero_ids": [
+        7,
+        8
+      ],
+      "id": 15
+    },
+    {
+      "titulo": "Toy Story",
+      "duracao": 81,
+      "imagem": "https://upload.wikimedia.org/wikipedia/pt/a/a7/Toy_Story_1995.jpg",
+      "sinopse": "Brinquedos ganham vida quando os humanos nao estao por perto.",
       "genero_ids": [
         4,
         6
       ],
-      "id": 6
+      "id": 16
+    },
+    {
+      "titulo": "Shrek",
+      "duracao": 90,
+      "imagem": "https://upload.wikimedia.org/wikipedia/pt/e/e6/Shrek_Poster.jpg",
+      "sinopse": "Um ogro embarca em uma aventura para resgatar uma princesa.",
+      "genero_ids": [
+        4,
+        6
+      ],
+      "id": 17
+    },
+    {
+      "titulo": "Harry Potter e a Pedra Filosofal",
+      "duracao": 152,
+      "imagem": "https://upload.wikimedia.org/wikipedia/pt/thumb/1/1d/Harry_Potter_Pedra_Filosofal_2001.jpg/250px-Harry_Potter_Pedra_Filosofal_2001.jpg",
+      "sinopse": "Harry descobre que e um bruxo e entra para Hogwarts.",
+      "genero_ids": [
+        3,
+        5,
+        6
+      ],
+      "id": 18
+    },
+    {
+      "titulo": "Homem-Aranha: Sem Volta para Casa",
+      "duracao": 148,
+      "imagem": "https://upload.wikimedia.org/wikipedia/pt/thumb/0/00/Spider-Man_No_Way_Home_poster.jpg/250px-Spider-Man_No_Way_Home_poster.jpg",
+      "sinopse": "Peter Parker pede ajuda ao Doutor Estranho e abre o multiverso.",
+      "genero_ids": [
+        3,
+        5
+      ],
+      "id": 19
+    },
+    {
+      "titulo": "Duna",
+      "duracao": 155,
+      "imagem": "https://upload.wikimedia.org/wikipedia/pt/thumb/a/a3/Dune_2021.jpeg/250px-Dune_2021.jpeg",
+      "sinopse": "Paul Atreides lidera uma revolucao no deserto de Arrakis.",
+      "genero_ids": [
+        3,
+        5
+      ],
+      "id": 20
+    },
+    {
+      "titulo": "Top Gun: Maverick",
+      "duracao": 131,
+      "imagem": "https://upload.wikimedia.org/wikipedia/pt/thumb/d/d2/Top_Gun_Maverick.jpg/250px-Top_Gun_Maverick.jpg",
+      "sinopse": "Maverick treina jovens pilotos para uma missao perigosa.",
+      "genero_ids": [
+        1,
+        3
+      ],
+      "id": 21
+    },
+    {
+      "titulo": "Barbie",
+      "duracao": 114,
+      "imagem": "https://upload.wikimedia.org/wikipedia/pt/thumb/8/82/Barbie_%282023%29.jpg/250px-Barbie_%282023%29.jpg",
+      "sinopse": "Barbie vive em Barbieland ate questionar sua existencia.",
+      "genero_ids": [
+        4,
+        6
+      ],
+      "id": 22
+    },
+    {
+      "titulo": "Oppenheimer",
+      "duracao": 180,
+      "imagem": "https://upload.wikimedia.org/wikipedia/pt/thumb/5/5b/Oppenheimer_poster.jpg/250px-Oppenheimer_poster.jpg",
+      "sinopse": "A vida de J. Robert Oppenheimer e a criacao da bomba atomica.",
+      "genero_ids": [
+        1,
+        8
+      ],
+      "id": 23
+    },
+    {
+      "titulo": "Avatar: O Caminho da Agua",
+      "duracao": 192,
+      "imagem": "https://upload.wikimedia.org/wikipedia/pt/thumb/5/54/Avatar_The_Way_of_Water_poster.jpg/250px-Avatar_The_Way_of_Water_poster.jpg",
+      "sinopse": "Jake Sully e Neytiri protegem sua familia em Pandora.",
+      "genero_ids": [
+        3,
+        5
+      ],
+      "id": 24
+    },
+    {
+      "id": 25,
+      "titulo": "Rocky: Um Lutador",
+      "duracao": 119,
+      "imagem": "https://upload.wikimedia.org/wikipedia/pt/1/18/Rocky_poster.jpg",
+      "sinopse": "Um boxeador de Philadelphia ganha uma chance no titulo mundial.",
+      "genero_ids": [
+        1,
+        2
+      ]
+    },
+    {
+      "id": 26,
+      "titulo": "Cidade de Deus",
+      "duracao": 130,
+      "imagem": "https://upload.wikimedia.org/wikipedia/pt/1/10/CidadedeDeus.jpg",
+      "sinopse": "A violencia no Rio de Janeiro vista pelos olhos de Buscapé.",
+      "genero_ids": [
+        1,
+        3
+      ]
+    },
+    {
+      "titulo": "Tropa de Elite",
+      "duracao": 118,
+      "imagem": "https://upload.wikimedia.org/wikipedia/pt/thumb/2/2a/TropaDeElitePoster.jpg/250px-TropaDeElitePoster.jpg",
+      "sinopse": "Capitao Nascimento enfrenta o crime na favela da Babilonia.",
+      "genero_ids": [
+        1,
+        3,
+        8
+      ],
+      "id": 27
+    },
+    {
+      "titulo": "Central do Brasil",
+      "duracao": 113,
+      "imagem": "https://upload.wikimedia.org/wikipedia/pt/2/29/Central_do_Brasil_poster.jpg",
+      "sinopse": "Uma ex-professora ajuda um menino a encontrar o pai.",
+      "genero_ids": [
+        1,
+        2
+      ],
+      "id": 28
+    },
+    {
+      "titulo": "Minha Mae e uma Peca",
+      "duracao": 88,
+      "imagem": "https://upload.wikimedia.org/wikipedia/pt/thumb/d/da/Minha_M%C3%A3e_%C3%A9_uma_Pe%C3%A7a.jpg/250px-Minha_M%C3%A3e_%C3%A9_uma_Pe%C3%A7a.jpg",
+      "sinopse": "As confusoes de uma familia carioca com a mae exagerada.",
+      "genero_ids": [
+        4
+      ],
+      "id": 29
+    },
+    {
+      "titulo": "Se Eu Fosse Voce",
+      "duracao": 98,
+      "imagem": "https://upload.wikimedia.org/wikipedia/pt/thumb/1/1a/P%C3%B4ster_Se_Eu_Fosse_Voc%C3%AA.jpg/250px-P%C3%B4ster_Se_Eu_Fosse_Voc%C3%AA.jpg",
+      "sinopse": "Um casal troca de corpo e precisa lidar com a vida do outro.",
+      "genero_ids": [
+        4,
+        2
+      ],
+      "id": 30
+    },
+    {
+      "titulo": "O Exorcista",
+      "duracao": 122,
+      "imagem": "https://upload.wikimedia.org/wikipedia/pt/thumb/a/a6/The_Exorcist_1973.jpg/250px-The_Exorcist_1973.jpg",
+      "sinopse": "Uma menina apresenta sinais de possessao demoníaca.",
+      "genero_ids": [
+        7,
+        8
+      ],
+      "id": 31
+    },
+    {
+      "titulo": "It: A Coisa",
+      "duracao": 135,
+      "imagem": "https://upload.wikimedia.org/wikipedia/pt/thumb/8/82/It_2017.jpg/250px-It_2017.jpg",
+      "sinopse": "Um grupo de amigos enfrenta um palhaco aterrorizante.",
+      "genero_ids": [
+        7,
+        8
+      ],
+      "id": 32
+    },
+    {
+      "titulo": "Ratatouille",
+      "duracao": 111,
+      "imagem": "https://upload.wikimedia.org/wikipedia/pt/8/82/Ratatouille_p%C3%B4ster.jpg",
+      "sinopse": "Um rato sonha em ser chef em Paris.",
+      "genero_ids": [
+        4,
+        6
+      ],
+      "id": 33
+    },
+    {
+      "titulo": "Up: Altas Aventuras",
+      "duracao": 96,
+      "imagem": "https://upload.wikimedia.org/wikipedia/pt/thumb/a/a8/Up_p%C3%B4ster.jpg/250px-Up_p%C3%B4ster.jpg",
+      "sinopse": "Um velhinho usa baloes para cumprir o sonho de sua esposa.",
+      "genero_ids": [
+        4,
+        6,
+        2
+      ],
+      "id": 34
+    },
+    {
+      "titulo": "Coco",
+      "duracao": 105,
+      "imagem": "https://upload.wikimedia.org/wikipedia/pt/thumb/a/ae/Cocofilme.png/250px-Cocofilme.png",
+      "sinopse": "Miguel viaja ao mundo dos mortos em busca de sua musica.",
+      "genero_ids": [
+        6,
+        1,
+        2
+      ],
+      "id": 35
     }
   ],
   "cinemas": [
     {
       "id": 1,
-      "nome": "Cinemark Paulista",
-      "endereco": "Av. Paulista, 1000 - Bela Vista, Sao Paulo - SP",
-      "telefone": "1133334444",
-      "cnpj": "12345678000199"
+      "nome": "Cinemark BarraShoppingSul",
+      "endereco": "Av. Otavio Rocha, 184 - Cristal, Porto Alegre - RS",
+      "telefone": "5133331001",
+      "cnpj": "12345678000101"
     },
     {
       "id": 2,
-      "nome": "UCI Kinoplex Iguatemi",
-      "endereco": "Av. Brigadeiro Faria Lima, 2232 - Sao Paulo - SP",
-      "telefone": "1144445555",
-      "cnpj": "98765432000188"
+      "nome": "Cinemark Praia de Belas",
+      "endereco": "Av. Borges de Medeiros, 1565 - Praia de Belas, Porto Alegre - RS",
+      "telefone": "5133331002",
+      "cnpj": "12345678000102"
     },
     {
       "id": 3,
-      "nome": "Cineart Estacao BH",
-      "endereco": "Praca da Estacao, 100 - Centro, Belo Horizonte - MG",
-      "telefone": "3155556666",
-      "cnpj": "11223344000177"
+      "nome": "UCI Kinoplex Bourbon Wallig",
+      "endereco": "Av. Tulio de Rose, 80 - Jardim Europa, Porto Alegre - RS",
+      "telefone": "5133331003",
+      "cnpj": "12345678000103"
+    },
+    {
+      "id": 4,
+      "nome": "Kinoplex Iguatemi Porto Alegre",
+      "endereco": "Av. Joao Wallig, 1800 - Passo da Areia, Porto Alegre - RS",
+      "telefone": "5133331004",
+      "cnpj": "12345678000104"
+    },
+    {
+      "id": 5,
+      "nome": "Cineflix Fontoura Xavier",
+      "endereco": "Rua Fontoura Xavier, 1127 - Petropolis, Porto Alegre - RS",
+      "telefone": "5133331005",
+      "cnpj": "12345678000105"
+    },
+    {
+      "id": 6,
+      "nome": "GNC Moinhos de Vento",
+      "endereco": "Rua Vinte e Quatro de Outubro, 1024 - Moinhos de Vento, Porto Alegre - RS",
+      "telefone": "5133331006",
+      "cnpj": "12345678000106"
+    },
+    {
+      "id": 7,
+      "nome": "Cinesystem Shopping Total",
+      "endereco": "Av. Cristovao Colombo, 545 - Floresta, Porto Alegre - RS",
+      "telefone": "5133331007",
+      "cnpj": "12345678000107"
+    },
+    {
+      "id": 8,
+      "nome": "Cinepolis Pantanal",
+      "endereco": "Av. Protasio Alves, 2278 - Petropolis, Porto Alegre - RS",
+      "telefone": "5133331008",
+      "cnpj": "12345678000108"
+    },
+    {
+      "id": 9,
+      "nome": "Orient Cine Madero",
+      "endereco": "Av. Marcio Verissimo de Souza, 300 - Jardim do Salso, Porto Alegre - RS",
+      "telefone": "5133331009",
+      "cnpj": "12345678000109"
+    },
+    {
+      "id": 10,
+      "nome": "Moviecom Praia de Belas",
+      "endereco": "Av. Borges de Medeiros, 1565 - Praia de Belas, Porto Alegre - RS",
+      "telefone": "5133331010",
+      "cnpj": "12345678000110"
+    },
+    {
+      "id": 11,
+      "nome": "Cine Ere",
+      "endereco": "Rua dos Andradas, 736 - Centro Historico, Porto Alegre - RS",
+      "telefone": "5133331011",
+      "cnpj": "12345678000111"
+    },
+    {
+      "id": 12,
+      "nome": "Cinemark Partage Norte",
+      "endereco": "Rua Lorenzi, 440 - Sarandi, Porto Alegre - RS",
+      "telefone": "5133331012",
+      "cnpj": "12345678000112"
     }
   ],
   "salas": [
     {
       "id": 1,
       "cinema_id": 1,
-      "nome": "Sala Premium 1"
+      "nome": "Sala 1"
     },
     {
       "id": 2,
       "cinema_id": 1,
-      "nome": "Sala Standard 2"
+      "nome": "Sala 2"
     },
     {
       "id": 3,
       "cinema_id": 1,
-      "nome": "Sala IMAX 3"
+      "nome": "Sala 3"
     },
     {
       "id": 4,
       "cinema_id": 2,
-      "nome": "Sala A"
+      "nome": "Sala 1"
     },
     {
       "id": 5,
       "cinema_id": 2,
-      "nome": "Sala B"
+      "nome": "Sala 2"
     },
     {
       "id": 6,
+      "cinema_id": 2,
+      "nome": "Sala 3"
+    },
+    {
+      "id": 7,
       "cinema_id": 3,
-      "nome": "Sala Principal"
+      "nome": "Sala 1"
+    },
+    {
+      "id": 8,
+      "cinema_id": 3,
+      "nome": "Sala 2"
+    },
+    {
+      "id": 9,
+      "cinema_id": 3,
+      "nome": "Sala 3"
+    },
+    {
+      "id": 10,
+      "cinema_id": 4,
+      "nome": "Sala 1"
+    },
+    {
+      "id": 11,
+      "cinema_id": 4,
+      "nome": "Sala 2"
+    },
+    {
+      "id": 12,
+      "cinema_id": 4,
+      "nome": "Sala 3"
+    },
+    {
+      "id": 13,
+      "cinema_id": 5,
+      "nome": "Sala 1"
+    },
+    {
+      "id": 14,
+      "cinema_id": 5,
+      "nome": "Sala 2"
+    },
+    {
+      "id": 15,
+      "cinema_id": 6,
+      "nome": "Sala 1"
+    },
+    {
+      "id": 16,
+      "cinema_id": 6,
+      "nome": "Sala 2"
+    },
+    {
+      "id": 17,
+      "cinema_id": 7,
+      "nome": "Sala 1"
+    },
+    {
+      "id": 18,
+      "cinema_id": 7,
+      "nome": "Sala 2"
+    },
+    {
+      "id": 19,
+      "cinema_id": 8,
+      "nome": "Sala 1"
+    },
+    {
+      "id": 20,
+      "cinema_id": 8,
+      "nome": "Sala 2"
+    },
+    {
+      "id": 21,
+      "cinema_id": 9,
+      "nome": "Sala 1"
+    },
+    {
+      "id": 22,
+      "cinema_id": 9,
+      "nome": "Sala 2"
+    },
+    {
+      "id": 23,
+      "cinema_id": 10,
+      "nome": "Sala 1"
+    },
+    {
+      "id": 24,
+      "cinema_id": 10,
+      "nome": "Sala 2"
+    },
+    {
+      "id": 25,
+      "cinema_id": 11,
+      "nome": "Sala 1"
+    },
+    {
+      "id": 26,
+      "cinema_id": 11,
+      "nome": "Sala 2"
+    },
+    {
+      "id": 27,
+      "cinema_id": 12,
+      "nome": "Sala 1"
+    },
+    {
+      "id": 28,
+      "cinema_id": 12,
+      "nome": "Sala 2"
     }
   ],
   "assentos": [
@@ -170,26 +679,158 @@
     {
       "id": 3,
       "sala_id": 3,
-      "fileira": 10,
-      "coluna": 12
-    },
-    {
-      "id": 4,
-      "sala_id": 4,
-      "fileira": 6,
-      "coluna": 8
-    },
-    {
-      "id": 5,
-      "sala_id": 5,
       "fileira": 7,
       "coluna": 9
     },
     {
+      "id": 4,
+      "sala_id": 4,
+      "fileira": 10,
+      "coluna": 12
+    },
+    {
+      "id": 5,
+      "sala_id": 5,
+      "fileira": 5,
+      "coluna": 8
+    },
+    {
       "id": 6,
       "sala_id": 6,
-      "fileira": 8,
+      "fileira": 6,
+      "coluna": 10
+    },
+    {
+      "id": 7,
+      "sala_id": 7,
+      "fileira": 6,
       "coluna": 8
+    },
+    {
+      "id": 8,
+      "sala_id": 8,
+      "fileira": 8,
+      "coluna": 10
+    },
+    {
+      "id": 9,
+      "sala_id": 9,
+      "fileira": 7,
+      "coluna": 9
+    },
+    {
+      "id": 10,
+      "sala_id": 10,
+      "fileira": 10,
+      "coluna": 12
+    },
+    {
+      "id": 11,
+      "sala_id": 11,
+      "fileira": 5,
+      "coluna": 8
+    },
+    {
+      "id": 12,
+      "sala_id": 12,
+      "fileira": 6,
+      "coluna": 10
+    },
+    {
+      "id": 13,
+      "sala_id": 13,
+      "fileira": 6,
+      "coluna": 8
+    },
+    {
+      "id": 14,
+      "sala_id": 14,
+      "fileira": 8,
+      "coluna": 10
+    },
+    {
+      "id": 15,
+      "sala_id": 15,
+      "fileira": 7,
+      "coluna": 9
+    },
+    {
+      "id": 16,
+      "sala_id": 16,
+      "fileira": 10,
+      "coluna": 12
+    },
+    {
+      "id": 17,
+      "sala_id": 17,
+      "fileira": 5,
+      "coluna": 8
+    },
+    {
+      "id": 18,
+      "sala_id": 18,
+      "fileira": 6,
+      "coluna": 10
+    },
+    {
+      "id": 19,
+      "sala_id": 19,
+      "fileira": 6,
+      "coluna": 8
+    },
+    {
+      "id": 20,
+      "sala_id": 20,
+      "fileira": 8,
+      "coluna": 10
+    },
+    {
+      "id": 21,
+      "sala_id": 21,
+      "fileira": 7,
+      "coluna": 9
+    },
+    {
+      "id": 22,
+      "sala_id": 22,
+      "fileira": 10,
+      "coluna": 12
+    },
+    {
+      "id": 23,
+      "sala_id": 23,
+      "fileira": 5,
+      "coluna": 8
+    },
+    {
+      "id": 24,
+      "sala_id": 24,
+      "fileira": 6,
+      "coluna": 10
+    },
+    {
+      "id": 25,
+      "sala_id": 25,
+      "fileira": 6,
+      "coluna": 8
+    },
+    {
+      "id": 26,
+      "sala_id": 26,
+      "fileira": 8,
+      "coluna": 10
+    },
+    {
+      "id": 27,
+      "sala_id": 27,
+      "fileira": 7,
+      "coluna": 9
+    },
+    {
+      "id": 28,
+      "sala_id": 28,
+      "fileira": 10,
+      "coluna": 12
     }
   ],
   "clientes": [
@@ -200,8 +841,8 @@
       "cpf": "11111111111",
       "data_nascimento": "1990-05-12",
       "genero": "masculino",
-      "endereco": "Rua das Flores, 120 - Vila Mariana, Sao Paulo - SP",
-      "telefone": "11988887777",
+      "endereco": "Rua Felipe Neri, 120 - Auxiliadora, Porto Alegre - RS",
+      "telefone": "51988887777",
       "email": "joao.silva@email.com"
     },
     {
@@ -211,8 +852,8 @@
       "cpf": "22222222222",
       "data_nascimento": "1995-08-23",
       "genero": "feminino",
-      "endereco": "Av. Brasil, 450 - Centro, Sao Paulo - SP",
-      "telefone": "11977776666",
+      "endereco": "Av. Ipiranga, 1500 - Azenha, Porto Alegre - RS",
+      "telefone": "51977776666",
       "email": "maria.souza@email.com"
     },
     {
@@ -222,8 +863,8 @@
       "cpf": "33333333333",
       "data_nascimento": "1988-11-03",
       "genero": "masculino",
-      "endereco": "Rua Augusta, 900 - Consolacao, Sao Paulo - SP",
-      "telefone": "11966665555",
+      "endereco": "Rua da Republica, 450 - Cidade Baixa, Porto Alegre - RS",
+      "telefone": "51966665555",
       "email": "pedro.santos@email.com"
     },
     {
@@ -233,9 +874,295 @@
       "cpf": "44444444444",
       "data_nascimento": "2000-02-18",
       "genero": "feminino",
-      "endereco": "Rua da Bahia, 300 - Centro, Belo Horizonte - MG",
-      "telefone": "31955554444",
+      "endereco": "Rua Jose do Patrocinio, 300 - Cidade Baixa, Porto Alegre - RS",
+      "telefone": "51955554444",
       "email": "ana.lima@email.com"
+    },
+    {
+      "id": 5,
+      "nome": "Lucas",
+      "sobrenome": "Ferreira",
+      "cpf": "55555555555",
+      "data_nascimento": "1993-07-14",
+      "genero": "masculino",
+      "endereco": "Av. Wenceslau Escobar, 900 - Tristeza, Porto Alegre - RS",
+      "telefone": "51944443333",
+      "email": "lucas.ferreira@email.com"
+    },
+    {
+      "id": 6,
+      "nome": "Juliana",
+      "sobrenome": "Rocha",
+      "cpf": "66666666666",
+      "data_nascimento": "1997-01-30",
+      "genero": "feminino",
+      "endereco": "Rua Padre Chagas, 200 - Moinhos de Vento, Porto Alegre - RS",
+      "telefone": "51933332222",
+      "email": "juliana.rocha@email.com"
+    },
+    {
+      "id": 7,
+      "nome": "Bruno",
+      "sobrenome": "Almeida",
+      "cpf": "77777777777",
+      "data_nascimento": "1985-09-22",
+      "genero": "masculino",
+      "endereco": "Av. Bento Goncalves, 1200 - Partenon, Porto Alegre - RS",
+      "telefone": "51922221111",
+      "email": "bruno.almeida@email.com"
+    },
+    {
+      "id": 8,
+      "nome": "Camila",
+      "sobrenome": "Pereira",
+      "cpf": "88888888888",
+      "data_nascimento": "1999-12-08",
+      "genero": "feminino",
+      "endereco": "Rua Dona Laura, 88 - Rio Branco, Porto Alegre - RS",
+      "telefone": "51911110000",
+      "email": "camila.pereira@email.com"
+    },
+    {
+      "id": 9,
+      "nome": "Ricardo",
+      "sobrenome": "Gomes",
+      "cpf": "99999999999",
+      "data_nascimento": "1991-04-17",
+      "genero": "masculino",
+      "endereco": "Av. Assis Brasil, 2500 - Sarandi, Porto Alegre - RS",
+      "telefone": "51900009999",
+      "email": "ricardo.gomes@email.com"
+    },
+    {
+      "id": 10,
+      "nome": "Fernanda",
+      "sobrenome": "Martins",
+      "cpf": "10101010101",
+      "data_nascimento": "1996-06-25",
+      "genero": "feminino",
+      "endereco": "Rua Ramiro Barcelos, 600 - Independencia, Porto Alegre - RS",
+      "telefone": "51990008888",
+      "email": "fernanda.martins@email.com"
+    },
+    {
+      "id": 11,
+      "nome": "Diego",
+      "sobrenome": "Cardoso",
+      "cpf": "12121212121",
+      "data_nascimento": "1987-03-11",
+      "genero": "masculino",
+      "endereco": "Av. Protasio Alves, 5000 - Petropolis, Porto Alegre - RS",
+      "telefone": "51980007777",
+      "email": "diego.cardoso@email.com"
+    },
+    {
+      "id": 12,
+      "nome": "Patricia",
+      "sobrenome": "Nunes",
+      "cpf": "13131313131",
+      "data_nascimento": "1994-10-02",
+      "genero": "feminino",
+      "endereco": "Rua Voluntarios da Patria, 350 - Bom Fim, Porto Alegre - RS",
+      "telefone": "51970006666",
+      "email": "patricia.nunes@email.com"
+    },
+    {
+      "id": 13,
+      "nome": "Roberto",
+      "sobrenome": "Machado",
+      "cpf": "14141414140",
+      "data_nascimento": "1989-04-03",
+      "genero": "masculino",
+      "endereco": "Rua Sarmento Leite, 200 - Centro, Porto Alegre - RS",
+      "telefone": "51960005555",
+      "email": "roberto.machado@email.com"
+    },
+    {
+      "id": 14,
+      "nome": "Carla",
+      "sobrenome": "Moura",
+      "cpf": "15151515150",
+      "data_nascimento": "1992-09-17",
+      "genero": "feminino",
+      "endereco": "Av. Protasio Alves, 1200 - Petropolis, Porto Alegre - RS",
+      "telefone": "51950004444",
+      "email": "carla.moura@email.com"
+    },
+    {
+      "id": 15,
+      "nome": "Thiago",
+      "sobrenome": "Barros",
+      "cpf": "16161616160",
+      "data_nascimento": "1998-12-01",
+      "genero": "masculino",
+      "endereco": "Rua Lima e Silva, 450 - Cidade Baixa, Porto Alegre - RS",
+      "telefone": "51940003333",
+      "email": "thiago.barros@email.com"
+    },
+    {
+      "id": 16,
+      "nome": "Vanessa",
+      "sobrenome": "Campos",
+      "cpf": "17171717170",
+      "data_nascimento": "1994-06-28",
+      "genero": "feminino",
+      "endereco": "Av. Bento Goncalves, 800 - Partenon, Porto Alegre - RS",
+      "telefone": "51930002222",
+      "email": "vanessa.campos@email.com"
+    },
+    {
+      "id": 17,
+      "nome": "Eduardo",
+      "sobrenome": "Pinto",
+      "cpf": "18181818180",
+      "data_nascimento": "1987-08-09",
+      "genero": "masculino",
+      "endereco": "Rua General Candido, 90 - Bom Fim, Porto Alegre - RS",
+      "telefone": "51920001111",
+      "email": "eduardo.pinto@email.com"
+    },
+    {
+      "id": 18,
+      "nome": "Gabriela",
+      "sobrenome": "Freitas",
+      "cpf": "19191919190",
+      "data_nascimento": "2001-03-22",
+      "genero": "feminino",
+      "endereco": "Rua Dona Laura, 220 - Rio Branco, Porto Alegre - RS",
+      "telefone": "51910000000",
+      "email": "gabriela.freitas@email.com"
+    },
+    {
+      "id": 19,
+      "nome": "Andre",
+      "sobrenome": "Correia",
+      "cpf": "20202020201",
+      "data_nascimento": "1990-11-14",
+      "genero": "masculino",
+      "endereco": "Av. Assis Brasil, 1800 - Sarandi, Porto Alegre - RS",
+      "telefone": "51990001111",
+      "email": "andre.correia@email.com"
+    },
+    {
+      "id": 20,
+      "nome": "Isabela",
+      "sobrenome": "Monteiro",
+      "cpf": "21212121210",
+      "data_nascimento": "1996-07-06",
+      "genero": "feminino",
+      "endereco": "Rua 24 de Outubro, 500 - Moinhos de Vento, Porto Alegre - RS",
+      "telefone": "51980002222",
+      "email": "isabela.monteiro@email.com"
+    },
+    {
+      "id": 21,
+      "nome": "Felipe",
+      "sobrenome": "Araujo",
+      "cpf": "22222222201",
+      "data_nascimento": "1984-01-25",
+      "genero": "masculino",
+      "endereco": "Av. Wenceslau Escobar, 1200 - Tristeza, Porto Alegre - RS",
+      "telefone": "51970003333",
+      "email": "felipe.araujo@email.com"
+    },
+    {
+      "id": 22,
+      "nome": "Larissa",
+      "sobrenome": "Cunha",
+      "cpf": "23232323230",
+      "data_nascimento": "1999-10-30",
+      "genero": "feminino",
+      "endereco": "Rua Jose Bonifacio, 300 - Centro, Porto Alegre - RS",
+      "telefone": "51960004444",
+      "email": "larissa.cunha@email.com"
+    },
+    {
+      "id": 23,
+      "nome": "Henrique",
+      "sobrenome": "Lopes",
+      "cpf": "24242424240",
+      "data_nascimento": "1993-05-19",
+      "genero": "masculino",
+      "endereco": "Av. Ipiranga, 2200 - Azenha, Porto Alegre - RS",
+      "telefone": "51950005555",
+      "email": "henrique.lopes@email.com"
+    },
+    {
+      "id": 24,
+      "nome": "Mariana",
+      "sobrenome": "Duarte",
+      "cpf": "25252525250",
+      "data_nascimento": "1997-02-08",
+      "genero": "feminino",
+      "endereco": "Rua General Joao Manoel, 150 - Centro Historico, Porto Alegre - RS",
+      "telefone": "51940006666",
+      "email": "mariana.duarte@email.com"
+    },
+    {
+      "id": 25,
+      "nome": "Paulo",
+      "sobrenome": "Rezende",
+      "cpf": "26262626260",
+      "data_nascimento": "1986-12-12",
+      "genero": "masculino",
+      "endereco": "Av. Cristovao Colombo, 900 - Floresta, Porto Alegre - RS",
+      "telefone": "51930007777",
+      "email": "paulo.rezende@email.com"
+    },
+    {
+      "id": 26,
+      "nome": "Renata",
+      "sobrenome": "Farias",
+      "cpf": "27272727270",
+      "data_nascimento": "1991-08-04",
+      "genero": "feminino",
+      "endereco": "Rua Padre Chagas, 400 - Moinhos de Vento, Porto Alegre - RS",
+      "telefone": "51920008888",
+      "email": "renata.farias@email.com"
+    },
+    {
+      "id": 27,
+      "nome": "Daniel",
+      "sobrenome": "Vargas",
+      "cpf": "28282828280",
+      "data_nascimento": "1995-04-16",
+      "genero": "masculino",
+      "endereco": "Av. Borges de Medeiros, 600 - Praia de Belas, Porto Alegre - RS",
+      "telefone": "51910009999",
+      "email": "daniel.vargas@email.com"
+    },
+    {
+      "id": 28,
+      "nome": "Aline",
+      "sobrenome": "Teixeira",
+      "cpf": "29292929290",
+      "data_nascimento": "2000-09-27",
+      "genero": "feminino",
+      "endereco": "Rua Felipe Neri, 500 - Auxiliadora, Porto Alegre - RS",
+      "telefone": "51900001112",
+      "email": "aline.teixeira@email.com"
+    },
+    {
+      "id": 29,
+      "nome": "Leonardo",
+      "sobrenome": "Moraes",
+      "cpf": "30303030301",
+      "data_nascimento": "1988-06-18",
+      "genero": "masculino",
+      "endereco": "Rua Voluntarios da Patria, 600 - Bom Fim, Porto Alegre - RS",
+      "telefone": "51900002223",
+      "email": "leonardo.moraes@email.com"
+    },
+    {
+      "id": 30,
+      "nome": "Simone",
+      "sobrenome": "Borges",
+      "cpf": "31313131310",
+      "data_nascimento": "1994-03-05",
+      "genero": "feminino",
+      "endereco": "Av. Tulio de Rose, 200 - Jardim Europa, Porto Alegre - RS",
+      "telefone": "51900003334",
+      "email": "simone.borges@email.com"
     }
   ],
   "funcionarios": [
@@ -243,11 +1170,11 @@
       "id": 1,
       "nome": "Carlos",
       "sobrenome": "Oliveira",
-      "cpf": "55555555555",
+      "cpf": "14141414141",
       "data_nascimento": "1992-03-10",
       "genero": "masculino",
-      "endereco": "Rua das Palmeiras, 50 - Sao Paulo - SP",
-      "telefone": "11977777777",
+      "endereco": "Rua Andradas, 50 - Centro, Porto Alegre - RS",
+      "telefone": "51977777777",
       "email": "carlos@cinema.com",
       "data_admissao": "2020-01-15",
       "cargo": "Gerente",
@@ -258,11 +1185,11 @@
       "id": 2,
       "nome": "Ana",
       "sobrenome": "Costa",
-      "cpf": "66666666666",
+      "cpf": "15151515151",
       "data_nascimento": "1998-07-22",
       "genero": "feminino",
-      "endereco": "Av. Brasil, 200 - Sao Paulo - SP",
-      "telefone": "11966666666",
+      "endereco": "Rua dos Andradas, 200 - Centro, Porto Alegre - RS",
+      "telefone": "51966666666",
       "email": "ana.costa@cinema.com",
       "data_admissao": "2023-06-01",
       "cargo": "Atendente",
@@ -273,16 +1200,91 @@
       "id": 3,
       "nome": "Rafael",
       "sobrenome": "Mendes",
-      "cpf": "77777777777",
+      "cpf": "16161616161",
       "data_nascimento": "1994-12-05",
       "genero": "masculino",
-      "endereco": "Rua XV de Novembro, 88 - Belo Horizonte - MG",
-      "telefone": "31944443333",
+      "endereco": "Av. Borges de Medeiros, 88 - Praia de Belas, Porto Alegre - RS",
+      "telefone": "51955555555",
       "email": "rafael.mendes@cinema.com",
       "data_admissao": "2022-09-10",
       "cargo": "Operador de Projecao",
       "salario": 3200,
       "ativo": true
+    },
+    {
+      "id": 4,
+      "nome": "Beatriz",
+      "sobrenome": "Ramos",
+      "cpf": "17171717171",
+      "data_nascimento": "1990-08-19",
+      "genero": "feminino",
+      "endereco": "Rua Felipe Neri, 300 - Auxiliadora, Porto Alegre - RS",
+      "telefone": "51944444444",
+      "email": "beatriz.ramos@cinema.com",
+      "data_admissao": "2019-04-20",
+      "cargo": "Supervisora",
+      "salario": 4200,
+      "ativo": true
+    },
+    {
+      "id": 5,
+      "nome": "Marcos",
+      "sobrenome": "Teixeira",
+      "cpf": "18181818181",
+      "data_nascimento": "1986-02-28",
+      "genero": "masculino",
+      "endereco": "Av. Cristovao Colombo, 200 - Floresta, Porto Alegre - RS",
+      "telefone": "51933333333",
+      "email": "marcos.teixeira@cinema.com",
+      "data_admissao": "2018-11-05",
+      "cargo": "Gerente",
+      "salario": 5800,
+      "ativo": true
+    },
+    {
+      "id": 6,
+      "nome": "Larissa",
+      "sobrenome": "Dias",
+      "cpf": "19191919191",
+      "data_nascimento": "1999-05-07",
+      "genero": "feminino",
+      "endereco": "Rua Padre Chagas, 100 - Moinhos de Vento, Porto Alegre - RS",
+      "telefone": "51922222222",
+      "email": "larissa.dias@cinema.com",
+      "data_admissao": "2024-02-14",
+      "cargo": "Atendente",
+      "salario": 2600,
+      "ativo": true
+    },
+    {
+      "id": 7,
+      "nome": "Gustavo",
+      "sobrenome": "Barbosa",
+      "cpf": "20202020202",
+      "data_nascimento": "1993-11-30",
+      "genero": "masculino",
+      "endereco": "Av. Wenceslau Escobar, 400 - Tristeza, Porto Alegre - RS",
+      "telefone": "51911111111",
+      "email": "gustavo.barbosa@cinema.com",
+      "data_admissao": "2021-08-22",
+      "cargo": "Operador de Projecao",
+      "salario": 3100,
+      "ativo": true
+    },
+    {
+      "id": 8,
+      "nome": "Helena",
+      "sobrenome": "Vieira",
+      "cpf": "21212121212",
+      "data_nascimento": "1991-01-15",
+      "genero": "feminino",
+      "endereco": "Rua da Republica, 150 - Cidade Baixa, Porto Alegre - RS",
+      "telefone": "51900000000",
+      "email": "helena.vieira@cinema.com",
+      "data_admissao": "2017-03-03",
+      "cargo": "Caixa",
+      "salario": 2400,
+      "ativo": false
     }
   ],
   "sessoes": [
@@ -290,261 +1292,1627 @@
       "id": 1,
       "filme_id": 1,
       "sala_id": 1,
-      "data_hora": "2026-06-15T19:00",
-      "preco": 59.99,
-      "dublado": true
-    },
-    {
-      "id": 2,
-      "filme_id": 1,
-      "sala_id": 1,
-      "data_hora": "2026-06-15T22:00",
-      "preco": 49.99,
-      "dublado": false
-    },
-    {
-      "id": 3,
-      "filme_id": 2,
-      "sala_id": 3,
-      "data_hora": "2026-06-16T20:00",
-      "preco": 69.99,
-      "dublado": false
-    },
-    {
-      "id": 4,
-      "filme_id": 3,
-      "sala_id": 2,
-      "data_hora": "2026-06-17T18:30",
+      "data_hora": "2026-06-15T14:00",
       "preco": 44.9,
       "dublado": true
     },
     {
-      "id": 5,
-      "filme_id": 4,
-      "sala_id": 4,
-      "data_hora": "2026-06-18T21:00",
+      "id": 2,
+      "filme_id": 2,
+      "sala_id": 2,
+      "data_hora": "2026-06-15T16:30",
+      "preco": 49.9,
+      "dublado": true
+    },
+    {
+      "id": 3,
+      "filme_id": 3,
+      "sala_id": 3,
+      "data_hora": "2026-06-16T14:00",
       "preco": 54.9,
       "dublado": false
     },
     {
-      "id": 6,
+      "id": 4,
+      "filme_id": 4,
+      "sala_id": 4,
+      "data_hora": "2026-06-16T16:30",
+      "preco": 59.99,
+      "dublado": true
+    },
+    {
+      "id": 5,
       "filme_id": 5,
       "sala_id": 5,
-      "data_hora": "2026-06-19T19:30",
-      "preco": 49.9,
+      "data_hora": "2026-06-17T14:00",
+      "preco": 69.99,
+      "dublado": true
+    },
+    {
+      "id": 6,
+      "filme_id": 6,
+      "sala_id": 6,
+      "data_hora": "2026-06-17T16:30",
+      "preco": 39.9,
       "dublado": false
     },
     {
       "id": 7,
-      "filme_id": 6,
-      "sala_id": 6,
-      "data_hora": "2026-06-20T15:00",
-      "preco": 39.9,
+      "filme_id": 7,
+      "sala_id": 7,
+      "data_hora": "2026-06-18T14:00",
+      "preco": 44.9,
       "dublado": true
     },
     {
       "id": 8,
-      "filme_id": 2,
-      "sala_id": 3,
-      "data_hora": "2026-06-21T17:00",
+      "filme_id": 8,
+      "sala_id": 8,
+      "data_hora": "2026-06-18T16:30",
+      "preco": 49.9,
+      "dublado": true
+    },
+    {
+      "id": 9,
+      "filme_id": 9,
+      "sala_id": 9,
+      "data_hora": "2026-06-19T14:00",
+      "preco": 54.9,
+      "dublado": false
+    },
+    {
+      "id": 10,
+      "filme_id": 10,
+      "sala_id": 10,
+      "data_hora": "2026-06-19T16:30",
+      "preco": 59.99,
+      "dublado": true
+    },
+    {
+      "id": 11,
+      "filme_id": 11,
+      "sala_id": 11,
+      "data_hora": "2026-06-20T14:00",
       "preco": 69.99,
       "dublado": true
+    },
+    {
+      "id": 12,
+      "filme_id": 12,
+      "sala_id": 12,
+      "data_hora": "2026-06-20T16:30",
+      "preco": 39.9,
+      "dublado": false
+    },
+    {
+      "id": 13,
+      "filme_id": 13,
+      "sala_id": 13,
+      "data_hora": "2026-06-21T14:00",
+      "preco": 44.9,
+      "dublado": true
+    },
+    {
+      "id": 14,
+      "filme_id": 14,
+      "sala_id": 14,
+      "data_hora": "2026-06-21T16:30",
+      "preco": 49.9,
+      "dublado": true
+    },
+    {
+      "id": 15,
+      "filme_id": 15,
+      "sala_id": 15,
+      "data_hora": "2026-06-22T14:00",
+      "preco": 54.9,
+      "dublado": false
+    },
+    {
+      "id": 16,
+      "filme_id": 16,
+      "sala_id": 16,
+      "data_hora": "2026-06-22T16:30",
+      "preco": 59.99,
+      "dublado": true
+    },
+    {
+      "id": 17,
+      "filme_id": 17,
+      "sala_id": 17,
+      "data_hora": "2026-06-23T14:00",
+      "preco": 69.99,
+      "dublado": true
+    },
+    {
+      "id": 18,
+      "filme_id": 18,
+      "sala_id": 18,
+      "data_hora": "2026-06-23T16:30",
+      "preco": 39.9,
+      "dublado": false
+    },
+    {
+      "id": 19,
+      "filme_id": 19,
+      "sala_id": 19,
+      "data_hora": "2026-06-24T14:00",
+      "preco": 44.9,
+      "dublado": true
+    },
+    {
+      "id": 20,
+      "filme_id": 20,
+      "sala_id": 20,
+      "data_hora": "2026-06-24T16:30",
+      "preco": 49.9,
+      "dublado": true
+    },
+    {
+      "id": 21,
+      "filme_id": 21,
+      "sala_id": 21,
+      "data_hora": "2026-06-25T14:00",
+      "preco": 54.9,
+      "dublado": false
+    },
+    {
+      "id": 22,
+      "filme_id": 22,
+      "sala_id": 22,
+      "data_hora": "2026-06-25T16:30",
+      "preco": 59.99,
+      "dublado": true
+    },
+    {
+      "id": 23,
+      "filme_id": 23,
+      "sala_id": 23,
+      "data_hora": "2026-06-26T14:00",
+      "preco": 69.99,
+      "dublado": true
+    },
+    {
+      "id": 24,
+      "filme_id": 24,
+      "sala_id": 24,
+      "data_hora": "2026-06-26T16:30",
+      "preco": 39.9,
+      "dublado": false
+    },
+    {
+      "id": 25,
+      "filme_id": 25,
+      "sala_id": 25,
+      "data_hora": "2026-06-27T14:00",
+      "preco": 44.9,
+      "dublado": true
+    },
+    {
+      "id": 26,
+      "filme_id": 26,
+      "sala_id": 26,
+      "data_hora": "2026-06-27T16:30",
+      "preco": 49.9,
+      "dublado": true
+    },
+    {
+      "id": 27,
+      "filme_id": 27,
+      "sala_id": 27,
+      "data_hora": "2026-06-28T14:00",
+      "preco": 54.9,
+      "dublado": false
+    },
+    {
+      "id": 28,
+      "filme_id": 28,
+      "sala_id": 28,
+      "data_hora": "2026-06-28T16:30",
+      "preco": 59.99,
+      "dublado": true
+    },
+    {
+      "id": 29,
+      "filme_id": 29,
+      "sala_id": 1,
+      "data_hora": "2026-06-29T14:00",
+      "preco": 69.99,
+      "dublado": true
+    },
+    {
+      "id": 30,
+      "filme_id": 30,
+      "sala_id": 2,
+      "data_hora": "2026-06-29T16:30",
+      "preco": 39.9,
+      "dublado": false
+    },
+    {
+      "id": 31,
+      "filme_id": 31,
+      "sala_id": 3,
+      "data_hora": "2026-06-30T14:00",
+      "preco": 44.9,
+      "dublado": true
+    },
+    {
+      "id": 32,
+      "filme_id": 32,
+      "sala_id": 4,
+      "data_hora": "2026-06-30T16:30",
+      "preco": 49.9,
+      "dublado": true
+    },
+    {
+      "id": 33,
+      "filme_id": 33,
+      "sala_id": 13,
+      "data_hora": "2026-07-01T16:30",
+      "preco": 69.99,
+      "dublado": false
+    },
+    {
+      "id": 34,
+      "filme_id": 34,
+      "sala_id": 16,
+      "data_hora": "2026-07-02T19:00",
+      "preco": 39.9,
+      "dublado": true
+    },
+    {
+      "id": 35,
+      "filme_id": 35,
+      "sala_id": 19,
+      "data_hora": "2026-07-03T21:30",
+      "preco": 44.9,
+      "dublado": false
+    },
+    {
+      "id": 36,
+      "filme_id": 1,
+      "sala_id": 22,
+      "data_hora": "2026-07-04T14:00",
+      "preco": 49.9,
+      "dublado": true
+    },
+    {
+      "id": 37,
+      "filme_id": 2,
+      "sala_id": 25,
+      "data_hora": "2026-07-05T16:30",
+      "preco": 54.9,
+      "dublado": false
+    },
+    {
+      "id": 38,
+      "filme_id": 3,
+      "sala_id": 28,
+      "data_hora": "2026-07-06T19:00",
+      "preco": 59.99,
+      "dublado": true
+    },
+    {
+      "id": 39,
+      "filme_id": 4,
+      "sala_id": 3,
+      "data_hora": "2026-07-07T21:30",
+      "preco": 69.99,
+      "dublado": false
+    },
+    {
+      "id": 40,
+      "filme_id": 5,
+      "sala_id": 6,
+      "data_hora": "2026-07-08T14:00",
+      "preco": 39.9,
+      "dublado": true
+    },
+    {
+      "id": 41,
+      "filme_id": 6,
+      "sala_id": 9,
+      "data_hora": "2026-07-09T16:30",
+      "preco": 44.9,
+      "dublado": false
+    },
+    {
+      "id": 42,
+      "filme_id": 7,
+      "sala_id": 12,
+      "data_hora": "2026-07-10T19:00",
+      "preco": 49.9,
+      "dublado": true
+    },
+    {
+      "id": 43,
+      "filme_id": 8,
+      "sala_id": 15,
+      "data_hora": "2026-07-11T21:30",
+      "preco": 54.9,
+      "dublado": false
+    },
+    {
+      "id": 44,
+      "filme_id": 9,
+      "sala_id": 18,
+      "data_hora": "2026-07-12T14:00",
+      "preco": 59.99,
+      "dublado": true
+    },
+    {
+      "id": 45,
+      "filme_id": 10,
+      "sala_id": 21,
+      "data_hora": "2026-07-13T16:30",
+      "preco": 69.99,
+      "dublado": false
+    },
+    {
+      "id": 46,
+      "filme_id": 11,
+      "sala_id": 24,
+      "data_hora": "2026-07-14T19:00",
+      "preco": 39.9,
+      "dublado": true
+    },
+    {
+      "id": 47,
+      "filme_id": 12,
+      "sala_id": 27,
+      "data_hora": "2026-07-15T21:30",
+      "preco": 44.9,
+      "dublado": false
     }
   ],
   "pedidos": [
     {
       "id": 1,
-      "cliente_id": 1,
-      "status": "pago",
-      "valor_total": 59.99
+      "cliente_id": 22,
+      "status": "pendente",
+      "valor_total": 179.6
     },
     {
       "id": 2,
-      "cliente_id": 2,
-      "status": "pendente",
-      "valor_total": 239.96
+      "cliente_id": 4,
+      "status": "aprovado",
+      "valor_total": 79.8
     },
     {
       "id": 3,
-      "cliente_id": 3,
+      "cliente_id": 22,
       "status": "aprovado",
-      "valor_total": 139.98
-    },
-    {
-      "id": 4,
-      "cliente_id": 4,
-      "status": "pago",
       "valor_total": 109.8
     },
     {
+      "id": 4,
+      "cliente_id": 23,
+      "status": "aprovado",
+      "valor_total": 79.8
+    },
+    {
       "id": 5,
-      "cliente_id": 1,
-      "status": "cancelado",
+      "cliente_id": 18,
+      "status": "aprovado",
       "valor_total": 44.9
     },
     {
       "id": 6,
-      "cliente_id": 2,
+      "cliente_id": 5,
+      "status": "aprovado",
+      "valor_total": 179.97
+    },
+    {
+      "id": 7,
+      "cliente_id": 18,
+      "status": "aprovado",
+      "valor_total": 199.6
+    },
+    {
+      "id": 8,
+      "cliente_id": 9,
+      "status": "aprovado",
+      "valor_total": 209.97
+    },
+    {
+      "id": 9,
+      "cliente_id": 7,
+      "status": "pendente",
+      "valor_total": 139.98
+    },
+    {
+      "id": 10,
+      "cliente_id": 3,
+      "status": "aprovado",
+      "valor_total": 109.8
+    },
+    {
+      "id": 11,
+      "cliente_id": 13,
+      "status": "pendente",
+      "valor_total": 199.6
+    },
+    {
+      "id": 12,
+      "cliente_id": 9,
+      "status": "aprovado",
+      "valor_total": 239.96
+    },
+    {
+      "id": 13,
+      "cliente_id": 16,
+      "status": "aprovado",
+      "valor_total": 79.8
+    },
+    {
+      "id": 14,
+      "cliente_id": 10,
+      "status": "aprovado",
+      "valor_total": 239.96
+    },
+    {
+      "id": 15,
+      "cliente_id": 17,
+      "status": "pendente",
+      "valor_total": 44.9
+    },
+    {
+      "id": 16,
+      "cliente_id": 27,
+      "status": "aprovado",
+      "valor_total": 59.99
+    },
+    {
+      "id": 17,
+      "cliente_id": 15,
+      "status": "pendente",
+      "valor_total": 134.7
+    },
+    {
+      "id": 18,
+      "cliente_id": 14,
+      "status": "aprovado",
+      "valor_total": 59.99
+    },
+    {
+      "id": 19,
+      "cliente_id": 10,
+      "status": "aprovado",
+      "valor_total": 59.99
+    },
+    {
+      "id": 20,
+      "cliente_id": 29,
+      "status": "pendente",
+      "valor_total": 179.6
+    },
+    {
+      "id": 21,
+      "cliente_id": 26,
+      "status": "aprovado",
+      "valor_total": 59.99
+    },
+    {
+      "id": 22,
+      "cliente_id": 23,
+      "status": "aprovado",
+      "valor_total": 159.6
+    },
+    {
+      "id": 23,
+      "cliente_id": 26,
       "status": "aprovado",
       "valor_total": 149.7
     },
     {
-      "id": 7,
-      "cliente_id": 3,
+      "id": 24,
+      "cliente_id": 5,
       "status": "aprovado",
-      "valor_total": 44.9
+      "valor_total": 279.96
+    },
+    {
+      "id": 25,
+      "cliente_id": 18,
+      "status": "aprovado",
+      "valor_total": 49.9
+    },
+    {
+      "id": 26,
+      "cliente_id": 5,
+      "status": "aprovado",
+      "valor_total": 239.96
+    },
+    {
+      "id": 27,
+      "cliente_id": 17,
+      "status": "aprovado",
+      "valor_total": 134.7
+    },
+    {
+      "id": 28,
+      "cliente_id": 4,
+      "status": "aprovado",
+      "valor_total": 279.96
+    },
+    {
+      "id": 29,
+      "cliente_id": 3,
+      "status": "pendente",
+      "valor_total": 159.6
+    },
+    {
+      "id": 30,
+      "cliente_id": 30,
+      "status": "pendente",
+      "valor_total": 119.98
+    },
+    {
+      "id": 31,
+      "cliente_id": 9,
+      "status": "aprovado",
+      "valor_total": 239.96
+    },
+    {
+      "id": 32,
+      "cliente_id": 14,
+      "status": "pendente",
+      "valor_total": 119.7
+    },
+    {
+      "id": 33,
+      "cliente_id": 2,
+      "status": "pendente",
+      "valor_total": 69.99
+    },
+    {
+      "id": 34,
+      "cliente_id": 23,
+      "status": "aprovado",
+      "valor_total": 89.8
+    },
+    {
+      "id": 35,
+      "cliente_id": 23,
+      "status": "pendente",
+      "valor_total": 209.97
+    },
+    {
+      "id": 36,
+      "cliente_id": 21,
+      "status": "cancelado",
+      "valor_total": 119.98
+    },
+    {
+      "id": 37,
+      "cliente_id": 10,
+      "status": "cancelado",
+      "valor_total": 89.8
+    },
+    {
+      "id": 38,
+      "cliente_id": 9,
+      "status": "cancelado",
+      "valor_total": 49.9
+    },
+    {
+      "id": 39,
+      "cliente_id": 10,
+      "status": "cancelado",
+      "valor_total": 79.8
     }
   ],
   "ingressos": [
     {
       "id": 1,
       "pedido_id": 1,
-      "sessao_id": 1,
-      "fileira": 3,
-      "coluna": 3,
-      "preco": 59.99
+      "sessao_id": 47,
+      "fileira": 1,
+      "coluna": 8,
+      "preco": 44.9
     },
     {
       "id": 2,
-      "pedido_id": 2,
-      "sessao_id": 1,
-      "fileira": 1,
-      "coluna": 3,
-      "preco": 59.99
+      "pedido_id": 1,
+      "sessao_id": 47,
+      "fileira": 2,
+      "coluna": 1,
+      "preco": 44.9
     },
     {
       "id": 3,
-      "pedido_id": 2,
-      "sessao_id": 1,
-      "fileira": 2,
-      "coluna": 3,
-      "preco": 59.99
+      "pedido_id": 1,
+      "sessao_id": 47,
+      "fileira": 5,
+      "coluna": 2,
+      "preco": 44.9
     },
     {
       "id": 4,
-      "pedido_id": 2,
-      "sessao_id": 1,
-      "fileira": 1,
-      "coluna": 4,
-      "preco": 59.99
-    },
-    {
-      "id": 5,
-      "pedido_id": 2,
-      "sessao_id": 1,
-      "fileira": 2,
-      "coluna": 4,
-      "preco": 59.99
-    },
-    {
-      "id": 6,
-      "pedido_id": 3,
-      "sessao_id": 3,
-      "fileira": 5,
-      "coluna": 5,
-      "preco": 69.99
-    },
-    {
-      "id": 7,
-      "pedido_id": 3,
-      "sessao_id": 3,
-      "fileira": 5,
-      "coluna": 6,
-      "preco": 69.99
-    },
-    {
-      "id": 8,
-      "pedido_id": 4,
-      "sessao_id": 5,
-      "fileira": 4,
-      "coluna": 2,
-      "preco": 54.9
-    },
-    {
-      "id": 9,
-      "pedido_id": 4,
-      "sessao_id": 5,
-      "fileira": 4,
-      "coluna": 3,
-      "preco": 54.9
-    },
-    {
-      "id": 10,
-      "pedido_id": 5,
-      "sessao_id": 4,
+      "pedido_id": 1,
+      "sessao_id": 47,
       "fileira": 2,
       "coluna": 5,
       "preco": 44.9
     },
     {
-      "id": 11,
-      "pedido_id": 6,
-      "sessao_id": 6,
+      "id": 5,
+      "pedido_id": 2,
+      "sessao_id": 24,
+      "fileira": 6,
+      "coluna": 5,
+      "preco": 39.9
+    },
+    {
+      "id": 6,
+      "pedido_id": 2,
+      "sessao_id": 24,
+      "fileira": 2,
+      "coluna": 3,
+      "preco": 39.9
+    },
+    {
+      "id": 7,
+      "pedido_id": 3,
+      "sessao_id": 37,
       "fileira": 3,
       "coluna": 4,
-      "preco": 49.9
+      "preco": 54.9
+    },
+    {
+      "id": 8,
+      "pedido_id": 3,
+      "sessao_id": 37,
+      "fileira": 6,
+      "coluna": 3,
+      "preco": 54.9
+    },
+    {
+      "id": 9,
+      "pedido_id": 4,
+      "sessao_id": 18,
+      "fileira": 1,
+      "coluna": 9,
+      "preco": 39.9
+    },
+    {
+      "id": 10,
+      "pedido_id": 4,
+      "sessao_id": 18,
+      "fileira": 3,
+      "coluna": 1,
+      "preco": 39.9
+    },
+    {
+      "id": 11,
+      "pedido_id": 5,
+      "sessao_id": 1,
+      "fileira": 2,
+      "coluna": 1,
+      "preco": 44.9
     },
     {
       "id": 12,
       "pedido_id": 6,
-      "sessao_id": 6,
-      "fileira": 3,
-      "coluna": 5,
-      "preco": 49.9
+      "sessao_id": 44,
+      "fileira": 6,
+      "coluna": 10,
+      "preco": 59.99
     },
     {
       "id": 13,
       "pedido_id": 6,
-      "sessao_id": 6,
+      "sessao_id": 44,
       "fileira": 3,
+      "coluna": 4,
+      "preco": 59.99
+    },
+    {
+      "id": 14,
+      "pedido_id": 6,
+      "sessao_id": 44,
+      "fileira": 1,
+      "coluna": 3,
+      "preco": 59.99
+    },
+    {
+      "id": 15,
+      "pedido_id": 7,
+      "sessao_id": 8,
+      "fileira": 6,
+      "coluna": 2,
+      "preco": 49.9
+    },
+    {
+      "id": 16,
+      "pedido_id": 7,
+      "sessao_id": 8,
+      "fileira": 5,
       "coluna": 6,
       "preco": 49.9
     },
     {
+      "id": 17,
       "pedido_id": 7,
-      "sessao_id": 4,
+      "sessao_id": 8,
+      "fileira": 1,
+      "coluna": 4,
+      "preco": 49.9
+    },
+    {
+      "id": 18,
+      "pedido_id": 7,
+      "sessao_id": 8,
+      "fileira": 6,
+      "coluna": 10,
+      "preco": 49.9
+    },
+    {
+      "id": 19,
+      "pedido_id": 8,
+      "sessao_id": 23,
       "fileira": 2,
+      "coluna": 4,
+      "preco": 69.99
+    },
+    {
+      "id": 20,
+      "pedido_id": 8,
+      "sessao_id": 23,
+      "fileira": 1,
+      "coluna": 3,
+      "preco": 69.99
+    },
+    {
+      "id": 21,
+      "pedido_id": 8,
+      "sessao_id": 23,
+      "fileira": 4,
+      "coluna": 6,
+      "preco": 69.99
+    },
+    {
+      "id": 22,
+      "pedido_id": 9,
+      "sessao_id": 33,
+      "fileira": 3,
+      "coluna": 7,
+      "preco": 69.99
+    },
+    {
+      "id": 23,
+      "pedido_id": 9,
+      "sessao_id": 33,
+      "fileira": 2,
+      "coluna": 4,
+      "preco": 69.99
+    },
+    {
+      "id": 24,
+      "pedido_id": 10,
+      "sessao_id": 21,
+      "fileira": 1,
+      "coluna": 4,
+      "preco": 54.9
+    },
+    {
+      "id": 25,
+      "pedido_id": 10,
+      "sessao_id": 21,
+      "fileira": 1,
+      "coluna": 3,
+      "preco": 54.9
+    },
+    {
+      "id": 26,
+      "pedido_id": 11,
+      "sessao_id": 2,
+      "fileira": 6,
       "coluna": 5,
-      "preco": 44.9,
-      "id": 14
+      "preco": 49.9
+    },
+    {
+      "id": 27,
+      "pedido_id": 11,
+      "sessao_id": 2,
+      "fileira": 2,
+      "coluna": 10,
+      "preco": 49.9
+    },
+    {
+      "id": 28,
+      "pedido_id": 11,
+      "sessao_id": 2,
+      "fileira": 5,
+      "coluna": 3,
+      "preco": 49.9
+    },
+    {
+      "id": 29,
+      "pedido_id": 11,
+      "sessao_id": 2,
+      "fileira": 8,
+      "coluna": 7,
+      "preco": 49.9
+    },
+    {
+      "id": 30,
+      "pedido_id": 12,
+      "sessao_id": 10,
+      "fileira": 8,
+      "coluna": 3,
+      "preco": 59.99
+    },
+    {
+      "id": 31,
+      "pedido_id": 12,
+      "sessao_id": 10,
+      "fileira": 2,
+      "coluna": 12,
+      "preco": 59.99
+    },
+    {
+      "id": 32,
+      "pedido_id": 12,
+      "sessao_id": 10,
+      "fileira": 8,
+      "coluna": 2,
+      "preco": 59.99
+    },
+    {
+      "id": 33,
+      "pedido_id": 12,
+      "sessao_id": 10,
+      "fileira": 1,
+      "coluna": 4,
+      "preco": 59.99
+    },
+    {
+      "id": 34,
+      "pedido_id": 13,
+      "sessao_id": 24,
+      "fileira": 3,
+      "coluna": 4,
+      "preco": 39.9
+    },
+    {
+      "id": 35,
+      "pedido_id": 13,
+      "sessao_id": 24,
+      "fileira": 6,
+      "coluna": 7,
+      "preco": 39.9
+    },
+    {
+      "id": 36,
+      "pedido_id": 14,
+      "sessao_id": 28,
+      "fileira": 10,
+      "coluna": 9,
+      "preco": 59.99
+    },
+    {
+      "id": 37,
+      "pedido_id": 14,
+      "sessao_id": 28,
+      "fileira": 4,
+      "coluna": 11,
+      "preco": 59.99
+    },
+    {
+      "id": 38,
+      "pedido_id": 14,
+      "sessao_id": 28,
+      "fileira": 4,
+      "coluna": 2,
+      "preco": 59.99
+    },
+    {
+      "id": 39,
+      "pedido_id": 14,
+      "sessao_id": 28,
+      "fileira": 6,
+      "coluna": 8,
+      "preco": 59.99
+    },
+    {
+      "id": 40,
+      "pedido_id": 15,
+      "sessao_id": 19,
+      "fileira": 6,
+      "coluna": 6,
+      "preco": 44.9
+    },
+    {
+      "id": 41,
+      "pedido_id": 16,
+      "sessao_id": 22,
+      "fileira": 6,
+      "coluna": 8,
+      "preco": 59.99
+    },
+    {
+      "id": 42,
+      "pedido_id": 17,
+      "sessao_id": 47,
+      "fileira": 2,
+      "coluna": 7,
+      "preco": 44.9
+    },
+    {
+      "id": 43,
+      "pedido_id": 17,
+      "sessao_id": 47,
+      "fileira": 1,
+      "coluna": 4,
+      "preco": 44.9
+    },
+    {
+      "id": 44,
+      "pedido_id": 17,
+      "sessao_id": 47,
+      "fileira": 7,
+      "coluna": 9,
+      "preco": 44.9
+    },
+    {
+      "id": 45,
+      "pedido_id": 18,
+      "sessao_id": 16,
+      "fileira": 2,
+      "coluna": 12,
+      "preco": 59.99
+    },
+    {
+      "id": 46,
+      "pedido_id": 19,
+      "sessao_id": 4,
+      "fileira": 7,
+      "coluna": 11,
+      "preco": 59.99
+    },
+    {
+      "id": 47,
+      "pedido_id": 20,
+      "sessao_id": 25,
+      "fileira": 6,
+      "coluna": 5,
+      "preco": 44.9
+    },
+    {
+      "id": 48,
+      "pedido_id": 20,
+      "sessao_id": 25,
+      "fileira": 4,
+      "coluna": 1,
+      "preco": 44.9
+    },
+    {
+      "id": 49,
+      "pedido_id": 20,
+      "sessao_id": 25,
+      "fileira": 3,
+      "coluna": 5,
+      "preco": 44.9
+    },
+    {
+      "id": 50,
+      "pedido_id": 20,
+      "sessao_id": 25,
+      "fileira": 3,
+      "coluna": 3,
+      "preco": 44.9
+    },
+    {
+      "id": 51,
+      "pedido_id": 21,
+      "sessao_id": 16,
+      "fileira": 4,
+      "coluna": 12,
+      "preco": 59.99
+    },
+    {
+      "id": 52,
+      "pedido_id": 22,
+      "sessao_id": 18,
+      "fileira": 2,
+      "coluna": 8,
+      "preco": 39.9
+    },
+    {
+      "id": 53,
+      "pedido_id": 22,
+      "sessao_id": 18,
+      "fileira": 2,
+      "coluna": 1,
+      "preco": 39.9
+    },
+    {
+      "id": 54,
+      "pedido_id": 22,
+      "sessao_id": 18,
+      "fileira": 3,
+      "coluna": 7,
+      "preco": 39.9
+    },
+    {
+      "id": 55,
+      "pedido_id": 22,
+      "sessao_id": 18,
+      "fileira": 4,
+      "coluna": 10,
+      "preco": 39.9
+    },
+    {
+      "id": 56,
+      "pedido_id": 23,
+      "sessao_id": 32,
+      "fileira": 2,
+      "coluna": 3,
+      "preco": 49.9
+    },
+    {
+      "id": 57,
+      "pedido_id": 23,
+      "sessao_id": 32,
+      "fileira": 4,
+      "coluna": 1,
+      "preco": 49.9
+    },
+    {
+      "id": 58,
+      "pedido_id": 23,
+      "sessao_id": 32,
+      "fileira": 3,
+      "coluna": 10,
+      "preco": 49.9
+    },
+    {
+      "id": 59,
+      "pedido_id": 24,
+      "sessao_id": 23,
+      "fileira": 3,
+      "coluna": 5,
+      "preco": 69.99
+    },
+    {
+      "id": 60,
+      "pedido_id": 24,
+      "sessao_id": 23,
+      "fileira": 1,
+      "coluna": 5,
+      "preco": 69.99
+    },
+    {
+      "id": 61,
+      "pedido_id": 24,
+      "sessao_id": 23,
+      "fileira": 5,
+      "coluna": 7,
+      "preco": 69.99
+    },
+    {
+      "id": 62,
+      "pedido_id": 24,
+      "sessao_id": 23,
+      "fileira": 3,
+      "coluna": 4,
+      "preco": 69.99
+    },
+    {
+      "id": 63,
+      "pedido_id": 25,
+      "sessao_id": 32,
+      "fileira": 10,
+      "coluna": 12,
+      "preco": 49.9
+    },
+    {
+      "id": 64,
+      "pedido_id": 26,
+      "sessao_id": 10,
+      "fileira": 10,
+      "coluna": 5,
+      "preco": 59.99
+    },
+    {
+      "id": 65,
+      "pedido_id": 26,
+      "sessao_id": 10,
+      "fileira": 2,
+      "coluna": 9,
+      "preco": 59.99
+    },
+    {
+      "id": 66,
+      "pedido_id": 26,
+      "sessao_id": 10,
+      "fileira": 7,
+      "coluna": 8,
+      "preco": 59.99
+    },
+    {
+      "id": 67,
+      "pedido_id": 26,
+      "sessao_id": 10,
+      "fileira": 7,
+      "coluna": 6,
+      "preco": 59.99
+    },
+    {
+      "id": 68,
+      "pedido_id": 27,
+      "sessao_id": 13,
+      "fileira": 5,
+      "coluna": 5,
+      "preco": 44.9
+    },
+    {
+      "id": 69,
+      "pedido_id": 27,
+      "sessao_id": 13,
+      "fileira": 1,
+      "coluna": 8,
+      "preco": 44.9
+    },
+    {
+      "id": 70,
+      "pedido_id": 27,
+      "sessao_id": 13,
+      "fileira": 5,
+      "coluna": 7,
+      "preco": 44.9
+    },
+    {
+      "id": 71,
+      "pedido_id": 28,
+      "sessao_id": 23,
+      "fileira": 2,
+      "coluna": 2,
+      "preco": 69.99
+    },
+    {
+      "id": 72,
+      "pedido_id": 28,
+      "sessao_id": 23,
+      "fileira": 2,
+      "coluna": 6,
+      "preco": 69.99
+    },
+    {
+      "id": 73,
+      "pedido_id": 28,
+      "sessao_id": 23,
+      "fileira": 5,
+      "coluna": 1,
+      "preco": 69.99
+    },
+    {
+      "id": 74,
+      "pedido_id": 28,
+      "sessao_id": 23,
+      "fileira": 1,
+      "coluna": 2,
+      "preco": 69.99
+    },
+    {
+      "id": 75,
+      "pedido_id": 29,
+      "sessao_id": 6,
+      "fileira": 5,
+      "coluna": 7,
+      "preco": 39.9
+    },
+    {
+      "id": 76,
+      "pedido_id": 29,
+      "sessao_id": 6,
+      "fileira": 4,
+      "coluna": 9,
+      "preco": 39.9
+    },
+    {
+      "id": 77,
+      "pedido_id": 29,
+      "sessao_id": 6,
+      "fileira": 6,
+      "coluna": 7,
+      "preco": 39.9
+    },
+    {
+      "id": 78,
+      "pedido_id": 29,
+      "sessao_id": 6,
+      "fileira": 5,
+      "coluna": 8,
+      "preco": 39.9
+    },
+    {
+      "id": 79,
+      "pedido_id": 30,
+      "sessao_id": 22,
+      "fileira": 1,
+      "coluna": 1,
+      "preco": 59.99
+    },
+    {
+      "id": 80,
+      "pedido_id": 30,
+      "sessao_id": 22,
+      "fileira": 3,
+      "coluna": 9,
+      "preco": 59.99
+    },
+    {
+      "id": 81,
+      "pedido_id": 31,
+      "sessao_id": 16,
+      "fileira": 8,
+      "coluna": 9,
+      "preco": 59.99
+    },
+    {
+      "id": 82,
+      "pedido_id": 31,
+      "sessao_id": 16,
+      "fileira": 8,
+      "coluna": 8,
+      "preco": 59.99
+    },
+    {
+      "id": 83,
+      "pedido_id": 31,
+      "sessao_id": 16,
+      "fileira": 6,
+      "coluna": 10,
+      "preco": 59.99
+    },
+    {
+      "id": 84,
+      "pedido_id": 31,
+      "sessao_id": 16,
+      "fileira": 1,
+      "coluna": 10,
+      "preco": 59.99
+    },
+    {
+      "id": 85,
+      "pedido_id": 32,
+      "sessao_id": 6,
+      "fileira": 5,
+      "coluna": 9,
+      "preco": 39.9
+    },
+    {
+      "id": 86,
+      "pedido_id": 32,
+      "sessao_id": 6,
+      "fileira": 5,
+      "coluna": 2,
+      "preco": 39.9
+    },
+    {
+      "id": 87,
+      "pedido_id": 32,
+      "sessao_id": 6,
+      "fileira": 4,
+      "coluna": 4,
+      "preco": 39.9
+    },
+    {
+      "id": 88,
+      "pedido_id": 33,
+      "sessao_id": 23,
+      "fileira": 5,
+      "coluna": 3,
+      "preco": 69.99
+    },
+    {
+      "id": 89,
+      "pedido_id": 34,
+      "sessao_id": 41,
+      "fileira": 4,
+      "coluna": 2,
+      "preco": 44.9
+    },
+    {
+      "id": 90,
+      "pedido_id": 34,
+      "sessao_id": 41,
+      "fileira": 6,
+      "coluna": 7,
+      "preco": 44.9
+    },
+    {
+      "id": 91,
+      "pedido_id": 35,
+      "sessao_id": 5,
+      "fileira": 3,
+      "coluna": 2,
+      "preco": 69.99
+    },
+    {
+      "id": 92,
+      "pedido_id": 35,
+      "sessao_id": 5,
+      "fileira": 1,
+      "coluna": 3,
+      "preco": 69.99
+    },
+    {
+      "id": 93,
+      "pedido_id": 35,
+      "sessao_id": 5,
+      "fileira": 1,
+      "coluna": 5,
+      "preco": 69.99
+    },
+    {
+      "id": 94,
+      "pedido_id": 36,
+      "sessao_id": 44,
+      "fileira": 5,
+      "coluna": 9,
+      "preco": 59.99
+    },
+    {
+      "id": 95,
+      "pedido_id": 36,
+      "sessao_id": 44,
+      "fileira": 1,
+      "coluna": 7,
+      "preco": 59.99
+    },
+    {
+      "id": 96,
+      "pedido_id": 37,
+      "sessao_id": 41,
+      "fileira": 1,
+      "coluna": 2,
+      "preco": 44.9
+    },
+    {
+      "id": 97,
+      "pedido_id": 37,
+      "sessao_id": 41,
+      "fileira": 2,
+      "coluna": 3,
+      "preco": 44.9
+    },
+    {
+      "id": 98,
+      "pedido_id": 38,
+      "sessao_id": 20,
+      "fileira": 4,
+      "coluna": 3,
+      "preco": 49.9
+    },
+    {
+      "id": 99,
+      "pedido_id": 39,
+      "sessao_id": 30,
+      "fileira": 3,
+      "coluna": 5,
+      "preco": 39.9
+    },
+    {
+      "id": 100,
+      "pedido_id": 39,
+      "sessao_id": 30,
+      "fileira": 7,
+      "coluna": 4,
+      "preco": 39.9
     }
   ],
   "pagamentos": [
     {
       "id": 1,
       "pedido_id": 1,
-      "metodo": "pix",
-      "valor": 59.99
+      "metodo": "cartao_credito",
+      "valor": 179.6
     },
     {
       "id": 2,
       "pedido_id": 2,
-      "metodo": "cartao_credito",
-      "valor": 239.96
+      "metodo": "cartao_debito",
+      "valor": 79.8
     },
     {
       "id": 3,
       "pedido_id": 3,
-      "metodo": "cartao_debito",
-      "valor": 139.98
+      "metodo": "dinheiro",
+      "valor": 109.8
     },
     {
       "id": 4,
       "pedido_id": 4,
       "metodo": "pix",
-      "valor": 109.8
+      "valor": 79.8
     },
     {
       "id": 5,
+      "pedido_id": 5,
+      "metodo": "cartao_credito",
+      "valor": 44.9
+    },
+    {
+      "id": 6,
       "pedido_id": 6,
+      "metodo": "cartao_debito",
+      "valor": 179.97
+    },
+    {
+      "id": 7,
+      "pedido_id": 7,
+      "metodo": "dinheiro",
+      "valor": 199.6
+    },
+    {
+      "id": 8,
+      "pedido_id": 8,
+      "metodo": "pix",
+      "valor": 209.97
+    },
+    {
+      "id": 9,
+      "pedido_id": 9,
+      "metodo": "cartao_credito",
+      "valor": 139.98
+    },
+    {
+      "id": 10,
+      "pedido_id": 10,
+      "metodo": "cartao_debito",
+      "valor": 109.8
+    },
+    {
+      "id": 11,
+      "pedido_id": 11,
+      "metodo": "dinheiro",
+      "valor": 199.6
+    },
+    {
+      "id": 12,
+      "pedido_id": 12,
+      "metodo": "pix",
+      "valor": 239.96
+    },
+    {
+      "id": 13,
+      "pedido_id": 13,
+      "metodo": "cartao_credito",
+      "valor": 79.8
+    },
+    {
+      "id": 14,
+      "pedido_id": 14,
+      "metodo": "cartao_debito",
+      "valor": 239.96
+    },
+    {
+      "id": 15,
+      "pedido_id": 15,
+      "metodo": "dinheiro",
+      "valor": 44.9
+    },
+    {
+      "id": 16,
+      "pedido_id": 16,
+      "metodo": "pix",
+      "valor": 59.99
+    },
+    {
+      "id": 17,
+      "pedido_id": 17,
+      "metodo": "cartao_credito",
+      "valor": 134.7
+    },
+    {
+      "id": 18,
+      "pedido_id": 18,
+      "metodo": "cartao_debito",
+      "valor": 59.99
+    },
+    {
+      "id": 19,
+      "pedido_id": 19,
+      "metodo": "dinheiro",
+      "valor": 59.99
+    },
+    {
+      "id": 20,
+      "pedido_id": 20,
+      "metodo": "pix",
+      "valor": 179.6
+    },
+    {
+      "id": 21,
+      "pedido_id": 21,
+      "metodo": "cartao_credito",
+      "valor": 59.99
+    },
+    {
+      "id": 22,
+      "pedido_id": 22,
+      "metodo": "cartao_debito",
+      "valor": 159.6
+    },
+    {
+      "id": 23,
+      "pedido_id": 23,
       "metodo": "dinheiro",
       "valor": 149.7
     },
     {
-      "pedido_id": 7,
+      "id": 24,
+      "pedido_id": 24,
       "metodo": "pix",
-      "valor": 44.9,
-      "id": 6
+      "valor": 279.96
+    },
+    {
+      "id": 25,
+      "pedido_id": 25,
+      "metodo": "cartao_credito",
+      "valor": 49.9
+    },
+    {
+      "id": 26,
+      "pedido_id": 26,
+      "metodo": "cartao_debito",
+      "valor": 239.96
+    },
+    {
+      "id": 27,
+      "pedido_id": 27,
+      "metodo": "dinheiro",
+      "valor": 134.7
+    },
+    {
+      "id": 28,
+      "pedido_id": 28,
+      "metodo": "pix",
+      "valor": 279.96
+    },
+    {
+      "id": 29,
+      "pedido_id": 29,
+      "metodo": "cartao_credito",
+      "valor": 159.6
+    },
+    {
+      "id": 30,
+      "pedido_id": 30,
+      "metodo": "cartao_debito",
+      "valor": 119.98
+    },
+    {
+      "id": 31,
+      "pedido_id": 31,
+      "metodo": "dinheiro",
+      "valor": 239.96
+    },
+    {
+      "id": 32,
+      "pedido_id": 32,
+      "metodo": "pix",
+      "valor": 119.7
+    },
+    {
+      "id": 33,
+      "pedido_id": 33,
+      "metodo": "cartao_credito",
+      "valor": 69.99
+    },
+    {
+      "id": 34,
+      "pedido_id": 34,
+      "metodo": "cartao_debito",
+      "valor": 89.8
+    },
+    {
+      "id": 35,
+      "pedido_id": 35,
+      "metodo": "dinheiro",
+      "valor": 209.97
     }
   ]
 }
