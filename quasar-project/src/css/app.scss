@@ -1,3 +1,125 @@
+// Tema escuro minimalista — Cinema App
+
+body.body--dark {
+  background: #0f1419;
+  color: #e8eaed;
+}
+
+.q-page {
+  min-height: 100%;
+}
+
+// Titulos de pagina
+.q-page > h5,
+.q-page .text-h5 {
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+// Cards
+body.body--dark .q-card {
+  background: #1a2332;
+  color: #e8eaed;
+}
+
+body.body--dark .q-card--bordered,
+body.body--dark .q-table--bordered {
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+body.body--dark .q-separator {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+// Tabelas
+body.body--dark .q-table__top,
+body.body--dark .q-table thead tr,
+body.body--dark .q-table tbody td {
+  border-color: rgba(255, 255, 255, 0.06);
+}
+
+body.body--dark .q-table tbody tr:hover td {
+  background: rgba(255, 255, 255, 0.04);
+}
+
+// Campos de formulario
+body.body--dark .q-field--outlined .q-field__control:before {
+  border-color: rgba(255, 255, 255, 0.18);
+}
+
+body.body--dark .q-field--outlined:hover .q-field__control:before {
+  border-color: rgba(255, 255, 255, 0.32);
+}
+
+body.body--dark .q-field--outlined.q-field--focused .q-field__control:before {
+  border-color: $primary;
+}
+
+// Superficies auxiliares (sessoes, listas)
+body.body--dark .bg-grey-1 {
+  background: #1e2836 !important;
+}
+
+body.body--dark .bg-grey-2 {
+  background: #222d3d !important;
+}
+
+// Placeholder de imagem
+.cinema-placeholder {
+  background: #222d3d;
+  color: rgba(255, 255, 255, 0.35);
+}
+
+// Dashboard — Home
+.dashboard-card {
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.dashboard-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
+}
+
+// Cards de filme
+.filme-card {
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.filme-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
+}
+
+.filme-card__sem-imagem {
+  aspect-ratio: 2 / 3;
+}
+
+.filme-card__sem-imagem,
+.poster--placeholder {
+  background: #222d3d;
+}
+
+// Poster nas sessoes
+.poster {
+  background: #222d3d;
+}
+
+// Scrollbar discreta
+body.body--dark ::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+body.body--dark ::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 4px;
+}
+
+body.body--dark ::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.25);
+}
+
+// Legado home cards (se ainda usados)
 .home-card {
   width: 220px;
 }

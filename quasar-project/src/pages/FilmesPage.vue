@@ -29,7 +29,7 @@
             :ratio="2 / 3"
             fit="cover"
           />
-          <div v-else class="filme-card__sem-imagem flex flex-center">
+          <div v-else class="filme-card__sem-imagem cinema-placeholder flex flex-center">
             <q-icon name="movie" size="48px" color="grey-5" />
           </div>
 
@@ -264,20 +264,6 @@ onMounted(() => {
 </script>
 
 <style scoped>
-.filme-card {
-  transition: transform 0.15s ease, box-shadow 0.15s ease;
-}
-
-.filme-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
-}
-
-.filme-card__sem-imagem {
-  aspect-ratio: 2 / 3;
-  background: #f0f0f0;
-}
-
 .ellipsis {
   overflow: hidden;
   text-overflow: ellipsis;
