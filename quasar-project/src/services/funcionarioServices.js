@@ -1,8 +1,8 @@
 import { API_URL } from '@/services/api.js'
 
-function getAllFilmesFromRest() {
+function getAllFuncionariosFromRest() {
   return new Promise((resolve, reject) => {
-    fetch(`${API_URL}/filmes`)
+    fetch(`${API_URL}/funcionarios`)
       .then((response) => {
         response
           .json()
@@ -19,9 +19,9 @@ function getAllFilmesFromRest() {
   })
 }
 
-function getFilmesCountFromRest() {
+function getFuncionariosCountFromRest() {
   return new Promise((resolve, reject) => {
-    getAllFilmesFromRest()
+    getAllFuncionariosFromRest()
       .then((data) => {
         resolve(data.length)
       })
@@ -31,12 +31,12 @@ function getFilmesCountFromRest() {
   })
 }
 
-function createFilmeFromRest(filme) {
+function createFuncionarioFromRest(funcionario) {
   return new Promise((resolve, reject) => {
-    fetch(`${API_URL}/filmes`, {
+    fetch(`${API_URL}/funcionarios`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(filme),
+      body: JSON.stringify(funcionario),
     })
       .then((response) => {
         response
@@ -54,12 +54,12 @@ function createFilmeFromRest(filme) {
   })
 }
 
-function updateFilmeFromRest(id, filme) {
+function updateFuncionarioFromRest(id, funcionario) {
   return new Promise((resolve, reject) => {
-    fetch(`${API_URL}/filmes/${id}`, {
+    fetch(`${API_URL}/funcionarios/${id}`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(filme),
+      body: JSON.stringify(funcionario),
     })
       .then((response) => {
         response
@@ -77,9 +77,9 @@ function updateFilmeFromRest(id, filme) {
   })
 }
 
-function deleteFilmeFromRest(id) {
+function deleteFuncionarioFromRest(id) {
   return new Promise((resolve, reject) => {
-    fetch(`${API_URL}/filmes/${id}`, {
+    fetch(`${API_URL}/funcionarios/${id}`, {
       method: 'DELETE',
     })
       .then(() => {
@@ -91,10 +91,10 @@ function deleteFilmeFromRest(id) {
   })
 }
 
-export { 
-  getAllFilmesFromRest, 
-  getFilmesCountFromRest, 
-  createFilmeFromRest, 
-  updateFilmeFromRest, 
-  deleteFilmeFromRest,
- }
+export {
+  getAllFuncionariosFromRest,
+  getFuncionariosCountFromRest,
+  createFuncionarioFromRest,
+  updateFuncionarioFromRest,
+  deleteFuncionarioFromRest,
+}
