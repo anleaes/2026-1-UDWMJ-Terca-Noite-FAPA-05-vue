@@ -55,7 +55,7 @@
             class="poster"
             fit="cover"
           />
-          <div v-else class="poster poster--placeholder flex flex-center">
+          <div v-else class="poster poster--placeholder cinema-placeholder flex flex-center">
             <q-icon name="movie" size="48px" color="grey-5" />
           </div>
           <div class="col q-pa-sm">
@@ -281,10 +281,9 @@ onMounted(carregarDados)
   min-width: 160px;
   height: 240px;
   object-fit: cover;
-  background: #1a2332;
 }
 
 .poster--placeholder {
-  background: #f0f0f0;
+  aspect-ratio: 2 / 3;
 }
 </style>

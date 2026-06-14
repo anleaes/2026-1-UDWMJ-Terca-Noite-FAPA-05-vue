@@ -36,16 +36,20 @@
       </q-list>
     </q-drawer>
 
-    <q-header elevated class="bg-grey-2 text-dark">
+    <q-header elevated class="cinema-header">
       <q-toolbar>
         <q-btn
           flat
           dense
           round
           icon="menu"
+          color="white"
           aria-label="Menu"
           @click="leftDrawerOpen = !leftDrawerOpen"
         />
+        <q-toolbar-title class="text-weight-medium">
+          Cinema App
+        </q-toolbar-title>
       </q-toolbar>
     </q-header>
 
@@ -90,6 +94,12 @@ function isActive(path) {
 </script>
 
 <style scoped>
+:deep(.cinema-header) {
+  background: #141b26;
+  color: #fff;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
 :deep(.cinema-drawer.q-drawer) {
   background-color: #1a2332;
   color: #fff;

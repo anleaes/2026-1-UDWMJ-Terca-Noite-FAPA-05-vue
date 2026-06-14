@@ -302,14 +302,3 @@ function carregarPainel() {
 
 onMounted(carregarPainel)
 </script>
-
-<style scoped>
-.dashboard-card {
-  transition: box-shadow 0.15s ease, transform 0.15s ease;
-}
-
-.dashboard-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1);
-}
-</style>
