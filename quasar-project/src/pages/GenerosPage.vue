@@ -1,7 +1,6 @@
 <template>
   <CrudPage
     titulo="Generos"
-    descricao="Cadastro de generos de filmes"
     nome-entidade="genero"
     :campos="campos"
     :colunas="colunas"

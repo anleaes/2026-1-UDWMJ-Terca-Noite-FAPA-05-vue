@@ -2,8 +2,7 @@
   <q-page class="q-pa-lg">
     <q-btn flat label="Voltar" to="/" icon="arrow_back" class="q-mb-md" />
 
-    <h5 class="q-my-none">Pedidos</h5>
-    <p class="text-grey-7 q-mb-lg">Gerenciamento de pedidos de ingressos</p>
+    <h5 class="q-my-none q-mb-lg">Pedidos</h5>
 
     <q-card flat bordered class="q-mb-lg">
       <q-card-section>
@@ -138,7 +137,6 @@ const STATUS_LABELS = {
   pendente: 'Pendente',
   aprovado: 'Aprovado',
   cancelado: 'Cancelado',
-  pago: 'Pago',
 }
 
 const METODOS = {
@@ -190,10 +188,7 @@ const valorTotal = computed(() => {
   return total.toFixed(2)
 })
 
-const podeAlterarStatus = computed(() => {
-  const status = pedidoStatus.value
-  return status === 'pendente' || status === 'pago'
-})
+const podeAlterarStatus = computed(() => pedidoStatus.value === 'pendente')
 
 const colunas = computed(() => [
   { name: 'id', label: 'ID', field: 'id', align: 'left' },
@@ -244,7 +239,7 @@ function fmtData(valor) {
 }
 
 function corStatus(status) {
-  if (status === 'aprovado' || status === 'pago') return 'positive'
+  if (status === 'aprovado') return 'positive'
   if (status === 'cancelado') return 'negative'
   return 'warning'
 }

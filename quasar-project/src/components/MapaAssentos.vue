@@ -36,7 +36,7 @@ import { getAssentosBySalaFromRest } from '@/services/assentoServices.js'
 import { getIngressosBySessaoFromRest } from '@/services/ingressoServices.js'
 import { getAllPedidosFromRest } from '@/services/pedidoServices.js'
 
-const STATUS_OCUPADO = ['pendente', 'aprovado', 'pago']
+const STATUS_OCUPADO = ['pendente', 'aprovado']
 
 const props = defineProps({
   sessaoId: { type: Number, default: null },
