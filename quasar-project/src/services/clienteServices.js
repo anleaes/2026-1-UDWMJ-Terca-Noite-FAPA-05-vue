@@ -19,18 +19,6 @@ function getAllClientesFromRest() {
   })
 }
 
-function getClientesCountFromRest() {
-  return new Promise((resolve, reject) => {
-    getAllClientesFromRest()
-      .then((data) => {
-        resolve(data.length)
-      })
-      .catch((error) => {
-        reject(error)
-      })
-  })
-}
-
 function createClienteFromRest(cliente) {
   return new Promise((resolve, reject) => {
     fetch(`${API_URL}/clientes`, {
@@ -93,7 +81,6 @@ function deleteClienteFromRest(id) {
 
 export { 
     getAllClientesFromRest, 
-    getClientesCountFromRest, 
     createClienteFromRest, 
     updateClienteFromRest, 
     deleteClienteFromRest,

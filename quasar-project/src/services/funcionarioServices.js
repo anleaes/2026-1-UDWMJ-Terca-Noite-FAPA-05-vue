@@ -19,18 +19,6 @@ function getAllFuncionariosFromRest() {
   })
 }
 
-function getFuncionariosCountFromRest() {
-  return new Promise((resolve, reject) => {
-    getAllFuncionariosFromRest()
-      .then((data) => {
-        resolve(data.length)
-      })
-      .catch((error) => {
-        reject(error)
-      })
-  })
-}
-
 function createFuncionarioFromRest(funcionario) {
   return new Promise((resolve, reject) => {
     fetch(`${API_URL}/funcionarios`, {
@@ -93,7 +81,6 @@ function deleteFuncionarioFromRest(id) {
 
 export {
   getAllFuncionariosFromRest,
-  getFuncionariosCountFromRest,
   createFuncionarioFromRest,
   updateFuncionarioFromRest,
   deleteFuncionarioFromRest,

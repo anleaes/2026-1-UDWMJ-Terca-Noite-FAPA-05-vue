@@ -19,18 +19,6 @@ function getAllFilmesFromRest() {
   })
 }
 
-function getFilmesCountFromRest() {
-  return new Promise((resolve, reject) => {
-    getAllFilmesFromRest()
-      .then((data) => {
-        resolve(data.length)
-      })
-      .catch((error) => {
-        reject(error)
-      })
-  })
-}
-
 function createFilmeFromRest(filme) {
   return new Promise((resolve, reject) => {
     fetch(`${API_URL}/filmes`, {
@@ -93,7 +81,6 @@ function deleteFilmeFromRest(id) {
 
 export { 
   getAllFilmesFromRest, 
-  getFilmesCountFromRest, 
   createFilmeFromRest, 
   updateFilmeFromRest, 
   deleteFilmeFromRest,

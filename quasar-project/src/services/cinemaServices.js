@@ -19,18 +19,6 @@ function getAllCinemasFromRest() {
   })
 }
 
-function getCinemasCountFromRest() {
-  return new Promise((resolve, reject) => {
-    getAllCinemasFromRest()
-      .then((data) => {
-        resolve(data.length)
-      })
-      .catch((error) => {
-        reject(error)
-      })
-  })
-}
-
 function createCinemaFromRest(cinema) {
   return new Promise((resolve, reject) => {
     fetch(`${API_URL}/cinemas`, {
@@ -93,7 +81,6 @@ function deleteCinemaFromRest(id) {
 
 export {
   getAllCinemasFromRest,
-  getCinemasCountFromRest,
   createCinemaFromRest,
   updateCinemaFromRest,
   deleteCinemaFromRest,

@@ -8,7 +8,7 @@
       behavior="desktop"
       :width="220"
       class="cinema-drawer"
-    >                                       <!-- GAVETA E TITULO -->
+    >
       <div class="drawer-title">
         <router-link to="/">Cinema App</router-link>
       </div>
@@ -111,8 +111,8 @@ function isActive(path) {
   justify-content: center;
   padding: 24px 16px 12px;
 }
- /* Router Link vira <a> */
-.drawer-title a {  
+
+.drawer-title a {
   color: #fff;
   text-decoration: none;
   font-size: 1.25rem;

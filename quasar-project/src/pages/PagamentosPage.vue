@@ -9,15 +9,14 @@
       row-key="id"
       flat
       bordered
-      :no-data-label="'Nenhum pagamento registrado'"
+      no-data-label="Nenhum pagamento registrado"
     />
-  </q-page> 
+  </q-page>
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from 'vue'
+import { ref, onMounted } from 'vue'
 import { getAllPagamentosFromRest } from '@/services/pagamentoServices.js'
-import { getAllPedidosFromRest } from '@/services/pedidoServices.js'
 
 const METODOS = {
   pix: 'PIX',
@@ -27,9 +26,13 @@ const METODOS = {
 }
 
 const pagamentos = ref([])
-const pedidosPorId = ref({})
 
-const colunas = computed(() => [
+function fmtMoeda(valor) {
+  if (valor == null) return 'R$ 0,00'
+  return `R$ ${Number(valor).toFixed(2).replace('.', ',')}`
+}
+
+const colunas = [
   {
     name: 'pedido_id',
     label: 'Pedido',
@@ -42,32 +45,16 @@ const colunas = computed(() => [
     label: 'Metodo',
     field: 'metodo',
     align: 'left',
-    format: (val) => METODOS[val],
+    format: (val) => METODOS[val] ?? val,
   },
   {
     name: 'valor',
     label: 'Valor',
-    field: 'pedido_id', /* Recebe o ID */
+    field: 'valor',
     align: 'left',
-    format: (val) => {
-      const pedido = pedidosPorId.value[val] /* Com o ID em val, procura pelo pedido no map */
-      if (pedido?.valor_total == null) return '-'
-      return `R$ ${Number(pedido.valor_total).toFixed(2)}` /* Encontra e formata o valor do pedido */
-    },
+    format: (val) => fmtMoeda(val),
   },
-])
-
-function carregarPedidos() {
-  getAllPedidosFromRest()
-    .then((pedidos) => {
-      pedidosPorId.value = Object.fromEntries(
-        pedidos.map((pedido) => [pedido.id, pedido]), /* Cria o map, listando os pedidos por índice do ID */
-      )
-    })
-    .catch((err) => {
-      console.log('Erro ao carregar pedidos:', err)
-    })
-}
+]
 
 function carregarPagamentos() {
   getAllPagamentosFromRest()
@@ -79,8 +66,5 @@ function carregarPagamentos() {
     })
 }
 
-onMounted(() => {
-  carregarPedidos()
-  carregarPagamentos()
-})
+onMounted(carregarPagamentos)
 </script>

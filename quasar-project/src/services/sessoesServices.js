@@ -19,18 +19,6 @@ function getAllSessoesFromRest() {
   })
 }
 
-function getSessoesCountFromRest() {
-  return new Promise((resolve, reject) => {
-    getAllSessoesFromRest()
-      .then((data) => {
-        resolve(data.length)
-      })
-      .catch((error) => {
-        reject(error)
-      })
-  })
-}
-
 function createSessaoFromRest(sessao) {
   return new Promise((resolve, reject) => {
     fetch(`${API_URL}/sessoes`, {
@@ -93,7 +81,6 @@ function deleteSessaoFromRest(id) {
 
 export {
   getAllSessoesFromRest,
-  getSessoesCountFromRest,
   createSessaoFromRest,
   updateSessaoFromRest,
   deleteSessaoFromRest,
