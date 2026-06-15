@@ -1,24 +1,5 @@
 import { API_URL } from '@/services/api.js'
 
-function getAllAssentosFromRest() {
-  return new Promise((resolve, reject) => {
-    fetch(`${API_URL}/assentos`)
-      .then((response) => {
-        response
-          .json()
-          .then((data) => {
-            resolve(data)
-          })
-          .catch((error) => {
-            reject(error)
-          })
-      })
-      .catch((error) => {
-        reject(error)
-      })
-  })
-}
-
 function getAssentosBySalaFromRest(salaId) {
   return new Promise((resolve, reject) => {
     fetch(`${API_URL}/assentos?sala_id=${salaId}`)
@@ -99,7 +80,6 @@ function deleteAssentoFromRest(id) {
 }
 
 export {
-  getAllAssentosFromRest,
   getAssentosBySalaFromRest,
   createAssentoFromRest,
   updateAssentoFromRest,

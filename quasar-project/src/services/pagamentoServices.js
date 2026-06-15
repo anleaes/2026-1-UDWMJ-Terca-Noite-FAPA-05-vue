@@ -19,18 +19,6 @@ function getAllPagamentosFromRest() {
   })
 }
 
-function getPagamentosCountFromRest() {
-  return new Promise((resolve, reject) => {
-    getAllPagamentosFromRest()
-      .then((data) => {
-        resolve(data.length)
-      })
-      .catch((error) => {
-        reject(error)
-      })
-  })
-}
-
 function getPagamentosByPedidoFromRest(pedidoId) {
   return new Promise((resolve, reject) => {
     fetch(`${API_URL}/pagamentos?pedido_id=${pedidoId}`)
@@ -112,7 +100,6 @@ function deletePagamentoFromRest(id) {
 
 export {
   getAllPagamentosFromRest,
-  getPagamentosCountFromRest,
   getPagamentosByPedidoFromRest,
   createPagamentoFromRest,
   updatePagamentoFromRest,

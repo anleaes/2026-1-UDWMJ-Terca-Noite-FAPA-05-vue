@@ -19,18 +19,6 @@ function getAllPedidosFromRest() {
   })
 }
 
-function getPedidosCountFromRest() {
-  return new Promise((resolve, reject) => {
-    getAllPedidosFromRest()
-      .then((data) => {
-        resolve(data.length)
-      })
-      .catch((error) => {
-        reject(error)
-      })
-  })
-}
-
 function createPedidoFromRest(pedido) {
   return new Promise((resolve, reject) => {
     fetch(`${API_URL}/pedidos`, {
@@ -93,7 +81,6 @@ function deletePedidoFromRest(id) {
 
 export {
   getAllPedidosFromRest,
-  getPedidosCountFromRest,
   createPedidoFromRest,
   updatePedidoFromRest,
   deletePedidoFromRest,

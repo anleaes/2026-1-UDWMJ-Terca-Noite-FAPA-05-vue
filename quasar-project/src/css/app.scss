@@ -118,18 +118,3 @@ body.body--dark ::-webkit-scrollbar-thumb {
 body.body--dark ::-webkit-scrollbar-thumb:hover {
   background: rgba(255, 255, 255, 0.25);
 }
-
-// Legado home cards (se ainda usados)
-.home-card {
-  width: 220px;
-}
-
-.home-card-link {
-  text-decoration: none;
-  color: inherit;
-  display: block;
-}
-
-.home-card-link .home-card:hover {
-  filter: brightness(1.08);
-}

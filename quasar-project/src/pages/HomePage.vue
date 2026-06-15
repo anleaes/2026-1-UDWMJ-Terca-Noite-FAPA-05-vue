@@ -106,6 +106,12 @@ import { ref, computed, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { API_URL } from '@/services/api.js'
 
+const STATUS_LABELS = {
+  pendente: 'Pendente',
+  aprovado: 'Aprovado',
+  cancelado: 'Cancelado',
+}
+
 const router = useRouter()
 
 const carregando = ref(true)
@@ -118,24 +124,18 @@ const filmes = ref([])
 const salas = ref([])
 const cinemas = ref([])
 
-const STATUS_LABELS = {
-  pendente: 'Pendente',
-  aprovado: 'Aprovado',
-  cancelado: 'Cancelado',
-}
-
 function buscar(endpoint) {
   return fetch(`${API_URL}/${endpoint}`)
     .then((response) => response.json())
 }
 
+function fmtData(valor) {
+  return valor ? new Date(valor).toLocaleString('pt-BR') : '-'
+}
+
 function fmtMoeda(valor) {
   if (valor == null) return 'R$ 0,00'
   return `R$ ${Number(valor).toFixed(2).replace('.', ',')}`
-}
-
-function fmtData(valor) {
-  return valor ? new Date(valor).toLocaleString('pt-BR') : '-'
 }
 
 function labelStatus(status) {

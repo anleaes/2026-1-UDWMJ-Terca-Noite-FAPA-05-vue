@@ -19,18 +19,6 @@ function getAllGenerosFromRest() {
   })
 }
 
-function getGenerosCountFromRest() {
-  return new Promise((resolve, reject) => {
-    getAllGenerosFromRest()
-      .then((data) => {
-        resolve(data.length)
-      })
-      .catch((error) => {
-        reject(error)
-      })
-  })
-}
-
 function createGeneroFromRest(genero) {
   return new Promise((resolve, reject) => {
     fetch(`${API_URL}/generos`, {
@@ -93,7 +81,6 @@ function deleteGeneroFromRest(id) {
 
 export { 
   getAllGenerosFromRest, 
-  getGenerosCountFromRest, 
   createGeneroFromRest, 
   updateGeneroFromRest, 
   deleteGeneroFromRest,

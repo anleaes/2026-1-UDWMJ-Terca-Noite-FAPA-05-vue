@@ -205,7 +205,7 @@ const colunas = computed(() => [
     label: 'Valor total',
     field: 'valor_total',
     align: 'left',
-    format: (val) => (val != null ? `R$ ${Number(val).toFixed(2)}` : ''),
+    format: (val) => fmtMoeda(val),
   },
   { name: 'acoes', label: 'Acoes', field: 'acoes', align: 'center' },
 ])
@@ -238,14 +238,19 @@ function fmtData(valor) {
   return valor ? new Date(valor).toLocaleString('pt-BR') : '-'
 }
 
-function corStatus(status) {
-  if (status === 'aprovado') return 'positive'
-  if (status === 'cancelado') return 'negative'
-  return 'warning'
+function fmtMoeda(valor) {
+  if (valor == null) return 'R$ 0,00'
+  return `R$ ${Number(valor).toFixed(2).replace('.', ',')}`
 }
 
 function labelStatus(status) {
   return STATUS_LABELS[status] ?? status
+}
+
+function corStatus(status) {
+  if (status === 'aprovado') return 'positive'
+  if (status === 'cancelado') return 'negative'
+  return 'warning'
 }
 
 function carregarDadosIniciais() {
@@ -316,6 +321,7 @@ function salvarPagamento(pedidoIdAtual) {
   const dados = {
     pedido_id: pedidoIdAtual,
     metodo: form.value.pagamento_metodo,
+    valor: Number(valorTotal.value),
   }
 
   if (pagamentoId.value) {
