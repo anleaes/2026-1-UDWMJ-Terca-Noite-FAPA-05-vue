@@ -2,8 +2,16 @@
   <q-page class="q-pa-lg">
     <q-btn flat label="Voltar" to="/" icon="arrow_back" class="q-mb-md" />
 
-    <div class="row items-center q-mb-md">
-      <h5 class="q-my-none col">Sessoes</h5>
+    <div class="row items-center q-gutter-md q-mb-md">
+      <h5 class="q-my-none col-auto">Sessoes</h5>
+      <q-input
+        v-model="filtro"
+        dense
+        outlined
+        placeholder="Pesquisar"
+        clearable
+        class="col"
+      />
       <q-btn-toggle
         v-model="modo"
         class="col-auto"
@@ -44,6 +52,8 @@
     </q-card>
 
     <div v-if="!sessoes.length" class="text-grey-7">Nenhuma sessao cadastrada.</div>
+
+    <div v-else-if="!sessoesFiltradas.length" class="text-grey-7">Nenhuma sessao encontrada.</div>
 
     <div v-else-if="modo === 'filme'" class="row q-col-gutter-md">
       <q-card v-for="filme in filmesComSessoes" :key="filme.id" flat bordered class="col-12 col-lg-6">
@@ -152,6 +162,7 @@ import {
 } from '@/services/sessoesServices.js'
 
 const sessoes = ref([])
+const filtro = ref('')
 const filmes = ref([])
 const cinemas = ref([])
 const salas = ref([])
@@ -171,13 +182,32 @@ const salaOptions = computed(() =>
   }),
 )
 
+const sessoesFiltradas = computed(() => {
+  const termo = filtro.value.toLowerCase().trim()
+  if (!termo) return sessoes.value
+
+  return sessoes.value.filter((s) => {
+    const texto = [
+      nomeFilme(s.filme_id),
+      nomeSala(s.sala_id),
+      fmtData(s.data_hora),
+      String(s.preco ?? ''),
+      s.dublado ? 'dublado' : 'legendado',
+    ]
+      .join(' ')
+      .toLowerCase()
+
+    return texto.includes(termo)
+  })
+})
+
 const filmesComSessoes = computed(() => {
-  const ids = new Set(sessoes.value.map((s) => s.filme_id))
+  const ids = new Set(sessoesFiltradas.value.map((s) => s.filme_id))
   return filmes.value.filter((f) => ids.has(f.id))
 })
 
 const cinemasComSessoes = computed(() => {
-  const salaIds = new Set(sessoes.value.map((s) => s.sala_id))
+  const salaIds = new Set(sessoesFiltradas.value.map((s) => s.sala_id))
   const cinemaIds = new Set(salas.value.filter((s) => salaIds.has(s.id)).map((s) => s.cinema_id))
   return cinemas.value.filter((c) => cinemaIds.has(c.id))
 })
@@ -206,15 +236,15 @@ function infoSessao(s) {
 }
 
 function sessoesDoFilme(filmeId) {
-  return sessoes.value.filter((s) => s.filme_id === filmeId)
+  return sessoesFiltradas.value.filter((s) => s.filme_id === filmeId)
 }
 
 function sessoesDaSala(salaId) {
-  return sessoes.value.filter((s) => s.sala_id === salaId)
+  return sessoesFiltradas.value.filter((s) => s.sala_id === salaId)
 }
 
 function salasDoCinema(cinemaId) {
-  const salaIds = new Set(sessoes.value.map((s) => s.sala_id))
+  const salaIds = new Set(sessoesFiltradas.value.map((s) => s.sala_id))
   return salas.value.filter((s) => s.cinema_id === cinemaId && salaIds.has(s.id))
 }
 

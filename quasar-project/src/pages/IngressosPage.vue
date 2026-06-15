@@ -6,11 +6,16 @@
       title="Registro de Ingressos"
       :rows="ingressos"
       :columns="colunas"
+      :filter="filtro"
       row-key="id"
       flat
       bordered
       no-data-label="Nenhum ingresso cadastrado"
-    />
+    >
+      <template #top-right>
+        <q-input v-model="filtro" dense outlined placeholder="Pesquisar" clearable />
+      </template>
+    </q-table>
   </q-page>
 </template>
 
@@ -23,6 +28,7 @@ import { getAllSalasFromRest } from '@/services/salaServices.js'
 import { getAllCinemasFromRest } from '@/services/cinemaServices.js'
 
 const ingressos = ref([])
+const filtro = ref('')
 const sessoes = ref([])
 const filmes = ref([])
 const salas = ref([])
@@ -64,6 +70,7 @@ const colunas = computed(() => [
     label: 'Pedido',
     field: 'pedido_id',
     align: 'left',
+    sortable: true,
     format: (val) => `#${val}`,
   },
   {
@@ -71,6 +78,7 @@ const colunas = computed(() => [
     label: 'Sessao',
     field: 'sessao_id',
     align: 'left',
+    sortable: true,
     format: (val) => labelSessao(val),
   },
   {
@@ -78,14 +86,16 @@ const colunas = computed(() => [
     label: 'Fileira',
     field: 'fileira',
     align: 'left',
+    sortable: true,
     format: (val) => fileiraLabel(val),
   },
-  { name: 'coluna', label: 'Coluna', field: 'coluna', align: 'left' },
+  { name: 'coluna', label: 'Coluna', field: 'coluna', align: 'left', sortable: true },
   {
     name: 'preco',
     label: 'Preco',
     field: 'preco',
     align: 'left',
+    sortable: true,
     format: (val) => fmtMoeda(val),
   },
 ])

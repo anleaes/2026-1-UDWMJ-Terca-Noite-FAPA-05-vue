@@ -87,11 +87,16 @@
       title="Pedidos cadastrados"
       :rows="pedidos"
       :columns="colunas"
+      :filter="filtro"
       row-key="id"
       flat
       bordered
       no-data-label="Nenhum pedido cadastrado"
     >
+      <template #top-right>
+        <q-input v-model="filtro" dense outlined placeholder="Pesquisar" clearable />
+      </template>
+
       <template #body-cell-status="props">
         <q-td :props="props">
           <q-badge :color="corStatus(props.row.status)" :label="labelStatus(props.row.status)" />
@@ -147,6 +152,7 @@ const METODOS = {
 }
 
 const pedidos = ref([])
+const filtro = ref('')
 const clientes = ref([])
 const sessoes = ref([])
 const filmes = ref([])
@@ -191,20 +197,22 @@ const valorTotal = computed(() => {
 const podeAlterarStatus = computed(() => pedidoStatus.value === 'pendente')
 
 const colunas = computed(() => [
-  { name: 'id', label: 'ID', field: 'id', align: 'left' },
+  { name: 'id', label: 'ID', field: 'id', align: 'left', sortable: true },
   {
     name: 'cliente_id',
     label: 'Cliente',
     field: 'cliente_id',
     align: 'left',
+    sortable: true,
     format: (val) => clientes.value.find((c) => c.id === val)?.nome ?? `#${val}`,
   },
-  { name: 'status', label: 'Status', field: 'status', align: 'left' },
+  { name: 'status', label: 'Status', field: 'status', align: 'left', sortable: true },
   {
     name: 'valor_total',
     label: 'Valor total',
     field: 'valor_total',
     align: 'left',
+    sortable: true,
     format: (val) => fmtMoeda(val),
   },
   { name: 'acoes', label: 'Acoes', field: 'acoes', align: 'center' },

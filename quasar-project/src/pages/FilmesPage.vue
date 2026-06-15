@@ -2,18 +2,30 @@
   <q-page class="q-pa-lg">
     <q-btn flat label="Voltar" to="/" icon="arrow_back" class="q-mb-md" />
 
-    <div class="row items-center justify-between q-mb-lg">
-      <h5 class="q-my-none">Filmes</h5>
-      <q-btn color="primary" icon="add" label="Novo filme" @click="abrirNovo" />
+    <div class="row items-center q-gutter-md q-mb-lg">
+      <h5 class="q-my-none col-auto">Filmes</h5>
+      <q-input
+        v-model="filtro"
+        dense
+        outlined
+        placeholder="Pesquisar"
+        clearable
+        class="col"
+      />
+      <q-btn class="col-auto" color="primary" icon="add" label="Novo filme" @click="abrirNovo" />
     </div>
 
     <div v-if="filmes.length === 0" class="text-grey-7">
       Nenhum filme cadastrado
     </div>
 
-    <div class="row q-col-gutter-md">
+    <div v-else-if="filmesFiltrados.length === 0" class="text-grey-7">
+      Nenhum filme encontrado
+    </div>
+
+    <div v-else class="row q-col-gutter-md">
       <div
-        v-for="filme in filmes"
+        v-for="filme in filmesFiltrados"
         :key="filme.id"
         class="col-6 col-sm-4 col-md-3 col-lg-2"
       >
@@ -129,7 +141,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import {
   getAllFilmesFromRest,
   createFilmeFromRest,
@@ -139,6 +151,7 @@ import {
 import { getAllGenerosFromRest } from '@/services/generoServices.js'
 
 const filmes = ref([])
+const filtro = ref('')
 const dialogAberto = ref(false)
 const editando = ref(false)
 const filmeId = ref(null)
@@ -188,6 +201,25 @@ function nomesGeneros(filme) {
     .map((id) => generosPorId.value[id])
     .filter(Boolean)
 }
+
+const filmesFiltrados = computed(() => {
+  const termo = filtro.value.toLowerCase().trim()
+  if (!termo) return filmes.value
+
+  return filmes.value.filter((filme) => {
+    const texto = [
+      filme.titulo,
+      filme.sinopse,
+      filme.duracao?.toString(),
+      ...nomesGeneros(filme),
+    ]
+      .filter(Boolean)
+      .join(' ')
+      .toLowerCase()
+
+    return texto.includes(termo)
+  })
+})
 
 function abrirNovo() {
   editando.value = false

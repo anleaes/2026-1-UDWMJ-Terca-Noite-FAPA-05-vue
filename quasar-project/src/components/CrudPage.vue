@@ -107,12 +107,17 @@
     <q-table
       :title="`${titulo} cadastrados`"
       :rows="registros"
-      :columns="colunas"
+      :columns="colunasTabela"
+      :filter="filtro"
       row-key="id"
       flat
       bordered
       :no-data-label="`Nenhum ${nomeEntidade} cadastrado`"
     >
+      <template #top-right>
+        <q-input v-model="filtro" dense outlined placeholder="Pesquisar" clearable />
+      </template>
+
       <template #body-cell-acoes="props">
         <q-td :props="props">
           <q-btn flat round icon="edit" color="primary" @click="editar(props.row)" />
@@ -124,7 +129,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, computed } from 'vue'
 
 const props = defineProps({
   titulo: { type: String, required: true },
@@ -135,9 +140,16 @@ const props = defineProps({
 })
 
 const registros = ref([])
+const filtro = ref('')
 const editando = ref(false)
 const registroId = ref(null)
 const form = ref(criarFormVazio())
+
+const colunasTabela = computed(() =>
+  props.colunas.map((col) =>
+    col.name === 'acoes' ? col : { ...col, sortable: true }
+  )
+)
 
 function isCampoComMascara(campo) {
   return ['cpf', 'cnpj', 'tel'].includes(campo.type) || campo.mask

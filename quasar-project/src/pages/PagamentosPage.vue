@@ -6,11 +6,16 @@
       title="Registro de Pagamentos"
       :rows="pagamentos"
       :columns="colunas"
+      :filter="filtro"
       row-key="id"
       flat
       bordered
       no-data-label="Nenhum pagamento registrado"
-    />
+    >
+      <template #top-right>
+        <q-input v-model="filtro" dense outlined placeholder="Pesquisar" clearable />
+      </template>
+    </q-table>
   </q-page>
 </template>
 
@@ -26,6 +31,7 @@ const METODOS = {
 }
 
 const pagamentos = ref([])
+const filtro = ref('')
 
 function fmtMoeda(valor) {
   if (valor == null) return 'R$ 0,00'
@@ -38,6 +44,7 @@ const colunas = [
     label: 'Pedido',
     field: 'pedido_id',
     align: 'left',
+    sortable: true,
     format: (val) => `#${val}`,
   },
   {
@@ -45,6 +52,7 @@ const colunas = [
     label: 'Metodo',
     field: 'metodo',
     align: 'left',
+    sortable: true,
     format: (val) => METODOS[val] ?? val,
   },
   {
@@ -52,6 +60,7 @@ const colunas = [
     label: 'Valor',
     field: 'valor',
     align: 'left',
+    sortable: true,
     format: (val) => fmtMoeda(val),
   },
 ]

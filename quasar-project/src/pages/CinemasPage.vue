@@ -36,11 +36,16 @@
       title="Cinemas cadastrados"
       :rows="cinemas"
       :columns="colunas"
+      :filter="filtro"
       row-key="id"
       flat
       bordered
       no-data-label="Nenhum cinema cadastrado"
     >
+      <template #top-right>
+        <q-input v-model="filtro" dense outlined placeholder="Pesquisar" clearable />
+      </template>
+
       <template #body-cell-acoes="props">
         <q-td :props="props">
           <q-btn flat round icon="edit" color="primary" @click="editar(props.row)" />
@@ -62,15 +67,16 @@ import {
 } from '@/services/cinemaServices.js'
 
 const cinemas = ref([])
+const filtro = ref('')
 const editando = ref(false)
 const cinemaId = ref(null)
 const form = ref({ nome: '', cnpj: '', endereco: '', telefone: '' })
 
 const colunas = [
-  { name: 'nome', label: 'Nome', field: 'nome', align: 'left' },
-  { name: 'endereco', label: 'Endereco', field: 'endereco', align: 'left' },
-  { name: 'telefone', label: 'Telefone', field: 'telefone', align: 'left' },
-  { name: 'cnpj', label: 'CNPJ', field: 'cnpj', align: 'left' },
+  { name: 'nome', label: 'Nome', field: 'nome', align: 'left', sortable: true },
+  { name: 'endereco', label: 'Endereco', field: 'endereco', align: 'left', sortable: true },
+  { name: 'telefone', label: 'Telefone', field: 'telefone', align: 'left', sortable: true },
+  { name: 'cnpj', label: 'CNPJ', field: 'cnpj', align: 'left', sortable: true },
   { name: 'acoes', label: 'Acoes', field: 'acoes', align: 'center' },
 ]
 
